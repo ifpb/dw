@@ -1,0 +1,24 @@
+@startmindmap
+* DW
+-- Estrutura da Web
+---_ Função do cliente e servidor HTTP
+---_ Componentes para construir um sistema Web
+-- HTML & CSS
+---_ Hipertexto
+---_ Folha de estilo
+---_ Extenções do CSS
+-- Javascript
+---_ Estrutura da linguagem
+---_ Manipulação do DOM
+---_ AJAX
+---_ Extenção da Linguagem
+++ PHP
++++_ Estrutura da linguagem
++++_ Execução de script e manipulação de arquivos
++++_ Manipulando GET e POST
++++_ Sessão
++++_ Manipulação de e-mail
+++ MySQL
++++_ Fundamentos de BDR
++++_ SQL (criação e manipulação)
+@endmindmap
