@@ -1,47 +1,6 @@
 # Roteiro das Aulas
 
-[\# 01 - Apresentação da Disciplina (28/08/2019 QUA)](#-01---apresentação-da-disciplina-28082019-qua)<br>
-[\# 02 - Funcionamento das Aplicações Web (30/08/2019 SEX)](#-02---funcionamento-das-aplicações-web-30082019-sex)<br>
-[\# 03 - Estrutura com HTML (31/08/2019 SAB)](#-03---estrutura-com-html-31082019-sab)<br>
-[\# 04 - Estrutura com HTML (04/09/2019 QUA)](#-04---estrutura-com-html-04092019-qua)<br>
-[\# 05 - Estilo com CSS (06/09/2019 SEX)](#-05---estilo-com-css-06092019-sex)<br>
-[\# 06 - Estilo com CSS (11/09/2019 QUA)](#-06---estilo-com-css-11092019-qua)<br>
-[\# 07 - Estilo com CSS (13/09/2019 SEX)](#-07---estilo-com-css-13092019-sex)<br>
-[\# 08 - Introdução ao Bootstrap (Valéria) (25/09/2019)](#-08---introdução-ao-bootstrap--valéria-25092019)<br>
-[\# 09 - Introdução conteúdo Gustavo (04/10/2019)](#-09---introdução-conteúdo-gustavo-04102019)<br>
-[\# 10 - Continuação Bootstrap (10/10/2019)](#-10---continuação-bootstrap-10102019)<br>
-[\# 11 - Continuação Bootstrap (11/10/2019)](#-11---continuação-bootstrap-11102019)<br>
-[\# 12 - Arrays - Math - Fetch (23/10/2019)](#-12---arrays---math---fetch-23102019)<br>
-[\# 13 - Continuação Fetch (25/10/2019)](#-13---continuação-fetch-25102019)<br>
-[\# 14 - Apresentação projeto Gustavo (30/10/2019)](#-14---apresentação-projeto-gustavo-30102019)<br>
-[\# 15 - Submentendo projeto Gustavo (01/11/2019 SEX)](#-15---submentendo-projeto-gustavo-01112019-sex)<br>
-[\# 16 - Planejando o Projeto da disciplina (06/11/2019 QUA)](#-16---planejando-o-projeto-da-disciplina-06112019-qua)<br>
-[\# 17 - Apresentando o Projeto da Disciplina (08/11/2019 SEX)](#-17---apresentando-o-projeto-da-disciplina-08112019-sex)<br>
-[\# 18 - Servidor LAMP e Avaliação de Javascript (13/11/2019 QUA)](#-18---servidor-lamp-e-avaliação-de-javascript-13112019-qua)<br>
-[\# 19 - Fundamentos de PHP (20/11/2019 QUA)](#-19---fundamentos-de-php-20112019-qua)<br>
-[\# 20 - Fundamentos de PHP (21/11/2019 SEX)](#-20---fundamentos-de-php-21112019-sex)<br>
-[\# 21 - Acompanhamento do Projeto (21/11/2019 SEX)](#-21---acompanhamento-do-projeto-21112019-sex)<br>
-[\# 22 - SECT - IFTech 2019 (27/11/2019 QUA)](#-22---sect---iftech-2019-27112019-qua)<br>
-[\# 23 - SECT - IFTech 2019 (29/11/2019 SEX)](#-23---sect---iftech-2019-29112019-sex)<br>
-[\# 24 - Acompanhamento do Projeto (29/11/2019 SEX)](#-24---acompanhamento-do-projeto-29112019-sex)<br>
-[\# 25 - APIs em PHP (30/11/2019 SAB)](#-25---apis-em-php-30112019-sab)<br>
-[\# 26 - PHP Web (30/11/2019 SAB)](#-26---php-web-30112019-sab)<br>
-[\# 27 - PHP Web (04/12/2019 QUA)](#-27---php-web-04122019-qua)<br>
-[\# 28 - Avaliação de PHP (06/12/2019 SEX)](#-28---avaliação-de-php-06122019-sex)<br>
-[\# 29 - Acompanhamento do Projeto (06/12/2019 SEX)](#-29---acompanhamento-do-projeto-06122019-sex)<br>
-[\# 30 - MySQL (11/12/2019 QUA)](#-30---mysql-11122019-qua)<br>
-[\# 31 - MySQL (13/12/2019 SEX)](#-31---mysql-13122019-sex)<br>
-[\# 32 - Acompanhamento do Projeto (13/12/2019 SEX)](#-32---acompanhamento-do-projeto-13122019-sex)<br>
-[\# 33 - PHP PDO (14/12/2019 SAB)](#-33---php-pdo-14122019-sab)<br>
-[\# 34 - PHP PDO (14/12/2019 SAB)](#-34---php-pdo-14122019-sab)<br>
-[\# 35 - Aplicação Web com MySQL (18/12/2019 QUA)](#-35---aplicação-web-com-mysql-18122019-qua)<br>
-[\# 36 - Aplicação Web com MySQL (20/12/2019 SEX)](#-36---aplicação-web-com-mysql-20122019-sex)<br>
-[\# 37 - Acompanhamento do Projeto (20/12/2019 SEX)](#-37---acompanhamento-do-projeto-20122019-sex)<br>
-[\# 38 - Acompanhamento do Projeto (22/01/2020 QUA)](#-38---acompanhamento-do-projeto-22012020-qua)<br>
-[\# 39 - Acompanhamento do Projeto (24/01/2020 SEX)](#-39---acompanhamento-do-projeto-24012020-sex)<br>
-[\# 40 - Projeto Final (Back-end) (24/01/2020 SEX)](#-40---projeto-final-back-end-24012020-sex)<br>
-
-## \# 01 - Apresentação da Disciplina (28/08/2019 QUA)
+## \# 01 - Apresentação da Disciplina
 
 ---
 
@@ -59,11 +18,11 @@
 
 **Exercício:**
 
-- Analise o [site da discplina](https://ifpb.github.io/dw/) e se inscreva no [telegram da disciplina](https://t.me/joinchat/COqVmhY66VAhJKPbzoGH_A).
+- Analise o [site da disciplina](https://ifpb.github.io/dw/) e se inscreva no [telegram da disciplina](https://t.me/joinchat/ifpbdw20201).
 - Configure seu computador com essas [ferramentas](TOOLS.md).
 - Veja e se inspire nos [projetos](https://ifpb.github.io/projects/) já realizados nesta disciplina.
 
-## \# 02 - Funcionamento das Aplicações Web (30/08/2019 SEX)
+## \# 02 - Funcionamento das Aplicações Web
 
 ---
 
@@ -87,7 +46,7 @@
 - Pesquise sobre a evolução da Web.
 - Descreva o que é uma Linguagem de Marcação.
 
-## \# 03 - Estrutura com HTML (31/08/2019 SAB)
+## \# 03 - Estrutura com HTML
 
 ---
 
@@ -107,10 +66,10 @@
 
 **Exercício:**
 
-- Reconstrua a [Primeira Página da Web](https://ifpb.github.io/html-exercises/html/first-web-page/)
-- [Inspecione uma página na Web](https://ifpb.github.io/html-exercises/html/inspect-page/)
+- Reconstrua a [Primeira Página da Web (front-end/structure/first-web-page/)](https://ifpb.github.io/exercises/problems/web/front-end/structure/first-web-page/)
+- [Inspecione uma página na Web](https://ifpb.github.io/exercises/problems/web/front-end/structure/inspect-hml/)
 
-## \# 04 - Estrutura com HTML (04/09/2019 QUA)
+## \# 04 - Estrutura com HTML
 
 ---
 
@@ -126,10 +85,10 @@
 
 **Exercício:**
 
-- Estruture o manual do [comando PING](https://ifpb.github.io/html-exercises/html/man-ping/) em HTML ([Fonte](https://linux.die.net/man/8/ping))
+- Estruture o manual do [comando PING (front-end/structure/man-ping/)](https://ifpb.github.io/exercises/problems/web/front-end/structure/man-ping/) em HTML ([Fonte](https://linux.die.net/man/8/ping))
 - Escolha algum manual do [GNU Manuals Online](https://www.gnu.org/manual/manual.html) ou do [Debian](https://www.debian.org/doc/) para tentar reproduzi-lo parcialmente.
 
-## \# 05 - Estilo com CSS (06/09/2019 SEX)
+## \# 05 - Estilo com CSS
 
 ---
 
@@ -152,11 +111,11 @@
 
 **Exercício:**
 
-- [Criando seu primeiro estilo](https://ifpb.github.io/css-exercises/css/hello-world-css/)
-- [Selecionando elementos no HTML](https://ifpb.github.io/css-exercises/css/selector-css/)
+- [Criando seu primeiro estilo (front-end/style/hello-world-css)](https://ifpb.github.io/exercises/problems/web/front-end/style/hello-world-css/)
+- [Selecionando elementos no HTML (front-end/style/selector)](https://ifpb.github.io/exercises/problems/web/front-end/style/selector-css/)
 - Verifique seus conhecimento em Seletores com o [Game: CSS selectors cheatsheet](https://frontend30.com/css-selectors-cheatsheet/)
 
-## \# 06 - Estilo com CSS (11/09/2019 QUA)
+## \# 06 - Estilo com CSS
 
 ---
 
@@ -174,11 +133,11 @@
 
 **Exercício:**
 
-- [Curriculum Vitae com Estilo](https://ifpb.github.io/css-exercises/css/curriculum-style-text/)
-- Estilize o mamual do comando Ping em CSS:
-  - [Proposta](https://ifpb.github.io/css-exercises/css/man-ping/) de [Miguel Cabral](https://github.com/BelarminoM)
+- [Curriculum Vitae com Estilo (front-end/style/curriculum-vitae)](https://ifpb.github.io/exercises/problems/web/front-end/style/curriculum-text/)
+- Estilize o manual do comando Ping em CSS (front-end/style/man-ping-style/):
+  - [Proposta](https://ifpb.github.io/exercises/problems/web/front-end/style/man-ping/) de [Miguel Cabral](https://github.com/BelarminoM)
 
-## \# 07 - Estilo com CSS (13/09/2019 SEX)
+## \# 07 - Estilo com CSS
 
 ---
 
@@ -201,10 +160,10 @@
 
 **Exercício:**
 
-- Analise o Box Model desses [títulos](https://ifpb.github.io/css-guide/css/box-model/headers-box-model/)
-- Crie essa [página](https://ifpb.github.io/css-exercises/css/text-simple/code-response/) usando os recursos CSS da aula de hoje.
+- Analise o Box Model desses [títulos (front-end/style/box-model/)](https://ifpb.github.io/css-guide/css/box-model/headers-box-model/)
+- Crie essa [página (front-end/style/text-simple/)](https://ifpb.github.io/css-exercises/css/text-simple/code-response/) usando os recursos CSS da aula de hoje.
 
-## \# 08 - Introdução ao Bootstrap (Valéria) (25/09/2019)
+## \# 08 - Introdução ao Bootstrap
 
 ---
 
@@ -223,445 +182,429 @@
 
 **Exercício:**
 
-- [Criando Dashboard Admin](https://ifpb.github.io/css-exercises/packages/bootstrap/dashboard-admin/)
+- [Criando Dashboard Admin (front-end/packages/bootstrap-gentelella-panel/ e front-end/packages/bootstrap-ample-admin/)](https://ifpb.github.io/exercises/problems/web/front-end/packages/bootstrap/dashboard-admin/)
 
-## \# 09 - Introdução conteúdo Gustavo (04/10/2019)
-
----
-
-**Conteúdo:**
-
-Apresentação Metodologia p2 Disciplina - Cadastro site schoology e repl.it - Apresentação BS Corretora e conceitos básicos de bootstrap (revisão e assuntos novos): grades, containers, jumbotron, modal etc
-
-## \# 10 - Continuação Bootstrap (10/10/2019)
+## \# 09 - Criando Dashboard Admin
 
 ---
 
 **Conteúdo:**
 
-MT1 - Cont. Bootstrap: itens do projeto BS Corretora - Projeto BS Corretora
-
-## \# 11 - Continuação Bootstrap (11/10/2019)
-
----
-
-**Conteúdo:**
-
-Cont. Bootstrap: - Visibilidade elementos dependendo tamanho tela (d-none, d-sm-block etc) - Botões com Font Awesome - Prática: Projeto Dashboard
-
-## \# 12 - Arrays - Math - Fetch (23/10/2019)
-
----
-
-**Conteúdo:**
-
-Arrays - Math - Fetch
-
-## \# 13 - Continuação Fetch (25/10/2019)
-
----
-
-**Conteúdo:**
-
-Cont. Fetch Javascript: - remocao, listagem, inserção - Classes - inserção de elementos no HTML
-
-## \# 14 - Apresentação projeto Gustavo (30/10/2019)
-
----
-
-**Conteúdo:**
-
-MTs 3 e 4 - Apresentação projeto
-
-## \# 15 - Submentendo projeto Gustavo (01/11/2019 SEX)
-
----
-
-**Conteúdo:**
-
-Submentendo o projeto de Front-end
-
-## \# 16 - Planejando o Projeto da disciplina (06/11/2019 QUA)
-
----
-
-**Projeto:**
-
-> [Proposta de projeto](../exams/projeto.md)
-
-## \# 17 - Apresentando o Projeto da Disciplina (08/11/2019 SEX)
-
----
-
-**Projeto:**
-
-> Apresentação do Front-end dos [Projetos](../exams/projeto.md).
-
-## \# 18 - Servidor LAMP e Avaliação de Javascript (13/11/2019 QUA)
-
----
-
-**Conteúdo:**
-
-- [PHP Guide](https://ifpb.github.io/php-guide/)
-  - [Lamp Server](https://ifpb.github.io/php-guide/lamp/)
+- [HTML](https://ifpb.github.io/html-guide/html/)
+- [CSS](https://ifpb.github.io/css-guide/css/)
 
 **Reflexão:**
 
-- Como configurar um ambiente backend com PHP e MySQL?
+- O que foi visto de HTML e CSS até o momento?
 
 **Exercício:**
 
-- Monte seu ambiente LAMP para as próximas aulas.
+- Simulado de HTML e CSS ([desafios de boostrap \*-static](https://ifpb.github.io/challenges/web/front-end/packages/bootstrap/)):
+  - [Glass ISC DHCP (front-end/packages/bootstrap-glass-isc-dhcp/)](https://ifpb.github.io/challenges/web/front-end/packages/bootstrap/static/glass-isc-dhcp/)
+  - [Dashboard Monitor (front-end/packages/bootstrap-dashboard-monitor/)](https://ifpb.github.io/challenges/web/front-end/packages/bootstrap/static/dashboard-monitor/)
+  - [Host Monitor (front-end/packages/bootstrap-host-monitor/)](https://ifpb.github.io/challenges/web/front-end/packages/bootstrap/static/host-monitor/)
+  - [eZ Server Monitor (front-end/packages/bootstrap-ez-server-monitor/)](https://ifpb.github.io/challenges/web/front-end/packages/bootstrap/static/ez-server-monitor/)
+  - [Pingdom Monitor (front-end/packages/bootstrap-pingdom-monitor/)](https://ifpb.github.io/challenges/web/front-end/packages/bootstrap/static/pingdom-monitor/)
+
+## \# 10 - Simulado de HTML & CSS
+
+---
+
+**Simulado**
+
+- Simulado da Prova de HTML e CSS: [glances (front-end/packages/bootstrap/glances/)](https://ifpb.github.io/challenges/web/front-end/packages/bootstrap/static/glances/).
+
+## \# 11 - Avaliação de HTML e CSS
+
+---
 
 **Avaliação:**
 
-> Entregue o front-end do seu projeto dinamicamente com JSON estáticos.
+- [Avaliação de HTML e CSS](../exams/prova-html-css.md)
 
-## \# 19 - Fundamentos de PHP (20/11/2019 QUA)
+## \# 12 - Proposta de Projeto
+
+---
+
+**Projeto:**
+
+- [Proposta de projeto](../exams/projeto.md)
+
+## \# 13 - Apresentação das Proposta de Projeto
+
+---
+
+**Projeto:**
+
+- [Proposta de projeto](../exams/projeto.md)
+
+## \# 14 - Introdução ao Javascript ECMA
 
 ---
 
 **Conteúdo:**
 
-- [PHP Guide](https://ifpb.github.io/php-guide/)
-  - [PHP Core](https://ifpb.github.io/php-guide/core/)
-    - [Values and Types](https://ifpb.github.io/php-guide/core/values-and-types/)
-    - [Variable](https://ifpb.github.io/php-guide/core/variable/)
-    - [Expression and Operator](https://ifpb.github.io/php-guide/core/expression-and-operator/)
-    - [Statements](https://ifpb.github.io/php-guide/core/statements/)
-    - [Function](https://ifpb.github.io/php-guide/core/function/)
+- [Executando Javascript](https://ifpb.github.io/javascript-exercises/ecma/running-javascript.html): prompt do Node.js
+- Editando Javascript com [Visual Studio Code (vscode)](http://code.visualstudio.com) e executando com o [Node.js](https://nodejs.org/en/)
+- [Javascript EcmaScript](https://ifpb.github.io/javascript-guide/ecma/)
+
+  - [Variável](https://ifpb.github.io/javascript-guide/ecma/variable/)
+  - [Tipos](https://ifpb.github.io/javascript-guide/ecma/)
+  - [Expressões e operadores](https://ifpb.github.io/javascript-guide/ecma/expression-and-operator/)
 
 **Reflexão:**
 
-- Como executamos código PHP?
-- Quais são os tipos da linguagem PHP?
-- Como declaramos variáveis no PHP?
-- Quais são os operadores do PHP, e como elaboramos expressões?
-- Quais são as estruturas de decisão e repetição do PHP?
-- Como criamos uma função em PHP?
+- Como executamos código Javascript? Que ferramentas podemos usar para programar em Javascript?
+- Como declaramos variáveis no Javascript?
+- Quais são os tipos primitivos e objetos do Javascript?
+- Quais são os operadores do Javascript? Como podemos montar expressões?
+- Como saber se um operador é unário, binário ou ternário?
+
+**Exercício:**
+
+- Crie um script para:
+  - Através de `const x = 8` definir `x+2` (10)
+  - Através de `const x = 8` definir `x²` (64)
+  - Através de `const x = 8` definir `∛x` (2)
+  - Através de `const x = 8` definir `3x²+12x-4` (284)
+  - Através de `const x = 8` definir `x+3 > √x` (true)
+  - Calcular o [IMC](https://ifpb.github.io/javascript-exercises/ecma/basic/bmi/) usando `if` e `switch`
+- Veja outros [exercícios](https://ifpb.github.io/javascript-exercises/ecma/) com JS.
+
+## \# 15 - Introdução ao Javascript ECMA
+
+---
+
+**Conteúdo:**
+
+- [Javascript EcmaScript](https://ifpb.github.io/javascript-guide/ecma/)
+  - [Estrutura de Decisão e Repetição](https://ifpb.github.io/javascript-guide/ecma/statements-and-declarations/)
+  - [Funções](https://ifpb.github.io/javascript-guide/ecma/function/)
+
+**Reflexão:**
+
+- Quais são as estruturas de decisão e repetição do Javascript?
 - O que acontece quando passamos uma quantidade de argumentos diferente do total de parâmetros?
+- O que são parâmetros default dentro das funções no Javascript?
 
 **Exercício:**
 
 - Crie um script para:
-  - Através de `x = 10` definir `x+2`
-  - Através de `x = 10` definir `x²`
-  - Através de `x = 10` definir `3x²+12x-4`
-  - Através de `x = 10` definir `x+3 > √x`
-  - Calcular o [IMC](https://ifpb.github.io/php-exercises/core/basic/bmi/)
-  - Gerar algumas [séries numéricas](https://ifpb.github.io/php-exercises/core/basic/numbers/)
-  - Calcular a [soma de números](https://ifpb.github.io/php-exercises/core/function/sum/)
+  - Exibir a séria de [00 até 99](https://ifpb.github.io/javascript-exercises/ecma/basic/numbers/) de dez em dez.
+  - [Somar](https://ifpb.github.io/javascript-exercises/ecma/function/sum/)
+  - [Calcular a área do círculo](https://ifpb.github.io/javascript-exercises/ecma/function/area-of-circle/)
+  - [Calcular operações aritméticas básicas](https://ifpb.github.io/javascript-exercises/ecma/function/calc/)
+- Veja outros [exercícios](https://ifpb.github.io/javascript-exercises/ecma/) com JS.
 
-## \# 20 - Fundamentos de PHP (21/11/2019 SEX)
+## \# 16 - Introdução ao Javascript Web
 
 ---
 
 **Conteúdo:**
 
-- [PHP Guide](https://ifpb.github.io/php-guide/)
-  - [PHP Core](https://ifpb.github.io/php-guide/core/)
-  - [PHP Stdlib](https://ifpb.github.io/php-guide/stdlib/)
-    - Process Control Extensions
-      - [Program execution](https://ifpb.github.io/php-guide/stdlib/program-execution/)
+- Formulário
+  - [Estrutura](https://ifpb.github.io/html-guide/html/form/)
+  - [Bootstrap > Form](https://getbootstrap.com/docs/4.1/components/forms/)
+- [Javascript W3C](https://ifpb.github.io/javascript-guide/w3c/)
+  - [Running Javascript in Browser](https://ifpb.github.io/javascript-guide/w3c/running-javascript-browser/)
+  - [Window](https://ifpb.github.io/javascript-guide/w3c/window/window.html)
+  - [DOM](https://ifpb.github.io/javascript-guide/w3c/dom/)
 
 **Reflexão:**
 
-- Como executamos comandos via PHP?
-- Qual a finalidade do script [`ping.php`](https://ifpb.github.io/php-guide/stdlib/program-execution/#ping)?
+- Para que serve os formulários e como estruturamos um?
+- Como integramos Javascript com HTML no Navegador?
+- É possível acessar recursos do Navegador com o Javascript? Por exemplo, é possível acessar os botões de navegação de histórico? Ou a URL da barra de endereço?
+- Qual a importância da árvore DOM para o Javascript?
+
+**Exercício:**
+
+- Crie uma interface Web para:
+  - Este [formulário](https://ifpb.github.io/html-guide/html/form/#simple-form) usando a estilização do Bootstrap ([form](https://ifpb.github.io/css-guide/packages/bootstrap/form/) e [form-row](https://ifpb.github.io/css-guide/packages/bootstrap/form-row/)).
+  - Calcular o:
+    - [IMC](https://ifpb.github.io/javascript-exercises/w3c/bmi-simple/).
+
+## \# 17 - Introdução ao Javascript Web
+
+---
+
+**Conteúdo:**
+
+- [Javascript W3C](https://ifpb.github.io/javascript-guide/w3c/)
+  - [DOM](https://ifpb.github.io/javascript-guide/w3c/dom/)
+    - [Node (DOM tree)](https://ifpb.github.io/javascript-guide/w3c/dom/node.html)
+    - [Document](https://ifpb.github.io/javascript-guide/w3c/dom/document.html): `querySelector()`
+    - [Element](https://ifpb.github.io/javascript-guide/w3c/dom/element.html): `innerHTML`, `setAttribute()`
+    - [HTML Element](https://ifpb.github.io/javascript-guide/w3c/dom/html-element.html): `style`
+    - [HTML Input Element](https://ifpb.github.io/javascript-guide/w3c/dom/html-input-element.html): `checked`, `value`
+  - [DOM Event](https://ifpb.github.io/javascript-guide/w3c/dom-event/): `onclick`
+
+**Reflexão:**
+
+- Um Elemento no HTML pode ser analisado como sendo mais de um objeto no DOM? Mostre algum exemplo.
+- Como acessamos um elemento do HTML via `document` no Javascript?
+- Como acessamos ou alteramos o conteúdo dos elementos `<div>`, `<input type="text">` e `<input type="radio">` (selecionado)?
+- Como alteramos o estilo de um elemento no Javascript?
+- No exercício do IMC gráfico, explique como alteramos a cor do resultado do IMC conforme o resultado, por exemplo, vermelho para obeso e assim por diante.
+- Como atribuímos um evento em um botão no Javascript?
+
+**Exercício:**
+
+- Crie uma interface Web para:
+  - Calcular o:
+    - [IMC](https://ifpb.github.io/javascript-exercises/w3c/bmi-simple/).
+    - [IMC com Estilo](https://ifpb.github.io/javascript-exercises/w3c/bmi-css/)
+    - [IMC com Validação](https://ifpb.github.io/javascript-exercises/w3c/bmi-validator/)
+
+## \# 18 - API do JS
+
+---
+
+**Conteúdo:**
+
+- [Javascript EcmaScript](https://ifpb.github.io/javascript-guide/ecma/)
+  - [Funções Anônimas](https://ifpb.github.io/javascript-guide/ecma/function/#function-expression--anonymous-function)
+  - Array ([sintaxe](https://ifpb.github.io/javascript-guide/ecma/array/syntax.html), [objeto](https://ifpb.github.io/javascript-guide/ecma/array/object.html))
+  - String ([sintaxe](https://ifpb.github.io/javascript-guide/ecma/string/syntax.html), [objeto](https://ifpb.github.io/javascript-guide/ecma/string/object.html))
+  - JSON ([sintaxe](https://ifpb.github.io/javascript-guide/ecma/json/syntax.html), [manipulação](https://ifpb.github.io/javascript-guide/ecma/object/syntax.html#changing-object), [iterando](https://ifpb.github.io/javascript-guide/ecma/object/syntax.html#object-interaction))
+
+**Reflexão:**
+
+- No Javascript, como manipulamos (criar, alterar, iterar, ações) String, Array e JSON?
+- Como estruturamos dados compostos em Javascript?
+- O que são funções anônimas?
 
 **Exercício:**
 
 - Crie um script para:
-  - Calcular a [área do círculo](https://ifpb.github.io/php-exercises/core/function/area-of-circle/)
-  - Calcular as [operações aritméticas básicas](https://ifpb.github.io/php-exercises/core/function/calc/)
-- Como executar o comando `ls` por meio do PHP?
+  - [Array Operation](https://ifpb.github.io/javascript-exercises/ecma/array/array-operations/)
+  - [Array Util](https://ifpb.github.io/javascript-exercises/ecma/array/array-util/)
+  - [List Generator](https://ifpb.github.io/javascript-exercises/ecma/string/list-generator/)
+- Crie uma representação desse dado no JS:
 
-## \# 21 - Acompanhamento do Projeto (21/11/2019 SEX)
+| Host   | Address     | Mask          |
+| ------ | ----------- | ------------- |
+| PC 1   | 192.168.0.1 | 255.255.255.0 |
+| Server | 10.0.0.1    | 255.255.255.0 |
 
----
-
-> [Projeto Final](../exams/projeto.md)
-
-## \# 22 - SECT - IFTech 2019 (27/11/2019 QUA)
-
----
-
-**Conteúdo:**
-
-[IFTech 2019](https://ifpb.github.io/iftech2019/)
-
-## \# 23 - SECT - IFTech 2019 (29/11/2019 SEX)
+## \# 19 - Geração Dinâmica com JS
 
 ---
 
 **Conteúdo:**
 
-[IFTech 2019](https://ifpb.github.io/iftech2019/)
+- [Javascript W3C](https://ifpb.github.io/javascript-guide/w3c/)
 
-## \# 24 - Acompanhamento do Projeto (29/11/2019 SEX)
-
----
-
-> [Projeto Final](../exams/projeto.md)
-
-## \# 25 - APIs em PHP (30/11/2019 SAB)
-
----
-
-**Conteúdo:**
-
-- [PHP Guide](https://ifpb.github.io/php-guide/)
-  - [PHP Stdlib](https://ifpb.github.io/php-guide/stdlib/)
-    - File System Related Extensions
-      - [Filesystem](https://ifpb.github.io/php-guide/stdlib/filesystem/)
-    - Other Basic Extensions
-      - [JSON](https://ifpb.github.io/php-guide/stdlib/json/)
-    - Other Services
-      - [SSH2 — Secure Shell2](https://ifpb.github.io/php-guide/stdlib/ssh2/)
-    - Process Control Extensions
-      - [Program execution](https://ifpb.github.io/php-guide/stdlib/program-execution/)
-    - Text Processing
-      - [PCRE — Regular Expressions (Perl-Compatible)](https://ifpb.github.io/php-guide/stdlib/pcre/)
-      - [Strings](https://ifpb.github.io/php-guide/stdlib/strings/)
+  - [Element](https://ifpb.github.io/javascript-guide/w3c/dom/element.html): `insertAdjacentHTML()`
+  - [HTML Element](https://ifpb.github.io/javascript-guide/w3c/dom/html-element.html): `focus()`
+  - [DOM Event](https://ifpb.github.io/javascript-guide/w3c/dom-event/)
+    - [EventTarget](https://ifpb.github.io/javascript-guide/w3c/dom-event/event-target.html): `addEventListener()`
+    - [GlobalEventHandlers](https://ifpb.github.io/javascript-guide/w3c/dom-event/global-event-handlers.html): `onclick`
 
 **Reflexão:**
 
-- Como executamos chamadas de sistema em PHP com e sem privilégio?
-- Como editamos um arquivo de configuração por meio do PHP?
-- Como formatar dados no PHP para retornar JSON?
+- Como adicionamos eventos a um elemento específico?
+- No exercício do IMC com evento, explique como adicionamos eventos:
+  - Na tecla 'Enter' para exibir o resultado do IMC;
+  - Na tecla 'Escape' para limpar os valores digitados nos `<input>`, e focar no primeiro `<input>`.
+- Como inserimos um novo parágrafo no final da `<div>` a seguir sem recriar seus elementos internos?
+
+```html
+<div>
+  <p>Lorem ipsum dolor</p>
+  <p>Dolor ipsum lorem</p>
+</div>
+```
 
 **Exercício:**
 
-- Crie uma API para listar arquivos de um `path` no formato JSON.
-- Crie uma API dos serviços de um SO no qual é possível realizar as seguintes as ações `start` e `stop`. Dica, use o comando `systemctl` ou `service`.
+- Crie uma interface Web para:
+  - Calcular o [IMC com Evento](https://ifpb.github.io/javascript-exercises/w3c/bmi-event/)
+  - [Calculadora](https://ifpb.github.io/javascript-exercises/w3c/calculator/)
+  - [Gerador de list](https://ifpb.github.io/javascript-exercises/w3c/list-generator/)
+  - Tabela de IPs ([Read](https://ifpb.github.io/javascript-exercises/w3c/iptable-read/), [Create](https://ifpb.github.io/javascript-exercises/w3c/iptable-create/), [Create Uniq](https://ifpb.github.io/javascript-exercises/w3c/iptable-create-uniq/))
 
-## \# 26 - PHP Web (30/11/2019 SAB)
+## \# 20 - Consumindo JSON e Geração Dinâmica com JS
 
 ---
 
 **Conteúdo:**
 
-- [PHP Guide](https://ifpb.github.io/php-guide/)
-  - [PHP Web](https://ifpb.github.io/php-guide/web/)
-    - [HTTP Methods](https://ifpb.github.io/php-guide/web/http/)
-    - [Web API](https://ifpb.github.io/php-guide/web/web-api/)
-    - [Dynamic pages](https://ifpb.github.io/php-guide/web/dynamic-pages/)
-    - [Session](https://ifpb.github.io/php-guide/web/session/)
+- [Web API](https://ifpb.github.io/javascript-guide/ecma/json/syntax.html#web-api)
+- [Javascript W3C](https://ifpb.github.io/javascript-guide/w3c/)
+  - [Fetch API](https://ifpb.github.io/javascript-guide/w3c/fetch-api/) ([AJAX](https://ifpb.github.io/javascript-guide/w3c/xmlhttprequest/#asynchronous-javaScript-and-xml-ajax))
 
 **Reflexão:**
 
-- Como construir uma página dinâmica no Front-end e no Back-end?
-- Como o PHP consegue tratar requisições HTTP GET e POST?
-- Como obter dados no PHP?
-- O que munda no processamento de PHP quando a renderização de conteúdo é feito no lado Cliente e Servidor?
-- Para que serve as sessões no PHP?
-- Como criar um autenticação via sessão no PHP?
+- Por que as Web API geralmente respondem JSONs?
+- O que o Fetch API permite fazer?
+- Como exibimos apenas a cidade do IP `8.8.8.8` usando a API do [ipinfo.io](https://ipinfo.io/developers)? Use essa rota `https://ipinfo.io/8.8.8.8/json` e o [Fetch API](https://ifpb.github.io/javascript-guide/w3c/fetch-api/).
 
 **Exercício:**
 
-- Crie o esquema da API do seu projeto baseado nos templates existentes em [Web API](https://ifpb.github.io/php-guide/web/web-api/).
-- [EZ Server Monitor](https://ifpb.github.io/php-exercises/challenges/ez-server-monitor/)
+- [Gentelella App Versions](https://ifpb.github.io/javascript-exercises/w3c/gentelella-app-versions/)
+- [Gentelella Top Tiles](https://ifpb.github.io/javascript-exercises/w3c/gentelella-top-tiles)
+- [IP Info 1](https://ifpb.github.io/javascript-exercises/w3c/ipinfo-table-api/)
 
-## \# 27 - PHP Web (04/12/2019 QUA)
+## \# 21 - Consumindo JSON e Geração Dinâmica com JS
 
 ---
 
 **Conteúdo:**
 
-- [PHP Guide](https://ifpb.github.io/php-guide/)
-  - [PHP Web](https://ifpb.github.io/php-guide/web/)
-    - [Web App](https://ifpb.github.io/php-guide/web/web-app/)
-      - [PS App](https://ifpb.github.io/php-guide/web/web-app/ps/)
-      - [Host Monitor Simple](https://ifpb.github.io/php-guide/web/web-app/monitor-host-simple/)
+- [Web API](https://ifpb.github.io/javascript-guide/ecma/json/syntax.html#web-api)
+- [Javascript W3C](https://ifpb.github.io/javascript-guide/w3c/)
+  - [Element](https://ifpb.github.io/javascript-guide/w3c/dom/element.html): `remove()`
+  - [Node](https://ifpb.github.io/javascript-guide/w3c/dom/node.html): `parentNode`
 
 **Reflexão:**
 
-- Como consumir APIs para gerar interfaces Web dinâmicas?
+- Como removemos um elemento no HTML via Javascript?
 
 **Exercício:**
 
-- [Host Monitor](https://ifpb.github.io/php-exercises/challenges/host-monitor/)
+- [IP Info 2](https://ifpb.github.io/javascript-exercises/w3c/ipinfo-api/)
+- [Tabela de IPs (CRUD)](https://ifpb.github.io/javascript-exercises/w3c/iptable-crud/)
 
-## \# 28 - Avaliação de PHP (06/12/2019 SEX)
-
----
-
-> Avaliação de [PHP](../exams/prova-php.md).
-
-## \# 29 - Acompanhamento do Projeto (06/12/2019 SEX)
-
----
-
-> [Projeto Final](../exams/projeto.md)
-
-## \# 30 - MySQL (11/12/2019 QUA)
+## \# 22 - Pacotes JS
 
 ---
 
 **Conteúdo:**
 
-- [MySQL Guide](https://ifpb.github.io/mysql-guide/)
-  - [Admin](https://ifpb.github.io/mysql-guide/admin/)
-  - [SQL](https://ifpb.github.io/mysql-guide/sql/)
+- [Javascript Ecma](https://ifpb.github.io/javascript-guide/ecma/)
+- [Javascript W3C](https://ifpb.github.io/javascript-guide/w3c/)
+- [Javascript Packages](https://ifpb.github.io/javascript-guide/packages/)
 
 **Reflexão:**
 
-- O que é e para que serve um banco de dados?
-- Qual é a arquitetura básica de um serviço de banco em MySQL?
-- Qual é a finalidade da linguagem SQL?
-- Como criamos um banco, tabela e dados no MySQL?
-- Como fazer CRUD em uma Tabela?
-- O que é integridade de entidade e referencial?
-- Quais são as [restrições](https://www.w3schools.com/sql/sql_constraints.asp) em um banco de dados relacional?
+- Como montamos gráficos usando Javascript?
 
 **Exercício:**
 
-- Crie um banco de dados para seu projeto.
+- [Javascript Packages](https://ifpb.github.io/javascript-exercises/packages/)
+  - [Ample Admin Charts](https://ifpb.github.io/javascript-exercises/packages/charts/ample-admin-charts/)
+- [Javascript Challenges](https://ifpb.github.io/javascript-exercises/challenges/)
+  - [Dashborad Monitor](https://ifpb.github.io/javascript-exercises/challenges/w3c/dashboard-monitor/)
+  - [eZ Server Monitor](https://ifpb.github.io/javascript-exercises/challenges/w3c/ez-server-monitor/)
+  - [Host Monitor](https://ifpb.github.io/javascript-exercises/challenges/w3c/host-monitor/)
+  - [Pingdom Monitor](https://ifpb.github.io/javascript-exercises/challenges/w3c/pingdom-monitor/)
 
-## \# 31 - MySQL (13/12/2019 SEX)
+## \# 23 - Simulado de JS
 
 ---
 
 **Conteúdo:**
 
-- [MySQL Guide](https://ifpb.github.io/mysql-guide/)
-  - [Admin](https://ifpb.github.io/mysql-guide/admin/)
-  - [SQL](https://ifpb.github.io/mysql-guide/sql/)
+- [Javascript Ecma](https://ifpb.github.io/javascript-guide/ecma/)
+- [Javascript W3C](https://ifpb.github.io/javascript-guide/w3c/)
+- [Javascript Packages](https://ifpb.github.io/javascript-guide/packages/)
 
 **Reflexão:**
 
-- O que é e para que serve um banco de dados?
-- Qual é a arquitetura básica de um serviço de banco em MySQL?
-- Qual é a finalidade da linguagem SQL?
-- Como criamos um banco, tabela e dados no MySQL?
-- Como fazer CRUD em uma Tabela?
-- O que é integridade de entidade e referencial?
-- Quais são as [restrições](https://www.w3schools.com/sql/sql_constraints.asp) em um banco de dados relacional?
+- O que conseguimos fazer com JS em uma aplicação Web?
 
 **Exercício:**
 
-- Crie um banco de dados para seu projeto.
+- [Javascript Challenges](https://ifpb.github.io/javascript-exercises/challenges/)
 
-## \# 32 - Acompanhamento do Projeto (13/12/2019 SEX)
+  - [Dashborad Monitor](https://ifpb.github.io/javascript-exercises/challenges/w3c/dashboard-monitor/)
+  - [eZ Server Monitor](https://ifpb.github.io/javascript-exercises/challenges/w3c/ez-server-monitor/)
+  - [Host Monitor](https://ifpb.github.io/javascript-exercises/challenges/w3c/host-monitor/)
+  - [Pingdom Monitor](https://ifpb.github.io/javascript-exercises/challenges/w3c/pingdom-monitor/)
 
----
-
-> [Projeto Final](../exams/projeto.md)
-
-## \# 33 - PHP PDO (14/12/2019 SAB)
-
----
-
-**Conteúdo:**
-
-- [PHP Guide](https://ifpb.github.io/php-guide/)
-  - [PHP Stdlib](https://ifpb.github.io/php-guide/stdlib/)
-    - [PDO - PHP Data Objects](https://ifpb.github.io/php-guide/stdlib/pdo/)
-      - [CRUD](https://ifpb.github.io/php-guide/stdlib/pdo/#pdo-crud)
-      - [Model](https://ifpb.github.io/php-guide/stdlib/pdo/#pdo-model)
-        - [Host Simple Model](https://ifpb.github.io/php-guide/stdlib/pdo/codes/host-simple/)
-        - [Host Address Model (1:1)](https://ifpb.github.io/php-guide/stdlib/pdo/codes/host-address/)
-        - [Host Interfaces Model (1:n)](https://ifpb.github.io/php-guide/stdlib/pdo/codes/host-interface/)
-        - [Host DNS Server Model (n:m)](https://ifpb.github.io/php-guide/stdlib/pdo/codes/host-dns/)
-        - [Ping Model](https://ifpb.github.io/php-guide/stdlib/pdo/codes/ping/)
-
-**Reflexão:**
-
-- Como o PHP consegue manipular um banco de dados MySQL?
-- Como usar o PDO para realizar um CRUD em uma Tabela?
-
-**Exercício:**
-
-- Faça com que algum serviço da API do seu projeto seja persistido em banco.
-
-## \# 34 - PHP PDO (14/12/2019 SAB)
+## \# 24 - Apresentação do Front-end do Projeto
 
 ---
 
-**Conteúdo:**
+**Projeto:**
 
-- [PHP Guide](https://ifpb.github.io/php-guide/)
-  - [PHP Stdlib](https://ifpb.github.io/php-guide/stdlib/)
-    - [PDO - PHP Data Objects](https://ifpb.github.io/php-guide/stdlib/pdo/)
-      - [CRUD](https://ifpb.github.io/php-guide/stdlib/pdo/#pdo-crud)
-      - [Model](https://ifpb.github.io/php-guide/stdlib/pdo/#pdo-model)
-        - [Host Simple Model](https://ifpb.github.io/php-guide/stdlib/pdo/codes/host-simple/)
-        - [Host Address Model (1:1)](https://ifpb.github.io/php-guide/stdlib/pdo/codes/host-address/)
-        - [Host Interfaces Model (1:n)](https://ifpb.github.io/php-guide/stdlib/pdo/codes/host-interface/)
-        - [Host DNS Server Model (n:m)](https://ifpb.github.io/php-guide/stdlib/pdo/codes/host-dns/)
-        - [Ping Model](https://ifpb.github.io/php-guide/stdlib/pdo/codes/ping/)
+- Apresentação do Front-end dos [Projetos](../exams/projeto.md).
 
-**Reflexão:**
-
-- Como o PHP consegue manipular um banco de dados MySQL?
-- Como usar o PDO para realizar um CRUD em uma Tabela?
-
-**Exercício:**
-
-- Faça com que algum serviço da API do seu projeto seja persistido em banco.
-
-## \# 35 - Aplicação Web com MySQL (18/12/2019 QUA)
+## \# 25 - Avaliação de Javascript
 
 ---
 
-**Conteúdo:**
+**Avaliação:**
 
-- Host Simple (DB)
-  - [Model](https://ifpb.github.io/php-guide/stdlib/pdo/codes/host-simple/)
-  - [API](https://ifpb.github.io/php-guide/web/web-api/codes/db/host/)
-  - [App](https://ifpb.github.io/php-guide/web/web-app/host-simple-db/)
+- Todos os detalhes da avaliação estão disponíveis nesta [página](../exams/prova-js.md)
 
-**Reflexão:**
+<!--
 
-- Como criar um modelo, API e interface Web de uma fonte de dados?
-
-**Exercício:**
-
-- Faça com que alguma interface Web do seu projeto que persiste dados em banco.
-
-## \# 36 - Aplicação Web com MySQL (20/12/2019 SEX)
+## \# 26 -
 
 ---
 
-**Conteúdo:**
-
-- Host Simple (DB)
-  - [Model](https://ifpb.github.io/php-guide/stdlib/pdo/codes/host-simple/)
-  - [API](https://ifpb.github.io/php-guide/web/web-api/codes/db/host/)
-  - [App](https://ifpb.github.io/php-guide/web/web-app/host-simple-db/)
-
-**Reflexão:**
-
-- Como criar um modelo, API e interface Web de uma fonte de dados?
-
-**Exercício:**
-
-- Faça com que alguma interface Web do seu projeto que persiste dados em banco.
-
-## \# 37 - Acompanhamento do Projeto (20/12/2019 SEX)
+## \# 27 -
 
 ---
 
-> [Projeto Final](../exams/projeto.md)
-
-## \# 38 - Acompanhamento do Projeto (22/01/2020 QUA)
+## \# 28 -
 
 ---
 
-> [Projeto Final](../exams/projeto.md)
-
-## \# 39 - Acompanhamento do Projeto (24/01/2020 SEX)
+## \# 29 -
 
 ---
 
-> [Projeto Final](../exams/projeto.md)
-
-## \# 40 - Projeto Final (Back-end) (24/01/2020 SEX)
+## \# 30 -
 
 ---
 
-> Entrega do [Projeto Final](../exams/projeto.md).
+## \# 31 -
+
+---
+
+## \# 32 -
+
+---
+
+## \# 33 -
+
+---
+
+## \# 34 -
+
+---
+
+## \# 35 -
+
+---
+
+## \# 36 -
+
+---
+
+## \# 37 -
+
+---
+
+
+## \# 38 - Acompanhamento do Projeto
+
+---
+
+**Projeto**
+
+- [Projeto Final](../exams/projeto.md)
+
+## \# 39 - Acompanhamento do Projeto
+
+---
+
+**Projeto**
+
+- [Projeto Final](../exams/projeto.md)
+
+## \# 40 - Projeto Final (Back-end)
+
+---
+
+**Projeto**
+
+- Entrega do [Projeto Final](../exams/projeto.md).
+
+-->
 
 ### E agora?
 
@@ -683,3 +626,7 @@ Submentendo o projeto de Front-end
 - MySQL
   - [MySQL - SQL Statement Syntax](https://dev.mysql.com/doc/refman/5.7/en/sql-syntax.html)
   - Curated list of awesome: [DB](https://github.com/numetriclabz/awesome-db), [MySQL](http://shlomi-noach.github.io/awesome-mysql/)
+
+<script src="js/dates.js"></script>
+<script src="js/load-summary.js"></script>
+<script src="js/load-target-blank.js"></script>
