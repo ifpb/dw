@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  node :
+    build: .
+    image: ifpb/node:slim-cron
+    container_name: node
+    volumes:
+      - .:/usr/app/
