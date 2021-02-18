@@ -1,272 +1,172 @@
-# Client Side Rendering
+# Manipulação de Sessão
 
-  - [Conteúdo Dinâmico](#conteúdo-dinâmico)
-    - [Front](#front)
-    - [Back](#back)
-  - [Fetch API](#fetch-api)
-    - [CRUD de Hosts](#crud-de-hosts)
-    - [Read](#read)
-    - [Create](#create)
-    - [Update](#update)
-    - [Delete](#delete)
+- [Manipulação de Sessão](#manipulação-de-sessão)
+  - [Cookie](#cookie)
+    - [Front-end (window.document.cookie)](#front-end-windowdocumentcookie)
+    - [Back-end (express, cookie-parser)](#back-end-express-cookie-parser)
+    - [Exemplo (Contador)](#exemplo-contador)
+  - [Session](#session)
+    - [Back-end (express-session)](#back-end-express-session)
+    - [Exemplo (Contador)](#exemplo-contador-1)
+  - [Autenticação](#autenticação)
+  - [Referências](#referências)
 
-## Conteúdo Dinâmico
-
----
-
-![](assets/preview.png)
-
-```
-hosts-app
-├── back
-│   ├── .gitignore
-│   ├── db.json
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── resquest.http
-│   └── src
-│       └── index.js
-└── front
-    ├── index.html
-    └── js
-        ├── index.js
-        └── services
-            └── api.js
-```
-
-### Front
-
-[![Edit host-app-front](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/host-app-front-uvrug?fontsize=14&hidenavigation=1&theme=dark)
-
-hosts-app/front/index.html:
-
-```html
-{% include_relative codes/hosts-app/front/index.html %}
-```
-
-hosts-app/front/js/index.js:
-
-```js
-{% include_relative codes/hosts-app/front/js/index.js %}
-```
-
-### Back
-
-[![Edit host-app-back](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/host-app-back-moeem?fontsize=14&hidenavigation=1&theme=dark)
-
-hosts-app/back/db.json:
-
-```js
-{% include_relative codes/hosts-app/back/db.json %}
-```
-
-hosts-app/back/src/index.js:
-
-```js
-{% include_relative codes/hosts-app/back/src/index.js %}
-```
-
-[json-server](https://github.com/typicode/json-server):
-
-```
-$ npm init -y
-$ npm install json-server
-```
-
-hosts-app/back/package.json:
-
-```json
-{% include_relative codes/hosts-app/back/package.json %}
-```
-
-```
-$ npm start
-```
-
-[http://localhost:3000/hosts](http://localhost:3000/hosts):
-
-```json
-[
-  {
-    "name": "Server",
-    "address": "10.0.0.10",
-    "mask": "255.255.255.0",
-    "id": 1
-  },
-  {
-    "name": "PC 1",
-    "address": "192.168.0.1",
-    "mask": "255.255.255.0",
-    "id": 2
-  }
-]
-```
-
-back/request.http ([VS Code - Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)):
-
-```
-### Create Host
-
-### Read Hosts
-
-GET http://localhost:3000/hosts
-
-### Read Host by ID
-
-### Update Host
-
-### Delete Host
-```
-
-| Método | Caminho              | Resposta                                     |
-| ------ | -------------------- | -------------------------------------------- |
-| POST   | `/hosts`             | Cria uma novo host                           |
-| GET    | `/hosts`             | Retorna todas os hosts                       |
-| GET    | `/hosts/1`           | Retorna o host de ID 1                       |
-| PUT    | `/hosts/1`           | Atualiza o host de ID 1                      |
-| DELETE | `/hosts/1`           | Exclui o host de ID 1                        |
-
-## Fetch API
+## Cookie
 
 ---
 
-front/js/services/api.js:
-```js
-const domain = 'http://localhost:3000';
+![](assets/cookie-data.png)
 
-async function create(resource, data) {}
+Propósito:
+- Gerenciamento de sessão
+- Personalização
+- Rastreamento
 
-async function read(resource) {}
+> Alternativas: Web Storage API e IndexedDB
 
-async function update(resource, data) {}
+### Front-end (window.document.cookie)
 
-async function destroy(resource) {}
+| Ações  | Código                                                                 |
+| ------ | ---------------------------------------------------------------------- |
+| Create | `document.cookie = 'counter = 1'`                                      |
+| Read   | `document.cookie`                                                      |
+| Update | `document.cookie = 'counter = 2'`                                      |
+| Delete | `document.cookie = 'counter =; Expires=Thu, 01 Jan 1970 00:00:00 GMT'` |
 
-export default { create, read, update, destroy };
-```
+[RFC 6265 - HTTP State Management Mechanism](https://tools.ietf.org/html/rfc6265):
 
-### Read
+| Propriedade | Tipo              |
+| ----------- | ----------------- |
+| domain      | String            |
+| expires     | Date              |
+| httpOnly    | Boolean           |
+| maxAge      | Number            |
+| path        | String            |
+| secure      | Boolean           |
 
-![](assets/read-hosts.png)
+[Chrome DevTools (View, Edit, And Delete Cookies With Chrome DevTools)](https://developers.google.com/web/tools/chrome-devtools/storage/cookies)
 
-```
-### Read Hosts
+### Back-end (express, cookie-parser)
 
-GET http://localhost:3000/hosts
-```
+| Ações  | Código                                       | Referência                                                                               |
+| ------ | -------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Create | `res.cookie('counter', 1, {maxAge: 360000})` | [res.cookie(name, value [, options])](http://expressjs.com/en/5x/api.html#res.cookie)    |
+| Read   | `req.cookies.counter`                        | [cookie-parser](https://github.com/expressjs/cookie-parser)                              |
+| Update | `res.cookie('counter', 2)`                   | [res.cookie(name, value [, options])](http://expressjs.com/en/5x/api.html#res.cookie)    |
+| Delete | `res.clearCookie('counter')`                 | [res.clearCookie(name [, options])](http://expressjs.com/en/5x/api.html#res.clearCookie) |
 
-```js
-async function read(resource) {
-  const res = await fetch(`${domain}${resource}`);
+RFC 6265 - HTTP Request (Cookie), HTTP Response (Set-Cookie):
 
-  return await res.json();
-}
-```
+![](assets/cookie-flow.png)
 
-```js
-api.read('/hosts');
-```
+### Exemplo (Contador)
 
-### Create
-
-![](assets/create-host.png)
-
-```
-### Create Host
-
-POST http://localhost:3000/hosts
-Content-Type: application/json
-
-{
-  "name": "PC 2",
-  "address": "192.168.0.2",
-  "mask": "255.255.255.0"
-}
-```
+src/index.js:
 
 ```js
-async function create(resource, data) {
-  const res = await fetch(`${domain}${resource}`, {
-    method: 'post',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-  });
-
-  return await res.json();
-}
+{% include_relative codes/cookie-counter/src/index.js %}
 ```
+
+[![Edit cookie-counter](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/heuristic-morning-0rksr?fontsize=14&hidenavigation=1&theme=dark)
+
+![](assets/cookie-counter.png)
+
+## Session
+
+---
+
+![](assets/session-data.png)
+
+[Session Storage (express-session)](https://github.com/expressjs/session#compatible-session-stores):
+
+- MemoryStore (default)
+- [connect-redis](https://github.com/tj/connect-redis#readme)
+- [connect-mongo](https://github.com/jdesboeufs/connect-mongo#readme)
+- [connect-sqlite3](https://github.com/rawberg/connect-sqlite3#readme)
+
+### Back-end (express-session)
+
+[req.session (express-session)](https://github.com/expressjs/session#readme):
+
+| Ações  | Código                       |
+| ------ | ---------------------------- |
+| Create | `req.session.counter = 1`    |
+| Read   | `req.session.counter`        |
+| Update | `req.session.counter = 2`    |
+| Delete | `delete req.session.counter` |
+
+### Exemplo (Contador)
+
+src/index.js:
 
 ```js
-const host = {
-  name: "PC 2",
-  address: "192.168.0.2",
-  mask: "255.255.255.0"
-}
-
-api.create('/hosts', host);
+{% include_relative codes/session-counter/src/index.js %}
 ```
 
-### Update
+[![Edit session-counter](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/festive-heyrovsky-ymk52?fontsize=14&hidenavigation=1&theme=dark)
 
-![](assets/update-host.png)
+![](assets/session-counter.png)
+
+## Autenticação
+
+---
+
+[Fluxo](assets/auth-request.png):
+
+![](assets/auth-flow.png)
 
 ```
-### Update Host
-
-PUT http://localhost:3000/hosts/3
-Content-Type: application/json
-
-{
-  "name": "PC 2",
-  "address": "192.168.0.20",
-  "mask": "255.255.255.0"
-}
+auth
+├── package-lock.json
+├── package.json
+└── src
+    ├── controllers
+    │   └── SessionController.js
+    ├── index.js
+    ├── middleware
+    │   └── auth.js
+    ├── routes
+    │   └── index.js
+    └── views
+        ├── home.njk
+        └── signin.njk
 ```
+
+src/index.js:
 
 ```js
-async function update(resource, data) {
-  const res = await fetch(`${domain}${resource}`, {
-    method: 'put',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-  });
-
-  return await res.json();
-}
+{% include_relative codes/auth/src/index.js %}
 ```
+
+src/routes/index.js:
 
 ```js
-const host = {
-  name: "PC 2",
-  address: "192.168.0.20",
-  mask: "255.255.255.0"
-}
-
-api.update('/hosts/3', host);
+{% include_relative codes/auth/src/routes/index.js %}
 ```
 
-### Delete
-
-![](assets/delete-host.png)
-
-```
-### Delete Host
-
-DELETE http://localhost:3000/hosts/3
-```
+src/middleware/auth.js:
 
 ```js
-async function destroy(resource) {
-  await fetch(`${domain}${resource}`, {
-    method: 'delete',
-  });
-}
+{% include_relative codes/auth/src/middleware/auth.js %}
 ```
 
+src/controllers/SessionController.js:
+
 ```js
-api.destroy('/hosts/1');
+{% include_relative codes/auth/src/controllers/SessionController.js %}
 ```
+
+[![Edit session-auth](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/nice-poincare-jn9fm?fontsize=14&hidenavigation=1&theme=dark)
+
+## Referências
+
+---
+
+- [Using HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies)
+- [Use cookies securely](https://expressjs.com/en/advanced/best-practice-security.html#use-cookies-securely)
+- Pacotes:
+  - [cookie-parser](https://github.com/expressjs/cookie-parser#readme)
+  - [express-session](https://github.com/expressjs/session#readme)
+  - [cookie-session](http://expressjs.com/en/resources/middleware/cookie-session.html)
+  - [connect-sqlite3](https://github.com/rawberg/connect-sqlite3#readme)
+  - [bcrypt](https://github.com/kelektiv/node.bcrypt.js#readme)

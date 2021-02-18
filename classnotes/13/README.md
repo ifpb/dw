@@ -1,194 +1,196 @@
-# Estruturas e Funções
+# Template Engine
 
-  - [Estruturas de Decisão](#estruturas-de-decisão)
-    - [if](#if)
-    - [switch](#switch)
-  - [Estrutura de Repetição](#estrutura-de-repetição)
-    - [while](#while)
-    - [do...while](#dowhile)
-    - [for](#for)
-  - [Funções](#funções)
-    - [Declaração de função](#declaração-de-função)
-    - [Case Sensitive](#case-sensitive)
-    - [Redefinição de Função](#redefinição-de-função)
-    - [Parâmetro Default](#parâmetro-default)
-    - [Parâmetro Rest](#parâmetro-rest)
+  - [Conteúdo Estático e Dinâmico](#conteúdo-estático-e-dinâmico)
+  - [Local da Renderização](#local-da-renderização)
+  - [Arquitetura do MVC](#arquitetura-do-mvc)
+  - [Aplicação com MVC](#aplicação-com-mvc)
+    - [Estrutura de Código](#estrutura-de-código)
+    - [Loader](#loader)
+    - [Seed](#seed)
+    - [Model](#model)
+    - [Router](#router)
+    - [Controller](#controller)
+    - [View](#view)
 
-## Estruturas de Decisão
+## Conteúdo Estático e Dinâmico
 
 ---
 
-```js
-const number1 = 10;
-const number2 = 10;
-const operator = '+'; // (+, -)
+![](assets/client-server.png)
 
-// decision
-
-console.log(result); //=> 20
-```
-
-### if
-
-```js
-if (operator === '+') {
-    result = number1 + number2;
-} else if (operator === '-') {
-    result = number1 - number2;
-} else {
-    result = 'Invalid operator';
-}
-```
-
-### switch
-
-```js
-switch (operator) {
-  case '+':
-    result = number1 + number2;
-    break;
-  case '-':
-    result = number1 - number2;
-    break;
-  default:
-    result = 'Invalid operator';
-}
-```
-
-## Estrutura de Repetição
+## Local da Renderização
 
 ---
 
-```
-1
-2
-...
-9
-10
-```
+| Client Side Rendering (CSR) | Server Side Rendering (SSR) |
+| --------------------------- | --------------------------- |
+| ![](assets/csr.png)         | ![](assets/ssr.png)         |
 
-### while
-
-```js
-let flag = 1;
-
-while (flag <= 10) {
-  console.log(flag);
-  flag += 1;
-}
-```
-
-### do...while
-```js
-let flag = 1;
-
-do {
-  console.log(flag);
-  flag += 1;
-} while (flag < 10)
-```
-
-### for
-```js
-for (let flag = 1; flag <= 10; flag += 1) {
-  console.log(flag);
-}
-```
-
-## Funções
+## Arquitetura do MVC
 
 ---
 
-### Declaração de função
+- Model View Controller (MVC)
 
-```js
-function addition(param1, param2) {
-  return param1 + param2;
-}
+![](assets/mvc.png)
 
-console.log(addition(1)); //=> NaN
-console.log(addition(1, 2)); //=> 3
-console.log(addition(1, 2, 3)); //=> 3
+## Aplicação com MVC
+
+---
+
+### Estrutura de Código
+
+```
+foods-app
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── public
+│   ├── css
+│   │   └── bootstrap.min.css
+│   ├── foods.html
+│   ├── imgs
+│   │   ├── hamburguer.jpg
+│   │   ├── salada.jpg
+│   │   └── sanduiche.jpg
+│   └── js
+│       ├── bootstrap.min.js
+│       ├── jquery.min.js
+│       └── popper.min.js
+└── src
+    ├── controllers
+    │   └── foodsController.js
+    ├── index.js
+    ├── models
+    │   └── Food.js
+    ├── routes
+    │   └── index.js
+    ├── seeders
+    │   └── index.js
+    └── views
+        ├── foods
+        │   └── index.njk
+        └── layout.njk
 ```
 
-```js
-const addition = function(param1, param2) {
-  return param1 + param2;
-}
+[![Edit express-foods-app-simple](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/express-foods-app-simple-c7jpe?fontsize=14&hidenavigation=1&theme=dark)
 
-console.log(addition(1, 2)); //=> 3
-```
+### Loader
+
+src/index.js:
 
 ```js
-const addition = (param1, param2) => {
-  return param1 + param2;
-}
-
-console.log(addition(1, 2)); //=> 3
+{% include_relative codes/foods-app-simple/src/index.js %}
 ```
+
+```bash
+$ npm install express nunjucks
+```
+
+### Seed
+
+src/seeders/index.js:
 
 ```js
-const addition = (param1, param2) => param1 + param2;
-
-console.log(addition(1, 2)); //=> 3
+{% include_relative codes/foods-app-simple/src/seeders/index.js %}
 ```
 
-### Case Sensitive
+### Model
 
+src/models/Food.js:
 
 ```js
-function addition(param1, param2) {
-  return param1 + param2;
-}
-
-function Addition(param) {
-  return param + 1;
-}
-
-console.log(Addition(1)); //=> 2
-console.log(Addition(1, 2)); //=> 2
+{% include_relative codes/foods-app-simple/src/models/Food.js %}
 ```
 
-### Redefinição de Função
+### Router
 
+src/routes/index.js:
 
 ```js
-function addition(param1, param2) {
-  return param1 + param2;
-}
-
-function addition(param) {
-  return param + 1;
-}
-
-console.log(addition(1)); //=> 2
-console.log(addition(1, 2)); //=> 2
+{% include_relative codes/foods-app-simple/src/routes/index.js %}
 ```
 
-### Parâmetro Default
+### Controller
 
+src/controllers/foodsController.js:
 
 ```js
-function addition(param1, param2 = 0) {
-  return param1 + param2;
-}
-
-console.log(addition(1)); //=> 1
-console.log(addition(1, 2)); //=> 3
+{% include_relative codes/foods-app-simple/src/controllers/foodsController.js %}
 ```
 
-### Parâmetro Rest
+### View
 
-```js
-function addition(...params) {
-  let summation = 0;
-  for (let value of params) {
-    summation += value;
-  }
-  return summation;
-}
+![](assets/template-engine.png)
 
-console.log(addition(1)); //=> 1 ([1])
-console.log(addition(1, 1)); //=> 2 ([1, 1])
-console.log(addition(1, 1, 1, 1)); //=> 4 ([1, 1, 1, 1])
+![](assets/nunjucks.png)
+
+src/views/foods/index.njk ([VScode Nunjucks](https://marketplace.visualstudio.com/items?itemName=ronnidc.nunjucks)):
+
+```html
+{% raw %}
+{% extends "layout.njk" %}
+
+{% set title = "Menu" %}
+
+{% block content %}
+<h1 class="my-5 text-center">{{ title }}</h1>
+
+<section class="card-deck">
+  {% for food in foods %}
+  <div class="card">
+    <div class="card-header text-center font-weight-bold">
+      {{ food.name }}
+    </div>
+    <div class="card-body p-0">
+      <img src="{{ food.image }}" alt="{{ food.name }}" class="w-100" />
+    </div>
+    <div class="card-footer text-right">
+      {{ food.price }}
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% endblock %}
+
+{% block script %}
+<script>
+  const prices = document.querySelectorAll('.card-footer');
+  prices.forEach((price) => {
+    price.innerHTML = Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(price.innerHTML);
+  });
+</script>
+{% endblock %} {% endraw %}
 ```
+
+src/views/layout.njk:
+
+```html
+{% raw %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <title>{{ title }}</title>
+</head>
+<body>
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  <div>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  {% block script %}
+  {% endblock %}
+</body>
+</html>
+{% endraw %}
+```
+
+<img src="assets/preview.png" alt="Preview" width="100%">
