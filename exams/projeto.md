@@ -40,7 +40,7 @@ Então para a escolha do tema sugiro que sejam formadas equipes com no máximo t
 - Roteamento
 - Microcontrolador
 
-Depois de escolhido o tema, todos os projetos devem declarar suas propostas [neste padlet](https://padlet.com/lucachaves/projetodw20201) seguindo esse formato de card:
+Depois de escolhido o tema, todos os projetos devem declarar suas propostas [neste padlet](https://padlet.com/lucachaves/projetodw20202) seguindo esse formato de card:
 
 ```
 Título/Tema do Projeto
