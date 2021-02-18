@@ -1,240 +1,342 @@
-# Introdução ao JavaScript ECMA
+# REST API
 
-  - [Introdução](#introdução)
-  - [Execução de Código](#execução-de-código)
-    - [Instalação](#instalação)
-    - [Execução](#execução)
-  - [Tipos de dados](#tipos-de-dados)
-  - [Declaração de variáveis](#declaração-de-variáveis)
-    - [Reassociação](#reassociação)
-    - [Escopo](#escopo)
-    - [Tipagem Dinâmica](#tipagem-dinâmica)
-    - [Tipagem Fraca](#tipagem-fraca)
-    - [Case Sensitive](#case-sensitive)
-  - [Expressões e operadores](#expressões-e-operadores)
-    - [Expression](#expression)
-    - [Operators List](#operators-list)
+  - [Back-end Web](#back-end-web)
+    - [Rotas do Foods API](#rotas-do-foods-api)
+    - [HTTP Status Codes](#http-status-codes)
+    - [Estrutura do Código](#estrutura-do-código)
+    - [Create](#create)
+    - [Read](#read)
+    - [Update](#update)
+    - [Delete](#delete)
+  - [Front-end Web](#front-end-web)
+    - [Estrutura do Código](#estrutura-do-código-1)
+    - [Create](#create-1)
+    - [Read](#read-1)
+    - [Update](#update-1)
+    - [Delete](#delete-1)
 
-## Introdução
-
----
-
-- Criada por Brendan Eich em 1995 (Netscape)
-- Ecossistema popular ([Stackoverflow](https://insights.stackoverflow.com/survey/2020#technology-programming-scripting-and-markup-languages))
-  - [ECMAScript 262 11ᵗʰ, 2020](https://www.ecma-international.org/ecma-262/) ([tc39](https://github.com/tc39/ecma262)): expressions, statements, declarations, functions
-  - [W3C TR](https://www.w3.org/TR/): [Web API](https://developer.mozilla.org/en-US/docs/Web/API), [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
-  - [NPM](https://www.npmjs.com/): React, Angular, Express
-- Características
-  - Linguagem de alto nível
-  - Linguagem interpretada
-  - Linguagem de script
-  - Tipagem dinâmica e fraca
-  - Automatic semicolon insertion (ASI)
-  - Multi-paradigma: orientado a eventos, orientado a objeto, protótipos, imperativo, funcional
-
-## Execução de Código
+## Back-end Web
 
 ---
 
-### Instalação
+### Rotas do Foods API
 
-- Navegador
-- Node.js
-  - [Download Binary](https://nodejs.org/en/download/)
-  - [Installing Node.js via package manager](https://nodejs.org/en/download/package-manager/)
-    - [Debian (snap)](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions-enterprise-linux-fedora-and-snap-packages)
-    - [Windows (chocolatey)](https://nodejs.org/en/download/package-manager/#windows)
-    - [nvm](https://nodejs.org/en/download/package-manager/#nvm)
+| Método | Caminho              | Parâmetro   | Status       | Resposta                                     |
+| ------ | -------------------- | ----------- | ------------ | -------------------------------------------- |
+| POST   | `/foods`             | Body        | `201`        | Cria uma nova comida                         |
+| GET    | `/foods`             | -           | `200`        | Retorna todas as comidas                     |
+| GET    | `/foods?name=Salada` | Query       | `200`        | Retorna todas as comidas com o nome `Salada` |
+| GET    | `/foods/1`           | Route       | `200`, `400` | Retorna a comida de ID 1                     |
+| PUT    | `/foods/1`           | Body, Route | `200`, `400` | Atualiza a comida de ID 1                    |
+| DELETE | `/foods/1`           | Route       | `204`, `400` | Exclui a comida de ID 1                      |
 
-Testar a instalação:
+### HTTP Status Codes
+
+- [Classes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+  - Respostas de informação (100-199)
+  - Respostas de sucesso (200-299)
+  - Redirecionamentos (300-399)
+  - Erros do cliente (400-499)
+  - Erros do servidor (500-599)
+- Códigos do Foods API
+
+| Código | Nome                  | Significado                                                                |
+| ------ | --------------------- | -------------------------------------------------------------------------- |
+| `200`  | Ok                    | Solicitação gerada com sucesso                                             |
+| `201`  | Created               | Solicitação gerada com sucesso e um novo recurso foi criado como resultado |
+| `204`  | No Content            | Solicitação gerada com sucesso e não há conteúdo para ser enviado          |
+| `400`  | Bad Request           | Solicitação não compreendida por motivos de erro                           |
+| `404`  | Not Found             | O servidor não pode encontrar o recurso solicitado                         |
+| `500`  | Internal Server Error | O servidor encontrou uma situação com a qual não sabe lidar.               |
+
+### Estrutura do Código
 
 ```
-$ node -v
-$ npm -v
-$ npx -v
+foods-api
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── requests.http
+└── src
+    └── index.js
 ```
 
-### Execução
+[![Edit foods-api](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/foods-api-zedcj?fontsize=14&hidenavigation=1&theme=dark)
 
-- Terminal (`node file.js`)
-- Ambiente de Desenvolvimento
-  - Desktop: VSCode
-  - Online: [codesandbox](https://codesandbox.io/)
-- Navegador
+src/index.js:
 
-## [Tipos de dados](https://ifpb.github.io/javascript-guide/ecma/values-and-types/)
+```js
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+
+app.use(cors()); // Access-Control-Allow-Origin: *
+app.use(express.json());
+
+let key = 1;
+const foods = [];
+```
+
+### Create
+
+![](assets/create-food.png)
+
+src/index.js:
+
+```js
+app.post('/foods', (req, res) => {
+  const { name, price } = req.body;
+
+  const id = key++;
+
+  const food = { id, name, price };
+
+  foods.push(food);
+
+  res.status(201).json(food);
+});
+```
+
+requests.http:
+
+```
+### Create Food (Salada)
+
+POST http://localhost:3000/foods
+Content-Type: application/json
+
+{
+  "name": "Salada 1",
+  "price": 15.5
+}
+```
+
+CodeSandBox: [Create (REQBIN)](https://reqbin.com/kxrzigfx)
+
+### Read
+
+![](assets/read-foods.png)
+
+src/index.js:
+
+```js
+app.get('/foods', (req, res) => {
+  const { name } = req.query;
+
+  if (name) {
+    const filteredFoods = foods.filter((food) => food.name.includes(name));
+
+    return res.json(filteredFoods);
+  }
+
+  res.json(foods);
+});
+```
+
+requests.http:
+
+```
+### Read Foods
+
+GET http://localhost:3000/foods
+
+
+### Read Foods by Name
+
+GET http://localhost:3000/foods?name=Salada
+```
+
+CodeSandBox: [Read](https://zedcj.sse.codesandbox.io/foods), [Read by Name](https://zedcj.sse.codesandbox.io/foods?name=Salada)
+
+![](assets/read-food-by-id.png)
+
+src/index.js:
+
+```js
+app.get('/foods/:id', (req, res) => {
+  const id = Number(req.params.id);
+
+  const food = foods.find((food) => food.id === id);
+
+  if (food) {
+    return res.json(food);
+  } else {
+    return res.status(400).json({ error: 'Food not found.' });
+  }
+});
+```
+
+requests.http:
+
+```
+### Read Food by ID
+
+GET http://localhost:3000/foods/1
+```
+
+CodeSandBox: [Read by ID](https://zedcj.sse.codesandbox.io/foods/1)
+
+### Update
+
+![](assets/update-food.png)
+
+src/index.js:
+
+```js
+app.put('/foods/:id', (req, res) => {
+  const id = Number(req.params.id);
+  const { name, price } = req.body;
+
+  const index = foods.findIndex((food) => food.id === id);
+
+  if (index >= 0) {
+    const food = { id, name, price };
+
+    foods[index] = food;
+
+    res.json(food);
+  } else {
+    return res.status(400).json({ error: 'Food not found.' });
+  }
+});
+```
+
+requests.http:
+
+```
+### Update Food
+
+PUT http://localhost:3000/foods/1
+Content-Type: application/json
+
+{
+  "name": "Salada 1",
+  "price": 16.5
+}
+```
+
+CodeSandBox: [Update (REQBIN)](https://reqbin.com/ngkkunqu)
+
+### Delete
+
+![](assets/delete-food.png)
+
+src/index.js:
+
+```js
+app.delete('/foods/:id', (req, res) => {
+  const id = Number(req.params.id);
+
+  const index = foods.findIndex((food) => food.id === id);
+
+  if (index >= 0) {
+    foods.splice(index, 1);
+
+    res.status(204).send();
+  } else {
+    return res.status(400).json({ error: 'Food not found.' });
+  }
+});
+```
+
+requests.http:
+
+```
+### Delete Food
+
+DELETE http://localhost:3000/foods/1
+```
+
+CodeSandBox: [Delete (REQBIN)](https://reqbin.com/epd9hrqo)
+
+## Front-end Web
 
 ---
 
-![JavaScript’s type hierarchy](http://exploringjs.com/impatient-js/img-book/b8c834a3420a3b2d2df0d90dfa0c1dfd1f2ffbc9.svg)<br>
-[JavaScript for impatient programmers (Book)](http://exploringjs.com/impatient-js/ch_values.html)
+### Estrutura do Código
 
-| Category  | Types                           | Values                                                                      |
-| --------- | ------------------------------- | --------------------------------------------------------------------------- |
-| Primitive | [Undefined](../undefined/syntax.md) | `undefined`                                                                                       |
-| Primitive | [Null](../null/syntax.md)           | `null`                                                                                            |
-| Primitive | [Boolean](../boolean/syntax.md)     | `true`, `false`                                                                                   |
-| Primitive | [Number](../number/syntax.md)       | `-15`<br>`15`, `0b1111`, `0o17`, `0xf`<br>`-123.45`<br>`123.45`, `1.2345e2`, `12345E-2` |
-| Primitive | [String](../string/syntax.md)       | `'Hello'`, `"Hello"`, `` `Hello` ``                                                               |
-| Object    | [Array](../array/syntax.md)         | `[]`<br>`[1, 2, 3]`<br>`[1, '2', true, [3, false]]`<br>`["Alice", "alice@email"]`                                                           |
-| Object    | [Object](../object/syntax.md)       | `{name: "Alice", email: "alice@email"}`                                                            |
-
-## [Declaração de variáveis](https://ifpb.github.io/javascript-guide/ecma/variable/)
-
----
-
-Linguagem C:
-```c
-int number = 10;
+```
+foods-client
+├── index.html
+└── js
+    ├── index.js
+    └── services
+        └── api.js
 ```
 
-Linguagem Python:
-```py
-number = 10
-```
+[![Edit foods-client](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/foods-client-m91qk?fontsize=14&hidenavigation=1&theme=dark)
 
-Keyword
-```js
-var number = 10;
-console.log(number); //=> 10
-```
+### Create
+
+js/services/api.js:
 
 ```js
-let number = 10;
-console.log(number); //=> 10
+const api = 'http://127.0.0.1:3000';
+
+async function create(food) {
+  const res = await fetch(`${api}/foods`, {
+    method: 'post',
+    body: JSON.stringify(food),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  });
+
+  return await res.json();
+}
 ```
+
+### Read
+
+js/services/api.js:
 
 ```js
-const number = 10;
-console.log(number); //=> 10
+async function readAll() {
+  const res = await fetch(`${api}/foods`);
+
+  return await res.json();
+}
+
+async function readByName(name) {
+  const res = await fetch(`${api}/foods?name=${name}`);
+
+  return await res.json();
+}
+
+async function readById(id) {
+  const res = await fetch(`${api}/foods/${id}`);
+
+  return await res.json();
+}
 ```
 
-### Reassociação
+### Update
+
+js/services/api.js:
 
 ```js
-var number;
-number = 10;
-number = 100;
-console.log(number); //=> 100
+async function update(id, food) {
+  const res = await fetch(`${api}/foods/${id}`, {
+    method: 'put',
+    body: JSON.stringify(food),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  });
+
+  return await res.json();
+}
 ```
+
+### Delete
+
+js/services/api.js:
 
 ```js
-let number;
-number = 10;
-number = 100;
-console.log(number); //=> 100
+async function remove(id) {
+  await fetch(`${api}/foods/${id}`, {
+    method: 'delete',
+  });
+}
 ```
-
-```js
-const number; // SyntaxError
-const number = 10;
-number = 100; // TypeError
-```
-
-```js
-const numbers = [];
-numbers.push(1);
-console.log(numbers); //=> [ 1 ]
-```
-
-### Escopo
-
-```js
-var number = 10;
-var number = 10;
-```
-
-```js
-let number = 10;
-let number = 10; // SyntaxError: Identifier 'number' has already been declared
-```
-
-```js
-const number = 10;
-const number = 10; // SyntaxError: Identifier 'number' has already been declared
-```
-
-### Tipagem Dinâmica
-
-```js
-let variable = 10;
-console.log(variable); //=> 10
-console.log(typeof variable); //=> number
-
-variable = 'fulano';
-console.log(variable); //=> 'fulano'
-console.log(typeof variable); //=> string
-```
-
-### Tipagem Fraca
-
-```js
-const x = 10;
-const y = '5';
-console.log(x - y); //=> 5
-```
-
-### Case Sensitive
-
-```js
-const number = 8;
-const Number = 80;
-const NUMBER = 800;
-```
-
-## [Expressões e operadores](https://ifpb.github.io/javascript-guide/ecma/expression-and-operator/)
-
----
-
-### Expression
-
-<!--
-\begin{align*}
-C = \frac{F - 32}{1.8}
-\end{align*}
- -->
-
-![](assets/celsius2fahrenheit.png)
-
-Option 1:
-```js
-const fahrenheit = 50;
-const celsius = fahrenheit - 32 / 1.8;
-console.log(celsius); //=> 32.2
-```
-
-![](assets/celsius2fahrenheit1.svg)
-
-Option 2 (grouping operator):
-```js
-const fahrenheit = 50;
-const celsius = (fahrenheit - 32) / 1.8;
-console.log(celsisu); //=> 10
-```
-
-![](assets/celsius2fahrenheit2.svg)
-
-References:
-
-- [Operator precedence](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence)
-
-### [Operators List](https://ifpb.github.io/javascript-guide/ecma/expression-and-operator/)
-
-| Operator type              | Operators                                                                                                             |
-| -------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| Primary expressions        | `this`, `function`, `class`, `function*`, `yield`, `yield*`, `async function*`, `await`, `[]`, `{}`, `/ab+c/i`, `( )` |
-| Left-hand-side expressions | `object.property`, `object["property"]`, `new`, `new.target`, `super`, `...obj`                                       |
-| Increment and decrement    | `A++`, `A--`, `++A`, `--A`                                                                                            |
-| Unary operators            | `delete`, `void`, `typeof`, `+`, `-`, `~`, `!`                                                                        |
-| Arithmetic operators       | `+`, `-`, `*`, `/`, `%`, `**`                                                                                         |
-| Relational operators       | `in`, `instanceof`, `<`, `<=`, `>`, `>=`                                                                              |
-| Equality operators         | `==`, `!=`, `===`, `!==`                                                                                              |
-| Bitwise shift operators    | `<<`, `>>`, `>>>`                                                                                                     |
-| Binary bitwise operators   | `&`, `|`, `^`                                                                                                         |
-| Binary logical operators   | `&&`, `||`                                                                                                            |
-| Assignment operators       | `=`, `*=`, `/=`, `%=`, `+=`, `-=`, `<<=`, `>>=`, `>>>=`, `&=`, `^=`, `|=`, `[a, b] = [1, 2]`, `{a, b} = {a:1, b:2}`   |
-| Conditional operator       | `(condition ? ifTrue : ifFalse)`                                                                                      |
-| Comma operator             | `,`                                                                                                                   |
-
-Referências:
-- [Expressions and operators \| MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence)

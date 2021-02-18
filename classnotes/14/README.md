@@ -1,626 +1,677 @@
-# API do JavaScript
+# Database
 
-  - [Definição de Módulos](#definição-de-módulos)
-  - [String](#string)
-    - [Criação](#criação)
-    - [Casos Especiais](#casos-especiais)
-    - [Caracteres especiais](#caracteres-especiais)
-    - [Concatenação e Template literals](#concatenação-e-template-literals)
-    - [Objeto String](#objeto-string)
-  - [Array](#array)
-    - [Criação](#criação-1)
-    - [Acesso e Alteração](#acesso-e-alteração)
-    - [Tipos Múltiplos](#tipos-múltiplos)
-    - [Spread Operator](#spread-operator)
-    - [Iteração](#iteração)
-    - [Objeto Array](#objeto-array)
-  - [JSON](#json)
-    - [Criação](#criação-2)
-    - [Acesso e Alteração](#acesso-e-alteração-1)
-    - [Spread properties](#spread-properties)
-    - [Property Shorthand](#property-shorthand)
-    - [Iteração](#iteração-1)
-    - [Objeto JSON](#objeto-json)
+  - [MySQL](#mysql)
+  - [Dataset](#dataset)
+  - [Data Definition Language (DDL)](#data-definition-language-ddl)
+    - [Database](#database-1)
+    - [Table](#table)
+  - [Data Manipulation Language (DML)](#data-manipulation-language-dml)
+    - [INSERT](#insert)
+    - [SELECT](#select)
+    - [UPDATE](#update)
+    - [DELETE](#delete)
+  - [Database Relationships](#database-relationships)
+    - [1-N](#1-n)
+  - [MVC com Banco de Dados](#mvc-com-banco-de-dados)
+  - [Aplicação com SQLite](#aplicação-com-sqlite)
+    - [Estrutura de Código](#estrutura-de-código)
+    - [Loader](#loader)
+    - [Migration](#migration)
+    - [Database](#database-2)
+    - [Model](#model)
+    - [Controller](#controller)
+    - [Chamada de Sistema](#chamada-de-sistema)
+  - [References](#references)
 
-## [Definição de Módulos](https://ifpb.github.io/javascript-guide/ecma/modules/)
-
----
-
-```js
-{% include_relative codes/function-sum/index.js %}
-```
-
-- [Common Javascript - CJS](https://nodejs.org/api/modules.html)
-- [ECMAScript Modules - ESM](https://nodejs.org/api/esm.html)
-
-**CENÁRIOS**
-
-```
-src
-├── lib.js
-└── main.js
-```
-
-|     | Uma Função | Várias Funções |
-| --- | ---------- | -------------- |
-| CJS | 1.1        | 2.1            |
-| ESM | 1.2        | 2.2            |
-
-**CENÁRIO 1.1 - Uma função no CJS**
-
-src/lib.js:
-
-```js
-{% include_relative codes/module-cjs-default/lib.js %}
-```
-
-src/main.js:
-
-```js
-{% include_relative codes/module-cjs-default/main.js %}
-```
-
-**CENÁRIO 1.2 - Uma função no ESM**
-
-src/lib.js:
-
-```js
-{% include_relative codes/module-esm-default/lib.js %}
-```
-
-src/main.js:
-
-```js
-{% include_relative codes/module-esm-default/main.js %}
-```
-
-**CENÁRIO 2.1 - Várias funções no CJS**
-
-src/lib.js:
-
-```js
-{% include_relative codes/module-cjs-named/lib.js %}
-```
-
-src/main.js:
-
-```js
-{% include_relative codes/module-cjs-named/main.js %}
-```
-
-**CENÁRIO 2.2 - Várias funções no ESM**
-
-src/lib.js:
-
-```js
-{% include_relative codes/module-esm-named/lib.js %}
-```
-
-src/main.js:
-
-```js
-{% include_relative codes/module-esm-named/main.js %}
-```
-
-**RESUMO**
-
-|     | Uma Função                                               | Várias Funções                                                                 |
-| --- | -------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| CJS | `module.exports = sum`<br>`const sum = require('./lib')` | `module.exports = { sum, minus }`<br>`const { sum, minus } = require('./lib')` |
-| ESM | `export default sum;`<br>`import sum from './lib'`       | `export { sum, minus }`<br>`import { sum, minus } from './lib'`                |
-
-> **Warning:** To load an ES module, set "type": "module" in the package.json or use the .mjs extension.
-
-```json
-{% include_relative codes/module-esm-default/package.json %}
-```
-
-## String
+## MySQL
 
 ---
 
-### Criação
-
-```js
-console.log('h'); //=> "h"
-console.log('hello world'); //=> "hello world"
-console.log("hello world"); //=> "hello world"
-console.log(`hello world`); //=> "hello world"
-console.log(String('hello world')); //=> "hello world"
-console.log(new String('hello world')); //=> "hello world"
+```
+$ docker run --name mysql -e MYSQL_ROOT_PASSWORD=secret -d mysql:8.0
 ```
 
-### Casos Especiais
+> [docker-compose.yml](docker-compose.yml):
 
-```js
-console.log('<img src="url">'); //=> "<img src="url">"
-console.log("<img src=\"url\">"); //=> "<img src="url">"
-console.log("hello' world"); //=> "hello\' world"
+```yaml
+{% include_relative docker-compose.yml %}
 ```
 
-### Caracteres especiais
+> [.env](.env):
 
-```js
-console.log("hello\' world"); //=> "hello\' world"
-console.log('hello\nworld'); //=> "hello\nworld"
-console.log('I \u2661 JavaScript!'); //=> "I ♡ JavaScript!"
+```
+{% include_relative .env %}
 ```
 
-### Concatenação e Template literals
+Load database:
 
-```js
-const name = 'John';
-console.log('Hello ' + name); //=> "Hello John"
+```
+$ docker-compose up -d
+$ docker-compose ps
+ Name                Command               State                 Ports
+------------------------------------------------------------------------------------
+adminer   entrypoint.sh docker-php-e ...   Up      0.0.0.0:8080->8080/tcp
+mysql     docker-entrypoint.sh --def ...   Up      0.0.0.0:3306->3306/tcp, 33060/tcp
 ```
 
-```js
-const name = 'John';
-const email = 'john@email.com';
-const id = '1';
+VSCode:
+  - [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools)
+  - [SQLTools MySQL/MariaDB](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools-driver-mysql)
+  - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
 
-const row =
-  '<tr><td>' + id + '</td><td>' + name + '</td><td>' + email + '</td></tr>';
+Docker:
+  - [Adminer](https://hub.docker.com/_/adminer)
+  - [MySQL](https://hub.docker.com/_/mysql)
 
-console.log(row);
-//=> "<tr><td>1</td><td>John</td><td>john@email.com</td></tr>"
-```
-
-```js
-const name = 'John';
-const email = 'john@email.com';
-const id = '1';
-
-const row = `<tr><td>${id}</td><td>${name}</td><td>${email}</td></tr>`;
-
-console.log(row);
-//=> "<tr><td>1</td><td>John</td><td>john@email.com</td></tr>"
-```
-
-### Objeto String
-
-Property: `length`
-
-```js
-console.log('lorem ipsum'.length); //=> 11
-```
-
-Methods: `includes`, `repeat`, `startsWith`, `endsWith`, `substr`, `substring`, `slice`, `split`, `toLowerCase`, `toUpperCase`, `match`, `replace`, `search`, `trim`, `padStart`
-
-```js
-console.log('lorem ipsum'.includes('lorem')); //=> true
-console.log('lorem ipsum'.includes('dolor')); //=> false
-```
-
-```js
-console.log('hello'.repeat(3)); //=> "hellohellohello"
-console.log('hello'.repeat(-3)); //=> RangerError
-```
-
-```js
-console.log('lorem ipsum'.substr(1, 2)); //=> "or"
-console.log('lorem ipsum'.substr(1)); //=> "orem ipsum"
-```
-
-```js
-console.log('lorem ipsum'.substring(1, 2)); //=> "o"
-console.log('lorem ipsum'.substring(1)); //=> "orem ipsum"
-```
-
-```js
-console.log('lorem ipsum'.slice(1, 2)); //=> "o"
-console.log('lorem ipsum'.slice(1)); //=> "orem ipsum"
-```
-
-```js
-console.log('lorem ipsum'.split('')); //=> [ "l", "o", "r", "e", "m", " ", "i", "p", "s", "u", "m" ]
-console.log('lorem ipsum'.split(' ')); //=> [ "lorem", "ipsum" ]
-console.log('lorem ipsum dolor'.split(' ', 1)); //=> [ "lorem" ]
-console.log('lorem\nipsum-dolor'.split(/[-\n]/g)); //=> [ "lorem", "ipsum", "dolor" ]
-```
-
-```js
-console.log('lorem ipsum'.match(/\w+/g)); //=> [ "lorem", "ipsum" ]
-```
-
-```js
-console.log('lorem ipsum'.replace('lorem', 'LOREM')); //=> "LOREM ipsum"
-```
-
-```js
-console.log('lorem ipsum'.search('lorem')); //=> 0
-```
-
-```js
-console.log('LOREM IPSUM'.toLowerCase()); //=> "lorem ipsum"
-```
-
-```js
-console.log('lorem ipsum'.toUpperCase()); //=> "LOREM IPSUM"
-```
-
-```js
-console.log('  lorem  ipsum  '.trim()); //=> "lorem  ipsum"
-```
-
-```js
-console.log('10'.padStart(4)); //=> "  10"
-console.log('10'.padStart(4, 0)); //=> "0010"
-```
-
-```js
-console.log('lorem ipsum'.startsWith('lorem')); //=> true
-```
-
-```js
-console.log('lorem ipsum'.endsWith('ipsum')); //=> true
-```
-
-## Array
+## Dataset
 
 ---
 
-### Criação
+| name               | address      | transmitted | received | time                |
+|--------------------|--------------|-------------|----------|---------------------|
+| portal.ifrn.edu.br | 10.0.0.100   |           4 |        4 | 2018-02-16 13:41:49 |
+| portal.ifrn.edu.br | 10.0.0.100   |           8 |        4 | 2018-02-16 13:41:49 |
+| portal.ifrn.edu.br | 10.0.0.100   |           4 |        3 | 2018-02-16 13:41:49 |
+| ...                | ...          |         ... |      ... | ...                 |
+| www.ifpb.edu.br    | 200.10.10.12 |           5 |        5 | 2018-02-18 13:41:49 |
 
-```js
-const numbers = [1, 2, 4, 7];
+**Questões**
 
-console.log(numbers); //=> [ 1, 2, 4, 7 ]
-```
+1. Quantos pacotes foram recebidos?
+2. Qual é a média de pacotes perdidos?
+3. Qual é a porcentagem de pacotes recebidos do IFPB?
+4. Qual é a porcentagem de pacotes perdidos do IFPB no dia 16/02/2018 entre 09:00 até 18:00?
 
-```js
-const numbers = [];
-
-numbers[0] = 10;
-numbers[1] = 20;
-numbers[10] = 100;
-
-console.log(numbers); //=> [ 10, 20, , , , , , , , , 100 ]
-```
-
-### Acesso e Alteração
-
-```js
-const numbers = [1, 2, 4, 7];
-
-console.log(numbers[0]); //=> 1
-console.log(numbers[3]); //=> 7
-console.log(numbers[4]); //=> undefined
-console.log(numbers); //=> [ 1, 2, 4, 7 ]
-```
-
-```js
-const numbers = [1, 2, 4, 7];
-
-// change value
-numbers[2] = 5;
-
-// add value
-numbers[4] = 10;
-console.log(numbers); //=> [ 1, 2, 5, 7, 10 ]
-
-// delete value
-delete numbers[4];
-console.log(numbers); //=> [ 1, 2, 5, 7,  ]
-```
-
-### Tipos Múltiplos
-
-```js
-const values = [1, 'John', true, null, [1, 2]];
-console.log(values[1]); //=> "John"
-console.log(values[4]); //=> [1, 2]
-console.log(values[4][1]); //=> 2
-```
-
-### Spread Operator
-
-```js
-const numbers = [1, 2, 3];
-console.log([...numbers, 4, 5]); //=> [ 1, 2, 3, 4, 5 ]
-```
-
-### Iteração
-
-for
-
-```js
-const numbers = [1, 2, 4];
-let result = '';
-
-for (const flag = 0; flag < numbers.length; flag++) {
-  result += numbers[flag] + ' ';
-}
-
-console.log(result); //=> "1 2 4 "
-```
-
-for..in
-
-```js
-const numbers = [1, 2, 4];
-let result = '';
-
-for (const index in numbers) {
-  result += number[index] + ' ';
-}
-
-console.log(result); //=> "1 2 4 "
-```
-
-for..of
-
-```js
-const numbers = [1, 2, 4];
-let result = '';
-
-for (const value of numbers) {
-  result += value + ' ';
-}
-
-console.log(result); //=> "1 2 4 "
-```
-
-### Objeto Array
-
-Property: `length`
-
-```js
-const numbers = [1, 2, 3];
-console.log(numbers.length); //=> 3
-```
-
-Mutator: `push()`, `unshift()`, `pop()`, `shift()`, `reverse()`, `sort()`, `splice()`
-
-```js
-const numbers = [1, 2, 3];
-console.log(numbers.push(4)); //=> 4
-console.log(numbers); //=> [ 1, 2, 3, 4 ]
-```
-
-```js
-const numbers = [1, 2, 3];
-console.log(numbers.unshift(0)); //=> 4
-console.log(numbers); //=> [ 0, 1, 2, 3 ]
-```
-
-```js
-const numbers = [1, 2, 3];
-console.log(numbers.pop()); //=> 3
-console.log(numbers); //=> [ 1, 2 ]
-```
-
-```js
-const numbers = [1, 2, 3];
-console.log(numbers.shift()); //=> 1
-console.log(numbers); //=> [ 2, 3 ]
-```
-
-```js
-const numbers = [1, 2, 3];
-console.log(numbers.reverse()); //=> [ 3, 2, 1 ]
-console.log(numbers); //=> [ 3, 2, 1 ]
-```
-
-```js
-const numbers = [3, 1, 2];
-console.log(numbers.sort()); //=> [ 1, 2, 3 ]
-console.log(numbers); //=> [ 1, 2, 3 ]
-```
-
-```js
-const numbers = [1, 2, 3];
-console.log(numbers.splice(1, 2)); //=> [ 2, 3 ]
-console.log(numbers); //=> [1]
-```
-
-Accessor: `includes()`, `join()`, `slice()`
-
-```js
-console.log([1, 2, 3].includes(1)); //=> true
-```
-
-```js
-console.log([1, 2, 3].join(' ')); //=> "1 2 3"
-```
-
-```js
-console.log([1, 2, 3].slice(1, 2)); //=> 2
-```
-
-Iteration: `map()`, `filter()`, `reduce()`, `every()`, `some()`
-
-```js
-const array = [1, 2, 3, 4, 5, 6];
-console.log(array.map((value) => value * 2)); //=> [ 2, 4, 6, 8, 10, 12 ]
-```
-
-```js
-const array = [1, 2, 3, 4, 5, 6];
-console.log(array.filter((value) => value % 2 !== 0)); //=> [ 1, 3, 5 ]
-```
-
-```js
-const array = [1, 2, 3, 4, 5, 6];
-console.log(array.reduce((addition, value) => addition + value, 0)); //=> 21
-```
-
-```js
-const array = [2, 4, 6];
-console.log(array.every((value) => value % 2 == 0)); //=> true
-```
-
-```js
-const array = [1, 2, 3, 4, 5, 6];
-console.log(array.some((value) => value % 2 == 0)); //=> true
-```
-
-## JSON
+## Data Definition Language (DDL)
 
 ---
 
-### Criação
+> **DICAS:**
+> - Os comandos não são *case sensitive*
+> - Os nomes são *case sensitive*
+> - Não esqueça do `;` nos comandos
+> - Em caso de erro tente interpretar a mensagem de erro
 
-| NAME    | EMAIL             |
-| ------- | ----------------- |
-| fulano  | fulano@gmail.com  |
-| sicrano | sicrano@gmail.com |
+### Database
 
-Quoted (.json, .js):
-
-```json
-[
-  {
-    "name": "fulano",
-    "email": "fulano@gmail.com",
-  },
-  {
-    "name": "sicrano",
-    "email": "sicrano@gmail.com",
-  },
-]
+```sql
+> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
 ```
 
-Unquoted (.js):
+```sql
+> CREATE DATABASE monitor_db;
+Query OK, 1 row affected (0.00 sec)
+
+> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| monitor_db         |
+| mysql              |
+| performance_schema |
++--------------------+
+4 rows in set (0.00 sec)
+```
+
+```sql
+> DROP DATABASE monitor_db;
+Query OK, 0 rows affected (0.00 sec)
+
+> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+```
+
+### Table
+
+```sql
+> USE monitor_db;
+Database changed
+
+> SELECT DATABASE();
++------------+
+| DATABASE() |
++------------+
+| monitor_db |
++------------+
+1 row in set (0.00 sec)
+```
+
+```sql
+> SHOW TABLES;
+Empty set (0.00 sec)
+```
+
+```sql
+> CREATE TABLE host (
+  id int NOT NULL AUTO_INCREMENT,
+  name varchar(100) NOT NULL,
+  address varchar(100) NOT NULL,
+  PRIMARY KEY (id)
+);
+Query OK, 0 rows affected (0.00 sec)
+
+> SHOW TABLES;
++----------------------+
+| Tables_in_monitor_db |
++----------------------+
+| host                 |
++----------------------+
+1 row in set (0.00 sec)
+```
+
+```sql
+> DESCRIBE host;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int          | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(100) | NO   |     | NULL    |                |
+| address | varchar(100) | NO   |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+```
+
+```sql
+> DROP TABLE host;
+Query OK, 0 rows affected (0.00 sec)
+
+> SHOW TABLES;
++----------------------+
+| Tables_in_monitor_db |
++----------------------+
+| host                 |
++----------------------+
+1 row in set (0.01 sec)
+```
+
+```sql
+> RENAME TABLE host TO hosts;
+Query OK, 0 rows affected (0.00 sec)
+
+> SHOW TABLES;
++----------------------+
+| Tables_in_monitor_db |
++----------------------+
+| hosts                |
++----------------------+
+1 row in set (0.01 sec)
+```
+
+```sql
+> DESCRIBE hosts;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int          | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(100) | NO   |     | NULL    |                |
+| address | varchar(100) | NO   |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+
+> ALTER TABLE hosts ADD COLUMN mask varchar(100);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+> DESCRIBE hosts;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int          | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(100) | NO   |     | NULL    |                |
+| address | varchar(100) | NO   |     | NULL    |                |
+| mask    | varchar(100) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+```
+
+```sql
+> ALTER TABLE hosts DROP COLUMN mask;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+> DESCRIBE hosts;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int          | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(100) | NO   |     | NULL    |                |
+| address | varchar(100) | NO   |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+```
+
+## Data Manipulation Language (DML)
+
+---
+
+### INSERT
+
+```sql
+> INSERT INTO hosts
+    VALUES (1, 'www.ifpb.edu.br', '200.10.10.10');
+Query OK, 1 row affected (0.01 sec)
+```
+
+```sql
+> INSERT INTO hosts
+      (name, address)
+    VALUES
+      ('www.ifrn.edu.br', '200.10.10.11'),
+      ('www.ifpb.edu.br', '200.10.10.12');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+```
+
+### SELECT
+
+```sql
+> SELECT * FROM hosts;
++----+-----------------+--------------+
+| id | name            | address      |
++----+-----------------+--------------+
+|  1 | www.ifpb.edu.br | 200.10.10.10 |
+|  2 | www.ifrn.edu.br | 200.10.10.11 |
+|  3 | www.ifpb.edu.br | 200.10.10.12 |
++----+-----------------+--------------+
+3 rows in set (0.00 sec)
+```
+
+```sql
+> SELECT name, address FROM hosts;
++-----------------+--------------+
+| name            | address      |
++-----------------+--------------+
+| www.ifpb.edu.br | 200.10.10.10 |
+| www.ifrn.edu.br | 200.10.10.11 |
+| www.ifpb.edu.br | 200.10.10.12 |
++-----------------+--------------+
+3 rows in set (0.00 sec)
+```
+
+```sql
+> SELECT name, address FROM hosts
+    ORDER BY name;
++-----------------+--------------+
+| name            | address      |
++-----------------+--------------+
+| www.ifpb.edu.br | 200.10.10.10 |
+| www.ifpb.edu.br | 200.10.10.12 |
+| www.ifrn.edu.br | 200.10.10.11 |
++-----------------+--------------+
+3 rows in set (0.01 sec)
+```
+
+```sql
+> SELECT name, address FROM hosts
+    WHERE id = 1;
++-----------------+--------------+
+| name            | address      |
++-----------------+--------------+
+| www.ifpb.edu.br | 200.10.10.10 |
++-----------------+--------------+
+1 row in set (0.00 sec)
+```
+
+```sql
+> SELECT name, address FROM hosts
+    WHERE name LIKE '%ifpb%' AND address LIKE '200.%.%.%';
++-----------------+--------------+
+| name            | address      |
++-----------------+--------------+
+| www.ifpb.edu.br | 200.10.10.10 |
+| www.ifpb.edu.br | 200.10.10.12 |
++-----------------+--------------+
+2 rows in set (0.00 sec)
+```
+
+```sql
+> SELECT * FROM hosts
+    LIMIT 2;
++----+-----------------+--------------+
+| id | name            | address      |
++----+-----------------+--------------+
+|  1 | www.ifpb.edu.br | 200.10.10.10 |
+|  2 | www.ifrn.edu.br | 200.10.10.11 |
++----+-----------------+--------------+
+2 rows in set (0.00 sec)
+```
+
+```sql
+> SELECT * FROM hosts
+    LIMIT 2
+    OFFSET 1;
++----+-----------------+--------------+
+| id | name            | address      |
++----+-----------------+--------------+
+|  2 | www.ifrn.edu.br | 200.10.10.11 |
+|  3 | www.ifpb.edu.br | 200.10.10.12 |
++----+-----------------+--------------+
+2 rows in set (0.00 sec)
+```
+
+```sql
+> SELECT COUNT(*) AS total FROM hosts;
++-------+
+| total |
++-------+
+|     3 |
++-------+
+1 row in set (0.00 sec)
+```
+
+### UPDATE
+
+```sql
+> UPDATE hosts
+    SET address = '10.0.0.10'
+    WHERE id = 2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+> SELECT * FROM hosts
+    WHERE id = 2;
++----+-----------------+-----------+
+| id | name            | address   |
++----+-----------------+-----------+
+|  2 | www.ifrn.edu.br | 10.0.0.10 |
++----+-----------------+-----------+
+1 row in set (0.00 sec)
+```
+
+```sql
+> UPDATE hosts
+    SET name = 'portal.ifrn.edu.br', address = '10.0.0.100'
+    WHERE id = 2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+> SELECT * FROM hosts
+    WHERE id = 2;
++----+--------------------+------------+
+| id | name               | address    |
++----+--------------------+------------+
+|  2 | portal.ifrn.edu.br | 10.0.0.100 |
++----+--------------------+------------+
+```
+
+### DELETE
+
+```sql
+> SELECT * FROM hosts;
++----+-----------------+--------------+
+| id | name            | address      |
++----+-----------------+--------------+
+|  1 | www.ifpb.edu.br | 200.10.10.10 |
++----+-----------------+--------------+
+
+> DELETE FROM hosts
+    WHERE id = 1;
+Query OK, 1 row affected (0.01 sec)
+
+> SELECT * FROM hosts
+    WHERE id = 1;
+Empty set (0.00 sec)
+```
+
+> **DICA:** Muito cuidado com o `DELETE` e `UPDATE` sem o `WHERE`!
+
+## Database Relationships
+
+---
+
+###  1-N
+
+![erd diagram](assets/monitor_db.png)
+
+```sql
+> CREATE TABLE histories (
+    id int NOT NULL AUTO_INCREMENT,
+    transmitted int NOT NULL,
+    received int NOT NULL,
+    time datetime NOT NULL,
+    host_id int NOT NULL,
+    PRIMARY KEY (id),
+    KEY host_id (host_id),
+    CONSTRAINT fk_host_id FOREIGN KEY (host_id) REFERENCES hosts (id)
+);
+Query OK, 0 rows affected (0.02 sec)
+```
+
+```sql
+> DESCRIBE histories;
++-------------+------+------+-----+---------+----------------+
+| Field       | Type | Null | Key | Default | Extra          |
++-------------+------+------+-----+---------+----------------+
+| id          | int  | NO   | PRI | NULL    | auto_increment |
+| transmitted | int  | YES  |     | NULL    |                |
+| received    | int  | YES  |     | NULL    |                |
+| time        | time | YES  |     | NULL    |                |
+| host_id     | int  | YES  | MUL | NULL    |                |
++-------------+------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+```
+
+```sql
+> INSERT INTO histories
+    (transmitted, received, time, host_id)
+  VALUES
+    (4, 4, NOW(), 2),
+    (8, 4, NOW(), 2),
+    (7, 4, NOW(), 3),
+    (5, 5, NOW(), 3),
+    (4, 3, NOW(), 2);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+> SELECT * FROM histories;
++----+-------------+----------+---------------------+---------+
+| id | transmitted | received | time                | host_id |
++----+-------------+----------+---------------------+---------+
+|  1 |           4 |        4 | 2018-02-16 13:41:49 |       2 |
+|  2 |           8 |        4 | 2018-02-16 13:41:49 |       2 |
+|  3 |           7 |        4 | 2018-02-16 13:41:49 |       3 |
+|  4 |           5 |        5 | 2018-02-16 13:41:49 |       3 |
+|  5 |           4 |        3 | 2018-02-16 13:41:49 |       2 |
++----+-------------+----------+---------------------+---------+
+5 rows in set (0.00 sec)
+```
+
+```sql
+> SELECT
+    *
+  FROM
+    hosts INNER JOIN histories;
++----+--------------------+--------------+----+-------------+----------+---------------------+---------+
+| id | name               | address      | id | transmitted | received | time                | host_id |
++----+--------------------+--------------+----+-------------+----------+---------------------+---------+
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  1 |           4 |        4 | 2018-02-16 13:41:49 |       2 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  1 |           4 |        4 | 2018-02-16 13:41:49 |       2 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  2 |           8 |        4 | 2018-02-16 13:41:49 |       2 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  2 |           8 |        4 | 2018-02-16 13:41:49 |       2 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  3 |           7 |        4 | 2018-02-16 13:41:49 |       3 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  3 |           7 |        4 | 2018-02-16 13:41:49 |       3 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  4 |           5 |        5 | 2018-02-16 13:41:49 |       3 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  4 |           5 |        5 | 2018-02-16 13:41:49 |       3 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  5 |           4 |        3 | 2018-02-16 13:41:49 |       2 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  5 |           4 |        3 | 2018-02-16 13:41:49 |       2 |
++----+--------------------+--------------+----+-------------+----------+---------------------+---------+
+10 rows in set (0.00 sec)
+```
+
+```sql
+> SELECT
+    *
+  FROM
+    hosts INNER JOIN histories
+  WHERE
+    hosts.id = histories.host_id;
++----+--------------------+--------------+----+-------------+----------+---------------------+---------+
+| id | name               | address      | id | transmitted | received | time                | host_id |
++----+--------------------+--------------+----+-------------+----------+---------------------+---------+
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  1 |           4 |        4 | 2018-02-16 13:41:49 |       2 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  2 |           8 |        4 | 2018-02-16 13:41:49 |       2 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  5 |           4 |        3 | 2018-02-16 13:41:49 |       2 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  3 |           7 |        4 | 2018-02-16 13:41:49 |       3 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  4 |           5 |        5 | 2018-02-16 13:41:49 |       3 |
++----+--------------------+--------------+----+-------------+----------+---------------------+---------+
+5 rows in set (0.00 sec)
+```
+
+```sql
+> SELECT
+    sum(histories.received) AS received,
+    sum(histories.transmitted) AS transmitted,
+    round(sum(histories.received)/sum(histories.transmitted), 2) AS percent
+  FROM
+    hosts INNER JOIN histories
+  WHERE
+    hosts.id = histories.host_id AND
+    hosts.name LIKE '%ifpb%';
++----------+-------------+---------+
+| received | transmitted | percent |
++----------+-------------+---------+
+|        9 |          12 |    0.75 |
++----------+-------------+---------+
+1 row in set (0.00 sec)
+```
+
+```sql
+> exit
+Bye
+```
+
+## MVC com Banco de Dados
+
+---
+
+![](assets/mvc.png)
+
+## Aplicação com SQLite
+
+---
+
+### Estrutura de Código
+
+```
+foods-app
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── public
+│   ├── css
+│   │   └── bootstrap.min.css
+│   ├── foods.html
+│   ├── imgs
+│   │   ├── hamburguer.jpg
+│   │   ├── salada.jpg
+│   │   └── sanduiche.jpg
+│   └── js
+│       ├── bootstrap.min.js
+│       ├── jquery.min.js
+│       └── popper.min.js
+└── src
+    ├── controllers
+    │   └── foodsController.js
+    ├── db
+    │   ├── database.sqlite
+    │   └── index.js
+    ├── index.js
+    ├── migrations
+    │   └── index.js
+    ├── models
+    │   └── Food.js
+    ├── routes
+    │   └── index.js
+    ├── seeders
+    │   └── index.js
+    └── views
+        ├── foods
+        │   └── index.njk
+        └── layout.njk
+```
+
+[![Edit express-foods-app-sqlite-simple](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/express-foods-app-sqlite-simple-y472j?fontsize=14&hidenavigation=1&theme=dark)
+
+### Loader
+
+src/index.js:
 
 ```js
-const students = [
-  {
-    name: 'fulano',
-    email: 'fulano@gmail.com',
-  },
-  {
-    name: 'sicrano',
-    email: 'sicrano@gmail.com',
-  },
-];
+{% include_relative codes/foods-app-sqlite-simple/src/index.js %}
 ```
 
-Indexed & Unquoted (.js):
+```bash
+$ npm install express nunjucks
+```
+
+### Migration
+
+[vscode-sqlite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite):
+
+![](assets/database.png)
+
+src/migrations/index.js:
 
 ```js
-const students = {
-  20181234: {
-    name: 'fulano',
-    email: 'fulano@gmail.com',
-  },
-  20181235: {
-    name: 'sicrano',
-    email: 'sicrano@gmail.com',
-  },
-};
+{% include_relative codes/foods-app-sqlite-simple/src/migrations/index.js %}
 ```
 
-[http://ip-api.com/json/8.8.8.8](http://ip-api.com/json/8.8.8.8) (IP API: [doc](http://ip-api.com/docs/), [json](http://ip-api.com/docs/api:json)):
+### Database
 
-```json
-{
-  "as":"AS15169 Google Inc.",
-  "city":"Mountain View",
-  "country":"United States",
-  "countryCode":"US",
-  "isp":"Google",
-  "lat":37.4229,
-  "lon":-122.085,
-  "org":"Google",
-  "query":"8.8.8.8",
-  "region":"CA",
-  "regionName":"California",
-  "status":"success",
-  "timezone":"America/Los_Angeles",
-  "zip":""
-}
-```
 
-### Acesso e Alteração
-
-![](assets/object-ip.png)
+src/db/index.js:
 
 ```js
-const ip = { address: '192.168.0.2', mask: '255.255.255.0' };
-
-console.log(ip); //=> { address: "192.168.0.2", mask: "255.255.255.0" }
-console.log(ip.address); //=> "192.168.0.2"
-console.log(ip['address']); //=> "192.168.0.2"
+{% include_relative codes/foods-app-sqlite-simple/src/db/index.js %}
 ```
+
+```bash
+$ npm install sqlite-async
+```
+
+### Model
+
+src/models/Food.js:
 
 ```js
-// add property
-ip.version = 'v6';
-console.log(ip); //=> { address: "192.168.0.2", mask: "255.255.255.0", version: "v6" }
-console.log(ip.version); //=> "v6"
-
-// change property
-ip.version = 'v4';
-console.log(ip); //=> { address: "192.168.0.2", mask: "255.255.255.0", version: "v4" }
-console.log(ip.version); //=> "v4"
-
-// delete property
-delete ip.version;
-console.log(ip); //=> { address: "192.168.0.2", mask: "255.255.255.0" }
-console.log(ip.version); //=> undefined
+{% include_relative codes/foods-app-sqlite-simple/src/models/Food.js %}
 ```
 
-### Spread properties
+### Controller
+
+src/controllers/foodsController.js:
 
 ```js
-const ip = { address: '192.168.0.2', mask: '255.255.255.0' };
-console.log({ ...ip, version: 'v4' });
-//=> {address: "192.168.0.2", mask: "255.255.255.0", version: "v4"}
+{% include_relative codes/foods-app-sqlite-simple/src/controllers/foodsController.js %}
 ```
 
-### Property Shorthand
+### Chamada de Sistema
 
-```js
-const address = '192.168.0.2';
-const mask = '255.255.255.0';
-const version = 'v4';
-console.log({ address: address, mask: mask, version: version });
-console.log({ address, mask, version });
-//=> {address: "192.168.0.2", mask: "255.255.255.0", version: "v4"}
-```
+[![Edit top-app-db](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/top-app-db-2bw2o?fontsize=14&hidenavigation=1&theme=dark)
 
-### Iteração
 
-```js
-const ips = [
-  { address: '192.168.0.2', mask: '255.255.255.0' },
-  { address: '192.168.0.10', mask: '255.255.255.0' },
-  { address: '192.168.0.26', mask: '255.255.255.0' },
-];
+## References
 
-for (const ip of ips) {
-  console.log(ip.address + '/' + ip.mask);
-}
-//=>
-// "192.168.0.2/255.255.255.0"
-// "192.168.0.10/255.255.255.0"
-// "192.168.0.26/255.255.255.0"
-```
+---
 
-```js
-const ips = {
-  database: { address: '192.168.0.2', mask: '255.255.255.0' },
-  dns: { address: '192.168.0.10', mask: '255.255.255.0' },
-  http: { address: '192.168.0.26', mask: '255.255.255.0' },
-};
-
-for (const host in ips) {
-  console.log(ips[host].address + '/' + ips[host].mask);
-}
-//=>
-// "192.168.0.2/255.255.255.0"
-// "192.168.0.10/255.255.255.0"
-// "192.168.0.26/255.255.255.0"
-```
-
-### Objeto JSON
-
-Methods: `parse()`, `stringify()`
-
-```js
-console.log(JSON.parse('{"value": 10}')); //=> { value: 10 }
-```
-
-```js
-console.log(JSON.stringify({ value: 10 })); //=> "{"value": 10}"
-```
+- [enochtangg/quick-SQL-cheatsheet](https://github.com/enochtangg/quick-SQL-cheatsheet)
+- [MySQL - SQL Statement Syntax](https://dev.mysql.com/doc/refman/5.7/en/sql-syntax.html)
+- Mysql: [Data types](https://www.tutorialspoint.com/mysql/mysql-data-types.htm), [Functions](https://www.w3schools.com/sql/sql_ref_mysql.asp), [Operators](https://www.w3schools.com/sql/sql_operators.asp)
+- [Oracle - Database SQL Language Reference](https://docs.oracle.com/database/121/SQLRF/toc.htm)
+- SQL Tutorial: [W3Schools](https://www.w3schools.com/sql/default.asp) e [TutorialsPoint](https://www.tutorialspoint.com/sql/index.htm)
+- SQL cheat sheet: [Websitesetup](https://websitesetup.org/sql-cheat-sheet/), [ZeroTurnaround](https://zeroturnaround.com/rebellabs/sql-cheat-sheet/), [cse.unl.edu](http://cse.unl.edu/~sscott/ShowFiles/SQL/CheatSheet/SQLCheatSheet.html), [hofmannsven](https://gist.github.com/hofmannsven/9164408), [sqltutorial](http://www.sqltutorial.org/sql-cheat-sheet/)

@@ -1,448 +1,396 @@
-# Formulários e JavaScript
+# Manipulação com Banco de Dados
 
-  - [Elementos do Formulário](#elementos-do-formulário)
-    - [single-line text field](#single-line-text-field)
-    - [label field](#label-field)
-    - [password field](#password-field)
-    - [radio button field](#radio-button-field)
-    - [checkbox field](#checkbox-field)
-    - [button field](#button-field)
-    - [file field](#file-field)
-    - [range field](#range-field)
-    - [number field](#number-field)
-    - [date field](#date-field)
-    - [email field](#email-field)
-    - [multi-line text field](#multi-line-text-field)
-    - [combobox field](#combobox-field)
-  - [Exemplo de Formulário](#exemplo-de-formulário)
-  - [Formulário com Boostrap](#formulário-com-boostrap)
-  - [JavaScript e HTML](#javascript-e-html)
-    - [Integrando JS e HTML](#integrando-js-e-html)
-    - [Tratando dados de formulário](#tratando-dados-de-formulário)
+  - [Relacionamento no Banco de Dados](#relacionamento-no-banco-de-dados)
+    - [Arquitetura da Aplicação](#arquitetura-da-aplicação)
+    - [Entidades do Banco](#entidades-do-banco)
+    - [Estrutura de Código](#estrutura-de-código)
+    - [Migration](#migration)
+    - [Seeders](#seeders)
+    - [Model](#model)
+    - [View](#view)
+  - [Integração com Front-end](#integração-com-front-end)
+    - [Arquitetura do Código](#arquitetura-do-código)
+    - [Exclusão de Comida](#exclusão-de-comida)
+    - [Estrutura de Código](#estrutura-de-código-1)
+    - [Router](#router)
+    - [Controller](#controller)
+    - [Model](#model-1)
+    - [View](#view-1)
+    - [CRUD de Comida](#crud-de-comida)
 
-## Elementos do Formulário
+## Relacionamento no Banco de Dados
 
 ---
 
-### [single-line text field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text)
+### Arquitetura da Aplicação
 
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <input type="text" name="cpf">
-</div>
+![](assets/mvc.png)
 
-```html
-<input type="text" name="cpf">
+### Entidades do Banco
+
+![](assets/database.png)
+
+### Estrutura de Código
+
+
+```
+foods-app
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── public
+│   ├── css
+│   │   └── bootstrap.min.css
+│   ├── foods.html
+│   ├── imgs
+│   │   ├── hamburguer.jpg
+│   │   ├── milkshake.jpg
+│   │   ├── sanduiche.jpg
+│   │   └── suco.jpg
+│   └── js
+│       ├── bootstrap.min.js
+│       ├── jquery.min.js
+│       └── popper.min.js
+└── src
+    ├── controllers
+    │   └── foodsController.js
+    ├── db
+    │   ├── database.sqlite
+    │   └── index.js
+    ├── index.js
+    ├── migrations
+    │   └── index.js
+    ├── models
+    │   ├── Category.js
+    │   └── Food.js
+    ├── routes
+    │   └── index.js
+    ├── seeders
+    │   ├── data.json
+    │   └── index.js
+    └── views
+        ├── foods
+        │   └── index.njk
+        └── layout.njk
 ```
 
-required attribute:
+[![Edit express-foods-app-sqlite-has-many](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/express-foods-app-sqlite-has-many-2c981?fontsize=14&hidenavigation=1&theme=dark)
 
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <form>
-    <input type="text" name="cpf" required>*
-  </form>
-</div>
+### Migration
 
-```html
-<input type="text" name="cpf" required>*
+![](assets/database.png)
+
+src/migrations/index.js:
+
+```js
+{% include_relative codes/foods-app-sqlite-simple/src/migrations/index.js %}
 ```
 
-placeholder attribute:
+### Seeders
 
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <input type="text" name="cpf" placeholder="000.000.000-00">
-</div>
+src/seeders/data.json:
 
-```html
-<input type="text" name="cpf" placeholder="000.000.000-00">
+```json
+{% include_relative codes/foods-app-sqlite-simple/src/seeders/data.json %}
 ```
 
-value attribute:
+src/seeders/index.js:
 
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <input type="text" name="cpf" value="000.000.000-00">
-</div>
-
-```html
-<input type="text" name="cpf" value="000.000.000-00">
+```js
+{% include_relative codes/foods-app-sqlite-simple/src/seeders/index.js %}
 ```
 
+### Model
 
-### [label field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label)
+src/models/Food.js:
 
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <label for="cpf">CPF:</label>
-  <input type="text" name="cpf" id="cpf">
-</div>
-
-```html
-<label for="cpf">CPF:</label>
-<input type="text" name="cpf" id="cpf">
+```js
+{% include_relative codes/foods-app-sqlite-simple/src/models/Food.js %}
 ```
 
-### [password field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password)
+src/models/Category.js:
 
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <input type="password" name="password">
-</div>
-
-```html
-<input type="password" name="password">
+```js
+{% include_relative codes/foods-app-sqlite-simple/src/models/Category.js %}
 ```
 
-### [radio button field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio)
+### View
 
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <input type="radio" name="sex" value="male" id="male">
-  <label for="male">masculino</label>
-</div>
+src/views/foods/index.njk:
 
 ```html
-<input type="radio" name="sex" value="male" id="male">
-<label for="male">masculino</label>
-```
+{% raw %}
+{% extends "layout.njk" %}
 
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  Sexo:
-  <input type="radio" name="sexo" value="masculino" id="masculino" checked>
-  <label for="masculino">masculino</label>
-  <input type="radio" name="sexo" value="feminino" id="feminino">
-  <label for="feminino">feminino</label>
-</div>
+{% set title = "Menu" %}
 
-```html
-Sexo:
-<input type="radio" name="sexo" value="masculino" id="masculino" checked>
-<label for="masculino">masculino</label>
-<input type="radio" name="sexo" value="feminino" id="feminino">
-<label for="feminino">feminino</label>
-```
+{% block content %}
+<h1 class="my-5 text-center">{{ title }}</h1>
 
-### [checkbox field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox)
+<section class="card-deck">
+  {% for food in foods %}
+  <div class="col-sm-6 col-lg-4 col-xl-3 mb-3">
+    <div class="card">
+      <div class="card-header text-center font-weight-bold">
+        {{ food.name }}
+      </div>
+      <div class="card-body p-0">
+        <img src="{{ food.image }}" alt="{{ food.name }}" class="w-100">
+      </div>
+      <div class="card-footer text-right">
+        <span class="food-category float-left badge badge-secondary">{{ food.category }}</span>
+        <span class="food-price">{{ food.price }}</span>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% endblock %}
 
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <input type="checkbox" name="aceitaCondicoes" value="ok" id="condicoes">
-  <label for="condicoes">Você concorda com os termos...</label>
-</div>
-
-```html
-<input type="checkbox" name="aceitaCondicoes" value="ok" id="condicoes">
-<label for="condicoes">Você concorda com os termos...</label>
-```
-
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  Linguagens:
-  <input type="checkbox" name="linguagens" value="javascript" id="javascript">
-  <label for="javascript">Javascript</label>
-  <input type="checkbox" name="linguagens" value="c" id="c">
-  <label for="c">C</label>
-  <input type="checkbox" name="linguagens" value="java" id="java">
-  <label for="java">Java</label>
-  <input type="checkbox" name="linguagens" value="python" id="python">
-  <label for="python">Python</label>
-</div>
-
-```html
-Linguagens:
-<input type="checkbox" name="linguagens" value="javascript" id="javascript">
-<label for="javascript">Javascript</label>
-<input type="checkbox" name="linguagens" value="c" id="c">
-<label for="c">C</label>
-<input type="checkbox" name="linguagens" value="java" id="java">
-<label for="java">Java</label>
-<input type="checkbox" name="linguagens" value="python" id="python">
-<label for="python">Python</label>
-```
-
-### [button field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/button)
-
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <button>Create</button>
-</div>
-
-```html
-<input type="button" name="submit" value="Create">
-<input type="submit" name="submit" value="Create">
-<button>Create</button>
-```
-
-### [file field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file)
-
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <input type="file" name="file">
-</div>
-
-```html
-<input type="file" name="file">
-```
-
-### [range field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range)
-
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <input type="range" name="number" min="1" max="99" step="1">
-  <input type="text" name="number-value" value="20" size="3">
-</div>
+{% block script %}
 <script>
-    document.querySelector('input[type=range]').oninput = function() {
-      document.querySelector('input[name=number-value]').value = this.value
-    }
-  </script>
-
-```html
-<input type="range" name="number" min="1" max="100" step="1">
-<input type="text" name="number-value" value="20" size="3">
+  const prices = document.querySelectorAll('.card-footer .food-price');
+  prices.forEach((price) => {
+    price.innerHTML = Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(price.innerHTML)
+  });
+</script>
+{% endblock %}
+{% endraw %}
 ```
 
-### [number field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number)
+<img src="assets/preview.png" alt="Preview" width="100%">
 
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <form>
-    <input type="number" name="number">
-  </form>
-</div>
-
-```html
-<input type="number" name="number">
-```
-
-### [date field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date)
-
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <form>
-    <input type="date" name="date">
-  </form>
-</div>
-
-```html
-<input type="date" name="date">
-```
-
-### [email field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email)
-
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <form>
-    <input type="email" name="email">
-  </form>
-</div>
-
-```html
-<input type="email" name="email">
-```
-
-### [multi-line text field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea)
-
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <label for="message">Mensagem:</label><br>
-  <textarea name="message" id="message" rows="3" cols="60">digite uma mensagem</textarea>
-</div>
-
-```html
-<label for="message">Mensagem:</label><br>
-<textarea name="message" id="message" rows="3" cols="60">digite uma mensagem</textarea>
-```
-
-### [combobox field](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select)
-
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <label for="place">Estado: </label>
-  <select name="place" id="place">
-    <option value=""></option>
-    <option value="PB">Paraíba</option>
-    <option value="PE">Pernambuco</option>
-  </select>
-</div>
-
-```html
-<label for="place">Estado: </label>
-<select name="place" id="place">
-  <option value=""></option>
-  <option value="PB">Paraíba</option>
-  <option value="PE">Pernambuco</option>
-</select>
-```
-
-## Exemplo de Formulário
+## Integração com Front-end
 
 ---
 
-[simple-form/index.html](codes/simple-form/index.html):
+### Arquitetura do Código
 
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <main>
-    <h1 style="color: 2em;">Contato</h1>
-    <form action="sucesso.html" method="post">
-      <fieldset>
-        <div>
-          <label for="nome">Nome</label>
-          <input type="text" id="nome" name="nome" required> *
-        </div>
-        <div>
-          <label for="curso">Curso</label>
-          <select name="curso" id="curso">
-            <option value="" selected>escolha um curso</option>
-            <option value="TSI">Sistemas para Internet</option>
-            <option value="RC">Redes de Computadores</option>
-          </select>
-        </div>
-      </fieldset>
-      <input type="submit" value="Enviar">
-    </form>
-  </main>
-</div>
+![](assets/mvc.png)
 
-```html
-<main>
-  <h1 style="color: #606c71">Contato</h1>
-  <form action="sucesso.html" method="post">
-    <fieldset>
-      <div>
-        <label for="nome">Nome</label>
-        <input type="text" id="nome" name="nome" required> *
-      </div>
-      <div>
-        <label for="curso">Curso</label>
-        <select name="curso" id="curso">
-          <option value="" selected>escolha um curso</option>
-          <option value="TSI">Sistemas para Internet</option>
-          <option value="RC">Redes de Computadores</option>
-        </select>
-      </div>
-    </fieldset>
-    <input type="submit" value="Enviar">
-  </form>
-</main>
+### Exclusão de Comida
+
+<img src="assets/preview.gif" alt="Preview" width="100%">
+
+### Estrutura de Código
+
+```
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── public
+│   ├── css
+│   │   └── bootstrap.min.css
+│   ├── foods.html
+│   ├── imgs
+│   │   ├── hamburguer.jpg
+│   │   ├── milkshake.jpg
+│   │   ├── sanduiche.jpg
+│   │   └── suco.jpg
+│   └── js
+│       ├── bootstrap.min.js
+│       ├── jquery.min.js
+│       ├── popper.min.js
+│       └── services
+│           └── api.js
+├── requests.http
+└── src
+    ├── controllers
+    │   └── foodsController.js
+    ├── db
+    │   ├── database.sqlite
+    │   └── index.js
+    ├── index.js
+    ├── migrations
+    │   └── index.js
+    ├── models
+    │   ├── Category.js
+    │   └── Food.js
+    ├── routes
+    │   └── index.js
+    ├── seeders
+    │   ├── data.json
+    │   └── index.js
+    └── views
+        ├── foods
+        │   ├── _delete.njk
+        │   └── index.njk
+        └── layout.njk
 ```
 
-## Formulário com Boostrap
+[![Edit foods-app-sqlite-delete](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/foods-app-sqlite-delete-z65bm?fontsize=14&hidenavigation=1&theme=dark)
 
----
+### Router
 
-[bootstrap-form/index.html](codes/bootstrap-form/index.html):
+![](assets/delete-food.png)
 
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <iframe
-    src="codes/bootstrap-form/index.html"
-    width="100%"
-    height="300px"
-    frameborder="0"
-    allowfullscreen>
-  </iframe>
-</div>
-
-```html
-<main class="container">
-  <h1>Contato</h1>
-  <form action="sucesso.html" method="post">
-    <div class="form-group">
-      <label for="nome">Nome</label>*
-      <input type="text" class="form-control" id="nome" name="nome" required>
-    </div>
-    <div class="form-group">
-      <label for="curso">Curso</label>
-      <select class="form-control" name="curso" id="curso">
-        <option value="" selected>escolha um curso</option>
-        <option value="TSI">Sistemas para Internet</option>
-        <option value="RC">Redes de Computadores</option>
-      </select>
-    </div>
-    <input type="submit" value="Enviar">
-  </form>
-</main>
-```
-
-[bootstrap-grid-form/index.html](codes/bootstrap-grid-form/index.html):
-
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <iframe
-    src="codes/bootstrap-grid-form/index.html"
-    width="100%"
-    height="300px"
-    frameborder="0"
-    allowfullscreen>
-  </iframe>
-</div>
-
-```html
-<main class="container">
-  <h1>Contato</h1>
-  <form action="sucesso.html" method="post">
-    <div class="row">
-      <div class="form-group col-sm-6">
-        <label for="nome">Nome</label>*
-        <input type="text" class="form-control" id="nome" name="nome" required>
-      </div>
-      <div class="form-group col-sm-6">
-        <label for="curso">Curso</label>
-        <select class="form-control" name="curso" id="curso">
-          <option value="" selected>escolha um curso</option>
-          <option value="TSI">Sistemas para Internet</option>
-          <option value="RC">Redes de Computadores</option>
-        </select>
-      </div>
-    </div>
-    <input type="submit" value="Enviar">
-  </form>
-</main>
-```
-
-## JavaScript e HTML
-
----
-
-### Integrando JS e HTML
-
-[hello-js/index.html](codes/hello-js/index.html):
-
-```html
-{% include_relative codes/hello-js/index.html %}
-```
-
-[hello-js/js/index.js](codes/hello-js/js/index.js):
+src/routes/index.js:
 
 ```js
-{% include_relative codes/hello-js/js/index.js %}
+{% include_relative codes/foods-app-sqlite-delete/src/routes/index.js %}
 ```
 
-### Tratando dados de formulário
+### Controller
 
-[calc/index.html](codes/calc/index.html):
-
-<div style="border-radius: 0.3rem; border: solid 1px #dce6f0; padding: 0.8rem">
-  <iframe
-    src="codes/calc/index.html"
-    width="100%"
-    height="330px"
-    frameborder="0"
-    allowfullscreen>
-  </iframe>
-</div>
-
-```html
-<main class="container">
-  <h1 class="mb-5">Calculadora</h1>
-  <form action="sucesso.html" method="post">
-      <div class="form-group">
-        <input type="text" class="form-control w-25" id="number1" name="number1">
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control w-25" id="number2" name="number2">
-      </div>
-      <div class="form-group ml-2">
-        <input type="button" class="btn btn-primary" id="sum" name="sum" value="+">
-        <input type="button" class="btn btn-primary" id="minus" name="minus" value="-">
-        <input type="button" class="btn btn-primary" id="multiply" name="minus" value="x">
-        <input type="button" class="btn btn-primary" id="divide" name="minus" value="÷">
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control w-25" id="result" name="result">
-      </div>
-    </div>
-  </form>
-</main>
-<script src="js/index.js"></script>
-```
-
-[calc/js/index.js](codes/calc/js/index.js):
+src/controllers/foodsController.js:
 
 ```js
-{% include_relative codes/calc/js/index.js %}
+const Food = require('../models/Food');
+
+...
+
+const destroy = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await Food.destroy(id);
+
+  if (result) {
+    res.status(204).send();
+  } else {
+    return res.status(400).json({ error: 'Food not found.' });
+  }
+};
+
+...
 ```
+
+### Model
+
+src/models/Food.js:
+
+```js
+const { conn } = require('../db');
+
+...
+
+async function destroy(id) {
+  const sql = `
+    DELETE FROM
+      foods
+    WHERE
+      id = ?
+  `;
+
+  const db = await conn();
+
+  const { changes } = await db.run(sql, [id]);
+
+  return changes;
+}
+
+...
+```
+
+### View
+
+src/views/foods/_delete.njk:
+
+```html
+{% raw %}
+<div class="modal fade" id="deleteFoodModal" tabindex="-1" aria-labelledby="deleteFoodLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteFoodLabel">Excluir comida</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Deseja realmente excluir <span id="modal-name-food"></span>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" id="deleteFoodBtn">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endraw %}
+```
+
+![](assets/delete-food-modal.png)
+
+src/views/foods/index.njk:
+
+```html
+{% raw %}
+{% extends "layout.njk" %}
+...
+{% block content %}
+...
+<section class="card-deck">
+  {% for food in foods %}
+  <div class="card-food col-sm-6 col-lg-4 col-xl-3 mb-3" id="food-{{ food.id }}">
+    <div class="card">
+      <div class="card-header text-center font-weight-bold">
+        <span class="food-name">
+          {{ food.name }}
+        </span>
+        <span class="food-delete float-right text-danger">
+          <i
+            class="far fa-trash-alt"
+            onclick="deleteFoodView({{ food.id }}, '{{ food.name }}')">
+          </i>
+        </span>
+      </div>
+      ...
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% include "foods/_delete.njk" %}
+{% endblock %}
+
+{% block script %}
+<script type="module">
+  import api from '/js/services/api.js';
+
+  ...
+
+  function deleteFoodView(foodId, foodName) {
+    $('#deleteFoodModal').modal('toggle');
+
+    document.querySelector('#modal-name-food').innerHTML = foodName;
+
+    document.querySelector('#deleteFoodBtn').onclick = async (e) => {
+      e.preventDefault();
+
+      await api.destroy(`/foods/${foodId}`);
+
+      document.querySelector(`#food-${ foodId }`).remove();
+
+      $('#deleteFoodModal').modal('toggle');
+    };
+  }
+
+  window.deleteFoodView = deleteFoodView;
+
+  ...
+</script>
+{% endblock %}
+{% endraw %}
+```
+
+public/js/services/api.js:
+
+```js
+const domain = '';
+
+...
+
+async function destroy(resource) {
+  await fetch(`${domain}${resource}`, {
+    method: 'delete',
+  });
+}
+
+...
+```
+
+### CRUD de Comida
+
+[![Edit foods-app-sqlite](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/foods-app-sqlite-kq0tl?fontsize=14&hidenavigation=1&theme=dark)
