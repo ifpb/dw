@@ -54,6 +54,17 @@ hosts-app/front/js/index.js:
 
 [![Edit host-app-back](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/host-app-back-moeem?fontsize=14&hidenavigation=1&theme=dark)
 
+REST API
+
+| Método | Caminho              | Resposta                                     |
+| ------ | -------------------- | -------------------------------------------- |
+| POST   | `/hosts`             | Cria uma novo host                           |
+| GET    | `/hosts`             | Retorna todas os hosts                       |
+| GET    | `/hosts/1`           | Retorna o host de ID 1                       |
+| PUT    | `/hosts/1`           | Atualiza o host de ID 1                      |
+| DELETE | `/hosts/1`           | Exclui o host de ID 1                        |
+
+
 hosts-app/back/db.json:
 
 ```js
@@ -118,14 +129,6 @@ GET http://localhost:3000/hosts
 ### Delete Host
 ```
 
-| Método | Caminho              | Resposta                                     |
-| ------ | -------------------- | -------------------------------------------- |
-| POST   | `/hosts`             | Cria uma novo host                           |
-| GET    | `/hosts`             | Retorna todas os hosts                       |
-| GET    | `/hosts/1`           | Retorna o host de ID 1                       |
-| PUT    | `/hosts/1`           | Atualiza o host de ID 1                      |
-| DELETE | `/hosts/1`           | Exclui o host de ID 1                        |
-
 ## Fetch API
 
 ---
@@ -149,6 +152,8 @@ export default { create, read, update, destroy };
 
 ![](assets/read-hosts.png)
 
+Codesandbox: [Read](https://moeem.sse.codesandbox.io/hosts)
+
 ```
 ### Read Hosts
 
@@ -170,6 +175,8 @@ api.read('/hosts');
 ### Create
 
 ![](assets/create-host.png)
+
+Codesandbox: [Create (REQBIN)](https://reqbin.com/75sw4s9x)
 
 ```
 ### Create Host
@@ -212,6 +219,8 @@ api.create('/hosts', host);
 
 ![](assets/update-host.png)
 
+Codesandbox: [Upadte (REQBIN)](https://reqbin.com/rmigtirs)
+
 ```
 ### Update Host
 
@@ -252,6 +261,8 @@ api.update('/hosts/3', host);
 ### Delete
 
 ![](assets/delete-host.png)
+
+Codesandbox: [Delete (REQBIN)](https://reqbin.com/8cwfroas)
 
 ```
 ### Delete Host
