@@ -106,13 +106,12 @@ Os critérios de avaliação serão influenciados por questões de apresentaçã
 | Item | Etapa            | Tecnologia | Recursos                                              |
 | ---- | ---------------- | ---------- | ----------------------------------------------------- |
 | 1    | Proposta de Tema | -          | Apresentar a ideia e objetivo principal do projeto    |
-| 1    | Proposta de Tema | -          | Listar algum comparativo de sistemas semelhantes      |
 | 2    | Proposta de Tema | -          | Exibir esboços de tela das funcionalidades do projeto |
 | 4    | Camada Frontend  | HTML & CSS | Conter listas, tabela e formulário                    |
 | 5    | Camada Frontend  | HTML & CSS | Página HTML estilizada                                |
 | 6    | Camada Frontend  | JS         | Criação de componentes dinamicamente através de JSON  |
 | 7    | Camada Backend   | Node.js    | Estruturar alguma Web API                             |
-| 7    | Camada Backend   | Node.js    | Uso de Template Engine                                |
+| 7    | Camada Backend   | Node.js    | Integrar Front e Back                                 |
 | 8    | Camada Backend   | Node.js    | Manipulação de Sessão                                 |
 | 9    | Camada Backend   | Node.js    | Uso de persistência de dados em SGBD                  |
 
@@ -121,15 +120,15 @@ Para auxiliar no cálculo da nota final do projeto utilize esse checklist:
 | Item | Critérios (%)         | Projeto 1 | Projeto 2 | ... | Projeto n |
 | ---- | --------------------- | --------- | --------- | --- | --------- |
 | 1    | Ideia                 |           |           |     |           |
-| 2    | Comparativo           |           |           |     |           |
-| 3    | Esboço de tela        |           |           |     |           |
-| 4    | HTML                  |           |           |     |           |
-| 5    | CSS                   |           |           |     |           |
-| 6    | JS                    |           |           |     |           |
-| 7    | API                   |           |           |     |           |
-| 8    | Template Engine       |           |           |     |           |
-| 9    | Sessão                |           |           |     |           |
-| 10   | BD                    |           |           |     |           |
+| 2    | Esboço de tela        |           |           |     |           |
+| 3    | HTML                  |           |           |     |           |
+| 4    | CSS                   |           |           |     |           |
+| 5    | JS                    |           |           |     |           |
+| 6    | API                   |           |           |     |           |
+| 7    | Integrar Front e Back |           |           |     |           |
+| 8    | Sessão                |           |           |     |           |
+| 9    | Projeto do BD         |           |           |     |           |
+| 10   | Integração com BD     |           |           |     |           |
 |      | Organização do código |           |           |     |           |
 |      | Funcionamento Geral   |           |           |     |           |
 |      | Nota\*                |           |           |     |           |
