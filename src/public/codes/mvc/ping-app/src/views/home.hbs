@@ -1,0 +1,154 @@
+<h1 class="text-center my-5">Monitor App</h1>
+<div class="row">
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title text-center">
+          Hosts
+          <i class="fas fa-plus float-end pt-1" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+        </h5>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Host</th>
+              <th>Address</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each hosts}}
+            <tr id="host-{{this.id}}" class="host">
+              <td>{{this.name}}</td>
+              <td>{{this.address}}</td>
+              <td class="align-middle">
+                <div class="d-flex justify-content-between">
+                  <i class="fas fa-stopwatch" onclick="loadTimeSeries({{this.id}}, '{{this.name}}')">
+                  </i>
+                  <div class="spinner-border spinner-border-sm invisible" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card mt-4 mt-md-0">
+      <div class="card-header">
+        <h5 class="card-title text-center">Times</h5>
+      </div>
+      <div class="card-body">
+        <canvas id="myChart" width="400"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form action="/hosts/create" method="POST">
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Novo Host</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="host" class="form-label">Host</label>
+            <input type="text" class="form-control" id="host" name="name" />
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" name="address" />
+          </div>
+          <div class="mb-3">
+            <label for="mask" class="form-label">Mask</label>
+            <input type="text" class="form-control" id="mask" name="mask" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Fechar
+          </button>
+          <button type="submit" class="btn btn-primary">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script type="module">
+  import api from "/js/service/api.js";
+
+  let chart;
+
+  function loadChart() {
+    const ctx = document.getElementById("myChart").getContext("2d");
+
+    chart = new Chart(ctx, {
+      type: "bar",
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+  async function loadTimeSeries(hostId, hostName) {
+    const loading = document.querySelector(`#host-${hostId} .spinner-border`);
+
+    loading.classList.remove("invisible");
+
+    activeHostRow(hostId);
+
+    const times = await api.read(`hosts/${hostId}/times`);
+
+    const timesValues = [];
+
+    for (const time of times) {
+      timesValues.push(time.time);
+    }
+
+    const data = {
+      labels: Object.keys(timesValues),
+      datasets: [
+        {
+          label: "Tempo (ms)",
+          data: timesValues
+        }
+      ]
+    };
+
+    chart.data = data;
+
+    chart.update();
+
+    loading.classList.add("invisible");
+  }
+
+  function activeHostRow(hostId) {
+    const rows = document.querySelectorAll('tr.host');
+
+    for (const row of rows) {
+      if (row.id === `host-${hostId}`) {
+        row.classList.add('table-active')
+      } else {
+        row.classList.remove('table-active')
+      }
+    }
+  }
+
+  loadChart();
+
+  window.loadTimeSeries = loadTimeSeries;
+
+</script>
