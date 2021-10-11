@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  express :
+    build: .
+    image: ifpb/node:slim-express-procps
+    container_name: express
+    volumes:
+      - .:/usr/app
+    ports:
+      - 3000:3000

@@ -1,0 +1,24 @@
+
+>>> 2020-10-27T01:46:39.716Z
+top - 01:46:39 up  9:09,  0 users,  load average: 0.08, 0.03, 0.01
+Tasks:   3 total,   1 running,   2 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.5 us,  0.6 sy,  0.0 ni, 98.8 id,  0.1 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem :  2039264 total,   832868 free,   261920 used,   944476 buff/cache
+KiB Swap:  1048572 total,  1048572 free,        0 used.  1655240 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+    1 root      20   0  325068  30488  25036 S   0.0  1.5   0:00.37 node
+   17 root      20   0    4280    756    688 S   0.0  0.0   0:00.00 sh
+   18 root      20   0   40908   3072   2688 R   0.0  0.2   0:00.00 top
+
+>>> 2020-10-27T01:46:52.286Z
+top - 01:46:52 up  9:09,  0 users,  load average: 0.07, 0.03, 0.00
+Tasks:   3 total,   1 running,   2 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.5 us,  0.6 sy,  0.0 ni, 98.8 id,  0.1 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem :  2039264 total,   831860 free,   262572 used,   944832 buff/cache
+KiB Swap:  1048572 total,  1048572 free,        0 used.  1654512 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+    1 root      20   0  325068  30632  25192 S   0.0  1.5   0:00.15 node
+   17 root      20   0    4280    756    688 S   0.0  0.0   0:00.00 sh
+   18 root      20   0   40908   3052   2676 R   0.0  0.1   0:00.00 top

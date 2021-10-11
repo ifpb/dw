@@ -1,0 +1,10 @@
+@startuml
+title Top App
+hide footbox
+skinparam monochrome true
+
+Client -> Server: GET /
+note right: GET / HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\n  "memory": ...,\n  "process": ...\n}
+@enduml
