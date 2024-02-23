@@ -1,0 +1,5 @@
+@server=http://localhost:3000
+
+### Get BMI
+
+GET {{@server}}/bmi?weight=100&height=1.5

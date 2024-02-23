@@ -1,0 +1,153 @@
+---
+title: JSON Server
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# { frontmatter.title }
+
+## CLI
+
+< CodePreview src = "/codes/package/json-server/db.json" />
+
+[json-server](https://www.npmjs.com/package/json-server)
+
+```bash
+$ npm init -y
+$ npm i json-server
+$ npx json-server --watch db.json
+```
+
+
+## Module
+
+< CodeTree src = "/codes/package/json-server/" />
+
+<CodePreview src="/codes/package/json-server/package.json" />
+
+<CodePreview src="/codes/package/json-server/src/server.js" />
+
+### Rotas
+
+| Método | Caminho       | Resposta                                       |
+| ------ | ------------- | -------------------------------------- |
+| POST   | `/hosts`      | Cria um novo host                      |
+| GET    | `/hosts`      | Retorna todos os hosts                 |
+| GET    | `/hosts?id=1` | Retorna o host com id igual a 1        |
+| GET    | `/hosts/1`    | Retorna o host com id igual a 1        |
+| PUT    | `/hosts/1`    | Atualiza o host com id igual a 1       |
+| DELETE | `/hosts/1`    | Exclui o host com id igual a 1         |
+
+[HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+  - Respostas de informação (100-199)
+  - Respostas de sucesso (200-299)
+  - Redirecionamentos (300-399)
+  - Erros do cliente (400-499)
+  - Erros do servidor (500-599)
+
+Exemplos de Códigos
+
+| Código | Nome                  | Significado                                                                     |
+| ------ | --------------------- | ------------------------------------------------------------------------------- |
+| `200`  | Ok                    | Solicitação gerada com sucesso                                                  |
+| `201`  | Created               | Solicitação gerada com sucesso e um novo recurso foi criado como resultado      |
+| `204`  | No Content            | Solicitação gerada com sucesso e não há conteúdo para ser enviado               |
+| `400`  | Bad Request           | Solicitação não compreendida por motivos de erro                                |
+| `401`  | Unauthorized          | Solicitação foi bloqueada porque não possui credenciais de autenticação válidas |
+| `404`  | Not Found             | O servidor não pode encontrar o recurso solicitado                              |
+| `500`  | Internal Server Error | O servidor encontrou uma situação com a qual não sabe lidar.                    |
+
+### Create a host
+
+![](/dw/imgs/api/rest/host-api-post.png)
+
+```http
+@server=http://localhost:3000
+@createdHostId = {{createHost.response.body.$.id}}
+
+### Create a host
+# @name createHost
+POST {{server}}/hosts
+Content-Type: application/json
+
+{
+  "name": "DNS Server",
+  "address": "1.1.1.1"
+}
+```
+
+```bash
+$ curl -X POST http://localhost:3000/hosts \
+   -d '{"name":"DNS Server","address":"1.1.1.1"}'
+```
+
+### Read hosts
+
+![](/dw/imgs/api/rest/host-api-get.png)
+
+```http
+@server=http://localhost:3000
+
+### Read hosts
+GET {{server}}/hosts
+```
+
+```bash
+$ curl http://localhost:3000/hosts
+```
+
+### Read a host (id)
+
+![](/dw/imgs/api/rest/host-api-get-filter.png)
+
+```http
+@server=http://localhost:3000
+@createdHostId = {{createHost.response.body.$.id}}
+
+### Read a host
+GET {{server}}/hosts/{{createdHostId}}
+```
+
+```bash
+$ curl http://localhost:3000/hosts/3
+```
+
+### Update a host
+
+![](/dw/imgs/api/rest/host-api-put.png)
+
+```http
+@server=http://localhost:3000
+@createdHostId = {{createHost.response.body.$.id}}
+
+### Update a host
+
+PUT {{server}}/hosts/{{createdHostId}}
+Content-Type: application/json
+
+{
+  "name": "Cloudflare DNS",
+  "address": "1.1.1.1"
+}
+```
+
+```bash
+$ curl -X PUT http://localhost:3000/hosts/3 \
+   -d '{"name":"Cloudflare DNS","address":"1.1.1.1"}'
+```
+
+### Delete a host
+
+![](/dw/imgs/api/rest/host-api-delete.png)
+
+```http
+@server=http://localhost:3000
+@createdHostId = {{createHost.response.body.$.id}}
+
+DELETE {{server}}/hosts/{{createdHostId}}
+```
+
+```bash
+$ curl -X DELETE http://localhost:3000/hosts/3
+```

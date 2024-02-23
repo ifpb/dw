@@ -1,0 +1,26 @@
+@startuml
+title GET
+hide footbox
+skinparam monochrome true
+
+Client -> Server: GET /hosts
+note right: GET /hosts HTTP/1.1\nHost: http://localhost:3000\n
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n[\n  {\n    "id": 1,\n    "name": "Google Search",\n    "address": "www.google.com"\n  },\n  {\n    "id": 2,\n    "name": "Google DNS",\n    "address": "8.8.8.8"\n  },\n  {\n    "name": "DNS Server",\n    "address": "1.1.1.1",\n    "id": 3\n  }\n]
+
+Client -> Server: GET /hosts?name=Google%20DNS
+note right: GET /hosts HTTP/1.1\nHost: http://localhost:3000\n
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n[\n  {\n    "id": 2,\n    "name": "Google DNS",\n    "address": "8.8.8.8"\n  },\n  {\n    "name": "DNS Server",\n    "address": "1.1.1.1",\n    "id": 3\n  }\n]
+
+Client -> Server: GET /hosts/3
+note right: GET /hosts/3 HTTP/1.1\nHost: http://localhost:3000\n
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n{\n  "name": "DNS Server",\n  "address": "1.1.1.1",\n  "id": 3\n}
+
+Client -> Server: GET /hosts/x
+note right: GET /hosts/x HTTP/1.1\nHost: http://localhost:3000\n
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "message": "Host not found"\n}
+
+@enduml

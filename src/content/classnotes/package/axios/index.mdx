@@ -1,0 +1,133 @@
+---
+title: Axios
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# {frontmatter.title}
+
+## Objeto Axios
+
+[axios](https://axios-http.com/)
+
+```bash
+$ npm install axios
+```
+
+<CodePreview src="/codes/package/axios/via-cep/index.js" />
+
+### Invest-app (CRUD)
+
+[Código Fonte](https://github.com/ifpb/dw/tree/main/public/codes/package/axios/invest-app/)
+
+<CodeTree src="/codes/package/axios/invest-app/" />
+
+#### Axios Config
+
+<CodePreview src="/codes/package/axios/invest-app/js/services/api.js" />
+
+```js title="/codes/package/axios/invest-app/js/services/storage.js"
+import API from '/services/api.js';
+
+async function create(resource, data) {}
+async function read(resource) {}
+async function update(resource, data) {}
+async function remove(resource) {}
+
+export default { create, read, update, remove };
+```
+
+#### Create a investment
+
+![](/dw/imgs/package/supabase-api/post-investment.png)
+
+[Axios - POST Request](https://axios-http.com/docs/post_example)
+
+```js  title="/codes/package/axios/invest-app/js/services/storage.js"
+async function create(resource, data) {
+  const { data: createdData } = await API.post(resource, data);
+
+  return createdData?.[0];
+}
+```
+
+```js
+import Storage from './services/storage.js';
+
+const investment = {
+  name: "Tesouro Selic 2029",
+  value: 10000,
+  origin: "Tesouro Direto",
+  category: "Pós",
+  interest: "100% Selic",
+  created_at: "2021-09-10T00:00:00-03:00",
+};
+
+Storage.create('investments', investment);
+```
+
+#### Read investments
+
+![](/dw/imgs/package/supabase-api/get-investments.png)
+
+[Axios - GET Request](https://axios-http.com/docs/example)
+
+```js  title="/codes/package/axios/invest-app/js/services/storage.js"
+async function read(resource) {
+  const { data } = await API.get(resource);
+
+  return data;
+}
+```
+
+```js
+import Storage from './services/storage.js';
+
+Storage.read('investments');
+Storage.read('investments/?id=eq.1');
+```
+
+#### Update a investment
+
+![](/dw/imgs/package/supabase-api/patch-investment.png)
+
+[Axios - PATCH Request](https://axios-http.com/docs/api_intro)
+
+```js  title="/codes/package/axios/invest-app/js/services/storage.js"
+async function update(resource, data) {
+  const { data: updatedData } = await API.patch(resource, data);
+
+  return updatedData?.[0];
+}
+```
+
+```js
+import Storage from './services/storage.js';
+
+Storage.update('investments/?id=eq.1', { value: 15000 });
+```
+
+#### Delete a investment
+
+![](/dw/imgs/package/supabase-api/delete-investment.png)
+
+[Axios - DELETE Resquest](https://axios-http.com/docs/api_intro)
+
+```js  title="/codes/package/axios/invest-app/js/services/storage.js"
+async function remove(resource) {
+  const { error } = await API.delete(resource);
+
+  if (error) {
+    throw error;
+  } else {
+    return true;
+  }
+}
+```
+
+```js
+import Storage from './services/storage.js';
+
+Storage.remove('investments/?id=eq.1');
+```

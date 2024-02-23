@@ -1,0 +1,21 @@
+@startuml
+title PUT
+hide footbox
+skinparam monochrome true
+
+Client -> Server: PUT /hosts/3
+note right: PUT /hosts/3 HTTP/1.1\nHost: http://localhost:3000\nContent-Type: application/json\n\n{\n  "name": "Google DNS",\n  "address": "1.1.1.1"\n}
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n{\n  "id": 3,\n  "name": "Cloudflare DNS",\n  "address": "1.1.1.1"\n}
+
+Client -> Server: PUT /hosts/3
+note right: PUT /hosts/3 HTTP/1.1\nHost: http://localhost:3000\nContent-Type: application/json\n\n{\n  "name": "DNS Server"\n}
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "message": "Error when passing parameters"\n}
+
+Client -> Server: PUT /hosts/x
+note right: PUT /hosts/x HTTP/1.1\nHost: http://localhost:3000\nContent-Type: application/json\n\n{\n  "name": "Google DNS",\n  "address": "1.1.1.1"\n}
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "message": "Host not found"\n}
+
+@enduml

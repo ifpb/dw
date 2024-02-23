@@ -1,0 +1,38 @@
+@server=http://localhost:3000
+
+### Get BMI (with params)
+
+POST {{@server}}/bmi
+Content-Type: application/json
+
+{
+  "weight": 100,
+  "height": 1.5
+}
+
+### Get BMI (bad params)
+
+POST {{@server}}/bmi
+Content-Type: application/json
+
+{
+  "weight": 100,
+  "height": -1
+}
+
+### Get BMI (without params)
+
+POST {{@server}}/bmi
+Content-Type: application/json
+
+{
+  "weight": 100
+}
+
+### Get BMI (without params)
+
+POST {{@server}}/bmi
+
+### Error 404
+
+GET {{@server}}/bmi

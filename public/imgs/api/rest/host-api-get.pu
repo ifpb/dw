@@ -1,0 +1,10 @@
+@startuml
+title GET
+hide footbox
+skinparam monochrome true
+
+Client -> Server: GET /hosts
+note right: GET /hosts HTTP/1.1\nHost: http://localhost:3000\n
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n[\n  {\n    "id": 1,\n    "name": "Google Search",\n    "value": "www.google.com"\n  },\n  {\n    "id": 2,\n    "name": "Google DNS",\n    "value": "8.8.8.8"\n  },\n  {\n    "name": "DNS Server",\n    "address": "1.1.1.1",\n    "id": 3\n  }\n]
+@enduml

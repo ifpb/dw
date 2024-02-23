@@ -1,0 +1,254 @@
+---
+title: Construção de API
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# { frontmatter.title }
+
+## Back-end Web
+
+### Rotas do Host API
+
+| Método | Caminho       | Resposta                         |
+| ------ | ------------- | -------------------------------- |
+| POST   | `/hosts`      | Cria um novo host                |
+| GET    | `/hosts`      | Retorna todos os hosts           |
+| GET    | `/hosts?id=1` | Retorna o host com id igual a 1  |
+| GET    | `/hosts/1`    | Retorna o host com id igual a 1  |
+| PUT    | `/hosts/1`    | Atualiza o host com id igual a 1 |
+| DELETE | `/hosts/1`    | Exclui o host com id igual a 1   |
+
+### HTTP Status Codes
+
+[HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
+  - Respostas de informação (100-199)
+  - Respostas de sucesso (200-299)
+  - Redirecionamentos (300-399)
+  - Erros do cliente (400-499)
+  - Erros do servidor (500-599)
+
+Exemplos de Códigos
+
+| Código | Nome                  | Significado                                                                     |
+| ------ | --------------------- | ------------------------------------------------------------------------------- |
+| `200`  | Ok                    | Solicitação gerada com sucesso                                                  |
+| `201`  | Created               | Solicitação gerada com sucesso e um novo recurso foi criado como resultado      |
+| `204`  | No Content            | Solicitação gerada com sucesso e não há conteúdo para ser enviado               |
+| `400`  | Bad Request           | Solicitação não compreendida por motivos de erro                                |
+| `401`  | Unauthorized          | Solicitação foi bloqueada porque não possui credenciais de autenticação válidas |
+| `404`  | Not Found             | O servidor não pode encontrar o recurso solicitado                              |
+| `500`  | Internal Server Error | O servidor encontrou uma situação com a qual não sabe lidar.                    |
+
+### API de Investimentos
+
+<CodeTree src ="/codes/expressjs/monitor-app-api/back" />
+
+<CodePreview src="/codes/expressjs/monitor-app-api/back/src/data/hosts.js" />
+
+<CodePreview src="/codes/expressjs/monitor-app-api/back/src/index.js" />
+
+<CodePreview src="/codes/expressjs/monitor-app-api/back/src/routes.js" />
+
+<CodePreview src="/codes/expressjs/monitor-app-api/back/requests.http" />
+
+<CodePreview src="/codes/expressjs/monitor-app-api/back/package.json" />
+
+### Create
+
+![](/dw/imgs/expressjs/api/create-host.png)
+
+```js title="/codes/expressjs/invest-app-api/src/routes.js"
+router.post('/hosts', (req, res) => {
+  const host = req.body;
+
+  const id = uuidv4();
+
+  const newHost = { ...host, id };
+
+  if (!host.name || !host.address) {
+    throw new HTTPError('Error when passing parameters', 400);
+  }
+
+  hosts.push(newHost);
+
+  res.json(newHost);
+});
+```
+
+```http title="/codes/expressjs/invest-app-api/back/requests.http"
+@server=http://localhost:3000
+@createdHostId = {{createHost.response.body.$.id}}
+
+### Create a host
+# @name createHost
+POST {{server}}/hosts
+Content-Type: application/json
+
+{
+  "name": "DNS Server",
+  "address": "1.1.1.1"
+}
+
+### Create a host (bad params)
+# @name createHost
+POST {{server}}/hosts
+Content-Type: application/json
+
+{
+  "name": "DNS Server"
+}
+```
+
+### Read
+
+![](/dw/imgs/expressjs/api/read-host.png)
+
+```js title="/codes/expressjs/invest-app-api/src/routes.js"
+router.get('/hosts', (req, res) => {
+  const { name } = req.query;
+
+  if (name) {
+    const filteredHosts = hosts.filter((host) => host.name.includes(name));
+
+    return res.json(filteredHosts);
+  }
+
+  return res.json(hosts);
+});
+
+router.get('/hosts/:id', (req, res) => {
+  const id = req.params.id;
+
+  const index = hosts.findIndex((host) => host.id === id);
+
+  if (!hosts[index]) {
+    throw new HTTPError('Host not found', 400);
+  }
+
+  return res.json(hosts[index]);
+});
+```
+
+```http title="/codes/expressjs/invest-app-api/back/requests.http"
+@server=http://localhost:3000
+
+### Read hosts
+GET {{server}}/hosts
+
+### Read a host by name
+GET {{server}}/hosts?name=Google%20DNS
+
+### Read a host by id
+GET {{server}}/hosts/{{createdHostId}}
+
+### Read a host by id (bad params)
+GET {{server}}/hosts/x
+```
+
+### Update
+
+![](/dw/imgs/expressjs/api/update-host.png)
+
+```js title="/codes/expressjs/invest-app-api/src/routes.js"
+router.put('/hosts/:id', (req, res) => {
+  const host = req.body;
+
+  const id = req.params.id;
+
+  if (!host.name || !host.address || !id) {
+    throw new HTTPError('Error when passing parameters', 400);
+  }
+
+  const newHost = { ...host, id };
+
+  const index = hosts.findIndex((host) => host.id === id);
+
+  if (!hosts[index]) {
+    throw new HTTPError('Host not found', 400);
+  }
+
+  hosts[index] = newHost;
+
+  return res.json(newHost);
+});
+```
+
+```http title="/codes/expressjs/invest-app-api/back/@server=http://localhost:3000
+@createdHostId = {{createHost.response.body.$.id}}
+
+### Update a host
+PUT {{server}}/hosts/{{createdHostId}}
+Content-Type: application/json
+
+{
+  "name": "Cloudflare DNS",
+  "address": "1.1.1.1"
+}
+
+### Update a host (bad params)
+PUT {{server}}/hosts/{{createdHostId}}
+Content-Type: application/json
+
+{
+  "name": "Cloudflare DNS"
+}
+
+### Update a host (bad params)
+PUT {{server}}/hosts/x
+Content-Type: application/json
+
+{
+  "name": "Cloudflare DNS",
+  "address": "1.1.1.1"
+}
+```
+
+### Delete
+
+![](/dw/imgs/expressjs/api/delete-host.png)
+
+```js title="/codes/expressjs/invest-app-api/src/routes.js"
+router.delete('/hosts/:id', (req, res) => {
+  const id = req.params.id;
+
+  const index = hosts.findIndex((host) => host.id === id);
+
+  if (!hosts[index]) {
+    throw new HTTPError('Host not found', 400);
+  }
+
+  hosts.splice(index, 1);
+
+  return res.send(204);
+});
+```
+
+```http title="/codes/expressjs/invest-app-api/back/requests.http"
+@server=http://localhost:3000
+@createdHostId = {{createHost.response.body.$.id}}
+
+### Delete a host
+DELETE {{server}}/hosts/{{createdHostId}}
+
+### Delete a host (bad params)
+DELETE {{server}}/hosts/x
+```
+
+## Front-end Web
+
+![](/dw/imgs/expressjs/api/monitor-app-crud.png)
+
+<CodeTree src = "/codes/expressjs/monitor-app-api/front" />
+
+<CodePreview src="/codes/expressjs/monitor-app-api/front/vite.config.js" />
+
+<CodePreview src="/codes/expressjs/monitor-app-api/front/index.html" />
+
+<CodePreview src="/codes/expressjs/monitor-app-api/front/css/style.css" />
+
+<CodePreview src="/codes/expressjs/monitor-app-api/front/js/main.js" />
+
+<CodePreview src="/codes/expressjs/monitor-app-api/front/js/services/storage.js" />

@@ -1,0 +1,209 @@
+---
+title: Local Storage
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# {frontmatter.title}
+
+## Objeto localStorage
+
+```js
+const name = 'value';
+
+localStorage.setItem('name', name);
+
+console.log(localStorage.getItem('name'));
+//=> value
+
+localStorage.setItem('person', JSON.stringify({ name: 'John' }));
+
+console.log(JSON.parse(localStorage.getItem('name')));
+//=> { name: 'John' }
+```
+
+Alternativas Remotas
+
+- [JSON Server](/dw/package/json-server)
+
+{/*
+- [Supabase](/dw/package/supabase-api)
+- [Firebase](/dw/package/firebase-firestore)
+ */}
+
+## Monitor-app (CRUD)
+
+![](/dw/imgs/w3c/local-storage/monitor-app-crud.png)
+
+[Código Fonte](https://github.com/ifpb/dw/tree/main/public/codes/w3c/local-storage/monitor-app/)
+
+<CodeTree src="/codes/w3c/local-storage/monitor-app/" />
+
+## Local Storage
+
+<CodePreview src="/codes/w3c/local-storage/monitor-app/js/data/seed.js" />
+
+```js title="/codes/w3c/local-storage/monitor-app/js/services/storage.js"
+import { v4 as uuidv4 } from 'uuid';
+
+function storageInsert(key, value) {
+  if (typeof value === 'object') {
+    value = JSON.stringify(value);
+  }
+
+  localStorage.setItem(`@monitor-app:${key}`, value);
+}
+
+function storageSelect(key, isJSON = true) {
+  let value = localStorage.getItem(`@monitor-app:${key}`);
+
+  if (isJSON) {
+    value = JSON.parse(value);
+  }
+
+  return value;
+}
+
+function load(resourse, data) {
+  if (storageSelect('loaded', false) !== 'ok') {
+    storageInsert(resourse, data);
+
+    storageInsert('loaded', 'ok');
+  }
+}
+
+function create(resourse, value) {}
+
+function read(resourse, id) {}
+
+function update(resourse, id, value) {}
+
+function remove(resourse, id) {}
+
+export default { load, create, read, update, remove };
+```
+
+### Create a host
+
+```js title="/codes/w3c/local-storage/monitor-app/js/services/storage.js"
+function create(resource, value) {
+  const values = storageSelect(resource);
+
+  value = { ...value, id: uuidv4() };
+
+  storageInsert(resource, [...values, value]);
+
+  return value;
+}
+```
+
+```js
+import Storage from './services/storage.js';
+
+const host = {
+    name: 'Google DNS',
+    address: '8.8.8.8',
+    mask: '255.255.255.0',
+    version: 'v4',
+  };
+
+Storage.create('hosts', host);
+```
+
+### Read hosts
+
+```js title="/codes/w3c/local-storage/monitor-app/js/services/storage.js"
+function read(resourse, id) {
+  const values = storageSelect(resourse);
+
+  if (id) {
+    return values.find((value) => value.id === id);
+  } else {
+    return values;
+  }
+}
+```
+
+```js
+import Storage from './services/storage.js';
+
+Storage.read('hosts');
+Storage.read('hosts', 1);
+```
+
+### Update a host
+
+```js title="/codes/w3c/local-storage/monitor-app/js/services/storage.js"
+function update(resourse, id, value) {
+  const values = storageSelect(resourse);
+
+  const index = values.findIndex((value) => value.id === id);
+
+  if (index >= 0) {
+    value = { id, ...value };
+
+    values[index] = {...values[index], ...value};
+
+    storageInsert(resourse, values);
+
+    return value;
+  } else {
+    return false;
+  }
+}
+```
+
+```js
+import Storage from './services/storage.js';
+
+Storage.update('hosts', { id: 1, value: 15000 });
+```
+
+### Delete a host
+
+```js title="/codes/w3c/local-storage/monitor-app/js/services/storage.js"
+function remove(resourse, id) {
+  const values = storageSelect(resourse);
+
+  const index = values.findIndex((value) => value.id === id);
+
+  if (index >= 0) {
+    values.splice(index, 1);
+  }
+
+  storageInsert(resourse, values);
+}
+```
+
+```js
+import Storage from './services/storage.js';
+
+Storage.remove('hosts', 1);
+```
+
+## Front-end
+
+```bash
+$ npm i uuidv4 iconify-icon bootstrap
+```
+
+<CodePreview src="/codes/w3c/local-storage/monitor-app/index.html" />
+
+<CodePreview src="/codes/w3c/local-storage/monitor-app/js/main.js" />
+
+<CodePreview src="/codes/w3c/local-storage/monitor-app/css/style.css" />
+
+### Utilitários
+
+<CodePreview src="/codes/w3c/local-storage/monitor-app/js/lib/dom.js" />
+
+<CodePreview src="/codes/w3c/local-storage/monitor-app/js/lib/hosts.js" />
+
+### Componentes
+
+<CodePreview src="/codes/w3c/local-storage/monitor-app/js/components/HostTableRow.js" />
+
+<CodePreview src="/codes/w3c/local-storage/monitor-app/js/components/HostForm.js" />
+
+<CodePreview src="/codes/w3c/local-storage/monitor-app/js/components/Modal.js" />

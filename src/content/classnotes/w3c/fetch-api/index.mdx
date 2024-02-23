@@ -1,0 +1,217 @@
+---
+title: Requisição Assíncrona
+---
+
+import CodeTree from '../../../../components/CodeTree.astro';
+import CodePreview from '../../../../components/CodePreview.astro';
+
+# {frontmatter.title}
+
+### Fetch API
+
+```js
+fetch(resource)
+fetch(resource, options)
+```
+
+Exemplo
+
+<CodePreview src="/codes/w3c/fetch-api/via-cep/index.js" />
+
+[Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+
+- Access-Control-Allow-Origin
+- Access-Control-Allow-Methods
+- Access-Control-Allow-Headers
+- Access-Control-Allow-Credentials
+- Access-Control-Max-Age
+
+```http
+HTTP/1.1 200 OK
+Server: nginx/1.22.0
+Date: Seg, 11 Sep 2023 12:03:17 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: close
+Expires: Sun, 10 Sep 2023 13:03:17 GMT
+Cache-Control: max-age=3600, public
+Pragma: public
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET
+Access-Control-Allow-Headers: Content-Type, X-Request-With, X-Requested-By
+Access-Control-Allow-Credentials: true
+Access-Control-Max-Age: 86400
+
+{
+  "cep": "58015-430",
+  "logradouro": "Avenida Primeiro de Maio",
+  "complemento": "até 469/470",
+  "bairro": "Jaguaribe",
+  "localidade": "João Pessoa",
+  "uf": "PB",
+  "ibge": "2507507",
+  "gia": "",
+  "ddd": "83",
+  "siafi": "2051"
+}
+```
+
+O [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) é uma alternativa ao [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)
+
+```js
+function makeRequest (method, url) {
+  return new Promise(function (resolve, reject) {
+    const xhr = new XMLHttpRequest();
+
+    xhr.open(method, url);
+
+    // xhr.setRequestHeader('Authorization', `Bearer TOKEN`);
+
+    xhr.onload = resolve;
+
+    xhr.onerror = reject;
+
+    xhr.send();
+  });
+}
+
+const cep = '58015430';
+
+const resource = `https://viacep.com.br/ws/${cep}/json/`;
+
+makeRequest('GET', resource)
+    .then(function (e) {
+        console.log(e.target.response);
+    }, function (e) {
+        // handle errors
+    });
+```
+
+### Monitor-app (CRUD)
+
+![](/dw/imgs/w3c/fetch-api/monitor-app-crud.png)
+
+[Código Fonte](https://github.com/ifpb/dw/tree/main/public/codes/w3c/fetch-api/monitor-app/)
+
+<CodeTree src="/codes/w3c/fetch-api/monitor-app/" />
+
+```js title="/codes/w3c/fetch-api/monitor-app/js/service/storage.js"
+const API_URL = 'http://localhost:3000';
+
+async function create(resource, data) {}
+async function read(resource) {}
+async function update(resource, data) {}
+async function remove(resource) {}
+
+export default { create, read, update, remove };
+```
+
+#### Create a host
+
+![](/dw/imgs/api/rest/host-api-post.png)
+
+```js title="/codes/w3c/fetch-api/monitor-app/js/service/storage.js"
+async function create(resource, data) {
+  resource = `${API_URL}/${resource}`;
+
+  const options = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'post',
+    body: JSON.stringify(data),
+  };
+
+  const res = await fetch(resource, options);
+
+  const createdData = await res.json();
+
+  return createdData;
+}
+```
+
+```js
+import Storage from './js/services/storage.js';
+
+const host = {
+  name: "DNS Server",
+  address: "1.1.1.1"
+};
+
+Storage.create('hosts', host);
+```
+
+#### Read hosts
+
+![](/dw/imgs/api/rest/host-api-get.png)
+
+```js title="/codes/w3c/fetch-api/monitor-app/js/service/storage.js"
+async function read(resource) {
+  resource = `${API_URL}/${resource}`;
+
+  const res = await fetch(resource);
+
+  return await res.json();
+}
+```
+
+```js
+import Storage from './js/services/storage.js';
+
+Storage.read('hosts');
+Storage.read('hosts/3');
+```
+
+#### Update a host
+
+![](/dw/imgs/api/rest/host-api-put.png)
+
+```js title="/codes/w3c/fetch-api/monitor-app/js/service/storage.js"
+async function update(resource, data) {
+  resource = `${API_URL}/${resource}`;
+
+  const options = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'put',
+    body: JSON.stringify(data),
+  };
+
+  const res = await fetch(resource, options);
+
+  const createdData = await res.json();
+
+  return createdData;
+}
+```
+
+```js
+import Storage from './js/services/storage.js';
+
+Storage.update('hosts/3', { name: 'Cloudflare DNS', addres: '1.1.1.1' });
+```
+
+#### Delete a host
+
+![](/dw/imgs/api/rest/host-api-delete.png)
+
+```js title="/codes/w3c/fetch-api/monitor-app/js/service/storage.js"
+async function remove(resource) {
+  resource = `${API_URL}/${resource}`;
+
+  const options = {
+    method: 'delete',
+  };
+
+  const res = await fetch(resource, options);
+
+  return res.ok;
+}
+```
+
+```js
+import Storage from './js/services/storage.js';
+
+Storage.remove('hosts/3');
+```

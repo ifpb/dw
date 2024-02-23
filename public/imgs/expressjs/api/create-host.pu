@@ -1,0 +1,16 @@
+@startuml
+title POST
+hide footbox
+skinparam monochrome true
+
+Client -> Server: POST /hosts
+note right: POST /hosts HTTP/1.1\nHost: http://localhost:3000\nContent-Type: application/json\n\n{\n  "name": "DNS Server",\n  "address": "1.1.1.1",\n}
+Server -> Client: HTTP/1.1 201 Created
+note left: HTTP/1.1 201 Created\n\n{\n  "id": 3,\n  "name": "DNS Server",\n  "address": "1.1.1.1"\n}
+
+Client -> Server: POST /hosts
+note right: POST /hosts HTTP/1.1\nHost: http://localhost:3000\nContent-Type: application/json\n\n{\n  "name": "DNS Server"\n}
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "message": "Error when passing parameters"\n}
+
+@enduml

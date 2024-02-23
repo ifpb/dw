@@ -1,0 +1,13 @@
+@server=http://localhost:3000
+
+### Get Ping (with params)
+
+GET {{server}}/ping?host=8.8.8.8
+
+### Get Ping (bad params)
+
+GET {{server}}/ping?host=a.a.a.a
+
+### Get Ping (without params)
+
+GET {{server}}/ping

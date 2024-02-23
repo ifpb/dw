@@ -1,0 +1,92 @@
+---
+title: Componentes Web
+---
+
+import CodeHtmlCssPreview from '../../../../components/CodeHtmlCssPreview.astro';
+import CodePreview from '../../../../components/CodePreview.astro';
+
+# {frontmatter.title}
+
+## CDN
+
+<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/cdn" onlyBody={false} />
+
+## Content
+
+[Reboot](https://getbootstrap.com/docs/5.3/content/reboot/)
+
+<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/content-reboot" />
+
+[Tables](https://getbootstrap.com/docs/5.3/content/tables/)
+
+<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/content-tables" />
+
+## Layout
+
+[Breakpoints](https://getbootstrap.com/docs/5.3/layout/breakpoints/)
+
+| Breakpoint        | Class infix | Dimensions |
+| ----------------- | ----------- | ---------- |
+| Extra small       | None        | \<576px    |
+| Small             | sm          | ≥576px     |
+| Medium            | md          | ≥768px     |
+| Large             | lg          | ≥992px     |
+| Extra large       | xl          | ≥1200px    |
+| Extra extra large | xxl         | ≥1400px    |
+
+[Containers](https://getbootstrap.com/docs/5.3/layout/containers/)
+
+|                  | xs&lt;576px | sm≥576px | md≥768px | lg≥992px | xl≥1200px | xxl≥1400px |
+|------------------|-----------|----------|----------|----------|-----------|------------|
+| .container       | 100%      | 540px    | 720px    | 960px    | 1140px    | 1320px     |
+| .container-sm    | 100%      | 540px    | 720px    | 960px    | 1140px    | 1320px     |
+| .container-md    | 100%      | 100%     | 720px    | 960px    | 1140px    | 1320px     |
+| .container-lg    | 100%      | 100%     | 100%     | 960px    | 1140px    | 1320px     |
+| .container-xl    | 100%      | 100%     | 100%     | 100%     | 1140px    | 1320px     |
+| .container-xxl   | 100%      | 100%     | 100%     | 100%     | 100%      | 1320px     |
+| .container-fluid | 100%      | 100%     | 100%     | 100%     | 100%      | 100%       |
+
+
+
+[Grid system](https://getbootstrap.com/docs/5.3/layout/grid/)
+
+<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/layout-grid" />
+
+## Helpers
+
+[Color & background](https://getbootstrap.com/docs/5.3/helpers/color-background/)
+
+<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/helpers-color" />
+
+## Utilities
+
+[Display](https://getbootstrap.com/docs/5.3/utilities/display/), [Spacing](https://getbootstrap.com/docs/5.3/utilities/spacing/), [Text](https://getbootstrap.com/docs/5.3/utilities/text/), [Visibility](https://getbootstrap.com/docs/5.3/utilities/visibility/)
+
+<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/utilities" />
+
+## Components
+
+[Navbar](https://getbootstrap.com/docs/5.3/components-navbar)
+
+<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/components-navbar/" />
+
+[Card](https://getbootstrap.com/docs/5.3/components/card/)
+
+<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/components-card" />
+
+## Monitor-app
+
+[Projeto Figma](https://figma.com/file/3rWtag6oLh0amk2wS0XQH1/monitor-app) ([layout.fig](/codes/package/bootstrap/monitor-app-cdn/layout.fig)):
+
+![](/dw/imgs/package/bootstrap/monitor-app-cdn.png)
+
+[monitor-app](/dw/codes/package/bootstrap/monitor-app-cdn/src/index.html):
+
+<CodePreview src="/codes/package/bootstrap/monitor-app-cdn/src/index.html" />
+
+## Referências
+
+- [Documentação](https://getbootstrap.com/docs/)
+- Templates
+  - https://bootstrapmade.com/
+  - https://startbootstrap.com/themes

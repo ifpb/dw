@@ -1,0 +1,46 @@
+{
+  "hosts": [
+    {
+      "id": 1,
+      "name": "Google Search",
+      "address": "www.google.com"
+    },
+    {
+      "id": 2,
+      "name": "Google DNS",
+      "address": "8.8.8.8"
+    }
+  ],
+  "reachabilities": [
+    {
+      "id": 1,
+      "hostId": 1,
+      "value": 90
+    },
+    {
+      "id": 2,
+      "hostId": 1,
+      "value": 95
+    },
+    {
+      "id": 3,
+      "hostId": 1,
+      "value": 85
+    },
+    {
+      "id": 4,
+      "hostId": 2,
+      "value": 95
+    },
+    {
+      "id": 5,
+      "hostId": 2,
+      "value": 80
+    },
+    {
+      "id": 6,
+      "hostId": 2,
+      "value": 99
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+@startuml
+title Ping API
+hide footbox
+skinparam monochrome true
+
+Client -> Server: GET /ping?host=8.8.8.8
+note right: GET /ping?host=8.8.8.8 HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n{\n  "inputHost": "8.8.8.8",\n  "host": "8.8.8.8",\n  "alive": true,\n  "output": "PING 8.8.8.8 (8.8.8.8) ...",\n  "time": 82.9,\n  "times": [\n    82.9\n  ],\n  "min": "82.935",\n  "max": "82.935",\n  "avg": "82.935",\n  "stddev": "0.000",\n  "packetLoss": "0.000",\n  "numeric_host": "8.8.8.8"\n}
+
+Client -> Server: GET /ping?host=a.a.a.a
+note right: GET /ping?host=a.a.a.a HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "message": "Unknown host"\n}
+
+Client -> Server: GET /ping
+note right: GET /ping HTTP/1.1\nHost: 127.0.0.1:3000
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "message": "Error when passing parameters"\n}
+
+@enduml

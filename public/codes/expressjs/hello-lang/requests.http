@@ -1,0 +1,9 @@
+@server=http://localhost:3000
+
+### Get Hello World
+
+GET {{@server}}/hello/en
+
+### Get Olá Mundo
+
+GET {{@server}}/hello/pt

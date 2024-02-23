@@ -1,0 +1,135 @@
+---
+title: Built Tool
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+import CodeTree from '../../../../components/CodeTree.astro';
+
+# {frontmatter.title}
+
+## Vite
+
+[Vite doc](https://vitejs.dev/guide/):
+
+```bash
+$ npm create vite@latest monitor-app -- --template vanilla
+
+Need to install the following packages:
+create-vite@5.2.0
+Ok to proceed? (y)
+
+Scaffolding project in /home/.../monitor-app...
+
+Done. Now run:
+
+  cd monitor-app
+  npm install
+  npm run dev
+```
+
+[Código Fonte](https://github.com/ifpb/dw/tree/main/public/codes/package/vite/monitor-app/)
+
+<CodeTree src="/codes/package/vite/monitor-app/" />
+
+```bash
+$ cd monitor-app
+$ npm install
+$ npm run dev
+
+> monitor-app@0.0.0 dev
+> vite
+
+
+  VITE v4.4.9  ready in 191 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h to show help
+```
+
+[http://localhost:5173/](http://localhost:5173/):
+
+![](/dw/imgs/package/vite/vite-hello.png)
+
+[Building the App](https://vitejs.dev/guide/static-deploy.html#building-the-app)
+
+```bash
+$ npm run build
+
+> monitor-app@0.0.0 build
+> vite build
+
+vite v4.3.0 building for production...
+✓ 7 modules transformed.
+dist/index.html                      0.45 kB │ gzip: 0.29 kB
+dist/assets/javascript-8dac5379.svg  1.00 kB │ gzip: 0.60 kB
+dist/assets/index-48a8825f.css       1.24 kB │ gzip: 0.65 kB
+dist/assets/index-44b5bae5.js        1.45 kB │ gzip: 0.75 kB
+✓ built in 132ms
+
+$ npm run preview
+
+> monitor-app@0.0.0 preview
+> vite preview
+
+  ➜  Local:   http://localhost:4173/
+  ➜  Network: use --host to expose
+```
+
+[Build Options](https://vitejs.dev/config/build-options.html)
+- build.target (default: 'modules')
+  - [Browser Compatibility](https://vitejs.dev/guide/build.html#browser-compatibility): 'esnext' | 'modules' | 'es2015' | 'es2019' | 'chrome58' | 'firefox57' | 'safari11' | 'edge16' | 'node12' | 'node10'
+  - [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) ([Browserslist](https://browsersl.ist/))
+- build.outDir (default: 'dist')
+- build.minify (default: 'terser')
+
+
+[Deploying a Static Site](https://vitejs.dev/guide/static-deploy.html)
+
+- [GitHub Pages](https://vitejs.dev/guide/static-deploy.html#github-pages)
+- [Netlify](https://vitejs.dev/guide/static-deploy.html#netlify)
+- [Vercel](https://vitejs.dev/guide/static-deploy.html#vercel)
+
+
+[Static Asset Handling](https://vitejs.dev/guide/assets.html)
+
+<CodePreview src="/codes/package/vite/monitor-app/main.js" />
+
+[NPM Dependency Resolving and Pre-Bundling](https://vitejs.dev/guide/features.html#npm-dependency-resolving-and-pre-bundling)
+
+```js
+import 'bootstrap'
+```
+
+Import JavaScript
+
+```js
+// import Hosts from './lib/hosts.js'
+import Hosts from './lib/hosts'
+```
+
+## Bootstrap
+
+[Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/download/#npm):
+
+```bash
+$ npm install bootstrap
+```
+
+[Código Fonte](https://github.com/ifpb/dw/tree/main/public/codes/package/boostrap/monitor-app/)
+
+<CodeTree src="/codes/package/bootstrap/monitor-app/" />
+
+<CodePreview src="/codes/package/bootstrap/monitor-app/index.html" />
+
+<CodePreview src="/codes/package/bootstrap/monitor-app/js/main.js" />
+
+<CodePreview src="/codes/package/bootstrap/monitor-app/js/data.js" />
+
+<CodePreview src="/codes/package/bootstrap/monitor-app/js/components/HostTable.js" />
+
+```bash
+$ npm run dev
+```
+
+![](/dw/imgs/package/vite/bootstrap-monitor-app.png)

@@ -1,0 +1,30 @@
+@startuml
+title BMI API
+hide footbox
+skinparam monochrome true
+
+Client -> Server: POST /bmi
+note right: POST /bmi HTTP/1.1\nHost: 127.0.0.1:3000\nContent-Type: application/json\n\n{\n  "weight": 100,\n  "height": 1.5\n}
+Server -> Client: HTTP/1.1 200 OK
+note left: HTTP/1.1 200 OK\n\n{\n  "weight": 100,\n  "height": 1.5,\n  "bmi": "Obesity"\n}
+
+Client -> Server: POST /bmi
+note right: POST /bmi HTTP/1.1\nHost: 127.0.0.1:3000\nContent-Type: application/json\n\n{\n  "weight": 100,\n  "height": -1\n}
+Server -> Client: HTTP/1.1 500 Internal Server Error
+note left: HTTP/1.1 500 Internal Server Error\n\n{\n  "message": "Something broke!"\n}
+
+Client -> Server: POST /bmi
+note right: POST /bmi HTTP/1.1\nHost: 127.0.0.1:3000\nContent-Type: application/json\n\n{\n  "weight": 100\n}
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "message": "Error when passing parameters"\n}
+
+Client -> Server: POST /bmi
+note right: POST /bmi HTTP/1.1\nHost: 127.0.0.1:3000\n\n
+Server -> Client: HTTP/1.1 400 Bad Request
+note left: HTTP/1.1 400 Bad Request\n\n{\n  "message": "Error when passing parameters"\n}
+
+Client -> Server: GET /bmi
+note right: GET /bmi HTTP/1.1\nHost: 127.0.0.1:3000\n\n
+Server -> Client: HTTP/1.1 404 Not Found
+note left: HTTP/1.1 404 Not Found\n\n{\n  "message": "Content not found!"\n}
+@enduml

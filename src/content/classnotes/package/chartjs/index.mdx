@@ -1,0 +1,31 @@
+---
+title: Chart.js
+---
+
+import CodeTree from '../../../../components/CodeTree.astro';
+import CodePreview from '../../../../components/CodePreview.astro';
+
+# {frontmatter.title}
+
+### JSON Server
+
+<CodePreview src="/codes/package/json-server/db.json" highlightLines="14-46" />
+
+### Monitor-app (CRUD)
+
+![](/dw/imgs/package/chartjs/monitor-app.png)
+
+
+[Código Fonte](https://github.com/ifpb/dw/tree/main/public/codes/w3c/fetch-api/monitor-app/)
+
+<CodeTree src="/codes/package/chartjs/monitor-app/" />
+
+[Chart.js](https://www.chartjs.org/docs/latest/):
+
+```js
+npm i chart.js
+```
+
+<CodePreview src="/codes/package/chartjs/monitor-app/js/components/LineChart.js" />
+
+<CodePreview src="/codes/package/chartjs/monitor-app/js/components/HostTableRow.js" highlightLines="28-33,54-65" />
