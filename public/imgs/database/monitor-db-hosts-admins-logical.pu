@@ -1,0 +1,38 @@
+@startuml
+hide circle
+scale 1.5
+skinparam linetype ortho
+skinparam monochrome true
+left to right direction
+
+entity "admins" as admin {
+  name
+  email
+}
+
+entity "hosts" as host {
+  name
+  address
+}
+
+entity "pings" as ping {
+  createAt
+}
+
+entity "icmps" as icmp {
+  bytes
+  ttl
+  time
+}
+
+entity "stats" as stat {
+  transmitted
+  received
+  time
+}
+
+ping ||--|{ icmp
+ping ||--|| stat
+host ||--|{ ping
+host }|--|{ admin
+@enduml

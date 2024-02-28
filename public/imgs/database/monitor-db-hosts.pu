@@ -1,0 +1,14 @@
+@startuml
+hide circle
+scale 1.5
+skinparam linetype ortho
+skinparam monochrome true
+left to right direction
+
+entity "hosts" as host {
+  *id : int
+  --
+  name : varchar(100)
+  address : varchar(100)
+}
+@enduml

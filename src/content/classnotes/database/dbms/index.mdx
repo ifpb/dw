@@ -1,0 +1,472 @@
+---
+title: Banco de Dados
+---
+
+import CodePreview from '../../../../components/CodePreview.astro';
+
+# { frontmatter.title }
+
+## SGDB
+
+- [Understanding Database Types | ByteByteGo](https://blog.bytebytego.com/p/understanding-database-types)
+- [DB-Engines Ranking](https://db-engines.com/en/ranking)
+
+
+### MySQL Server
+
+[MySQL Docker](https://hub.docker.com/_/mysql):
+
+```bash
+$ docker run -d \
+  --name mysql \
+  -e MYSQL_ROOT_PASSWORD=secret \
+  mysql:8.3
+
+$ docker exec -it mysql mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.3.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> quit
+Bye
+
+$ docker stop $(docker ps -a -q -f name=mysql ) && docker rm $(docker ps -a -q -f name=mysql )
+```
+
+Volume:
+
+```bash
+$ docker volume create mysql-data
+
+$ docker run -d \
+  --name mysql \
+  -e MYSQL_ROOT_PASSWORD=secret \
+  -v mysql-data:/var/lib/mysql \
+  mysql:8.3
+```
+
+Docker Compose ([MySQL](https://hub.docker.com/_/mysql), [Adminer](https://hub.docker.com/_/adminer)):
+
+<CodePreview src="/codes/database/mysql-server/docker-compose.yml" />
+
+<CodePreview src="/codes/database/mysql-server/.env.example" />
+
+```bash
+$ ls -a
+.  ..  .env  docker-compose.yml
+
+$ docker compose up -d
+[+] Building 0.0s (0/0)                                docker:default
+[+] Running 3/3
+ ✔ Network mysql-server_app-tier     Created                     0.0s
+ ✔ Container mysql-server-mysql-1    Started                     0.1s
+ ✔ Container mysql-server-adminer-1  Started                     0.1s
+
+$ docker compose ps
+NAME                     IMAGE         COMMAND                  SERVICE   CREATED          STATUS          PORTS
+mysql-server-adminer-1   adminer:4.7   "entrypoint.sh docke…"   adminer   11 seconds ago   Up 10 seconds   0.0.0.0:8080->8080/tcp
+mysql-server-mysql-1     mysql:8.0     "docker-entrypoint.s…"   mysql     11 seconds ago   Up 10 seconds   0.0.0.0:3306->3306/tcp, 33060/tcp
+
+$ docker compose exec mysql mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.31 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> quit
+Bye
+
+$ docker compose down
+[+] Running 3/3
+ ✔ Container mysql-server-adminer-1  Removed                     0.3s
+ ✔ Container mysql-server-mysql-1    Removed                     1.4s
+ ✔ Network mysql-server_app-tier     Removed                     0.2s
+```
+
+VSCode:
+  - [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools)
+  - [SQLTools MySQL/MariaDB](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools-driver-mysql)
+  - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+
+### Postgres Server
+
+[Postgres Docker](https://hub.docker.com/_/postgres):
+
+```bash
+$ docker run -d \
+  --name postgres \
+  -e POSTGRES_PASSWORD=secret \
+  postgres:16.2
+
+$ docker exec -it postgres psql -U postgres
+psql (16.2 (Debian 16.2-1.pgdg120+2))
+Type "help" for help.
+
+postgres=# \q
+```
+
+Volume:
+
+```bash
+$ docker run -d \
+  --name postgres \
+  -e POSTGRES_PASSWORD=secret \
+  -v pgdata:/var/lib/postgresql/data \
+  postgres:16.2
+```
+
+Docker Compose ([Postgres](https://hub.docker.com/_/postgres), [PgAdmin 4](https://hub.docker.com/r/dpage/pgadmin4/)):
+
+<CodePreview src="/codes/database/postgres-server/docker-compose.yml" />
+
+<CodePreview src="/codes/database/postgres-server/.env.example" />
+
+```bash
+$ ls -a
+.  ..  .env  docker-compose.yml
+
+$ docker compose up -d
+[+] Building 0.0s (0/0)                                                                                             docker:default
+[+] Running 3/3
+ ✔ Network postgres-server_app-tier     Created                                                                               0.0s
+ ✔ Container postgres                   Started                                                                               0.1s
+ ✔ Container postgres-server-adminer-1  Started                                                                               0.1s
+
+$ docker compose ps
+NAME                        IMAGE           COMMAND                  SERVICE    CREATED          STATUS          PORTS
+postgres                    postgres:16.2   "docker-entrypoint.s…"   postgres   37 seconds ago   Up 36 seconds   0.0.0.0:5432->5432/tcp
+postgres-server-adminer-1   adminer:4.8.1   "entrypoint.sh php -…"   adminer    37 seconds ago   Up 36 seconds   0.0.0.0:8080->8080/tcp
+
+$ docker compose exec postgres psql -U postgres
+psql (16.2 (Debian 16.2-1.pgdg120+2))
+Type "help" for help.
+
+postgres=# \q
+
+$ docker compose down
+[+] Running 3/3
+ ✔ Container postgres-server-adminer-1  Removed                                                                               0.4s
+ ✔ Container postgres                   Removed                                                                               0.4s
+ ✔ Network postgres-server_app-tier     Removed                                                                               0.2s
+```
+
+PostgreSQL Client Applications
+
+- clusterdb — cluster a PostgreSQL database
+- createdb — create a new PostgreSQL database
+- createuser — define a new PostgreSQL user account
+- dropdb — remove a PostgreSQL database
+- dropuser — remove a PostgreSQL user account
+- ecpg — embedded SQL C preprocessor
+- pg_amcheck — checks for corruption in one or more PostgreSQL databases
+- pg_basebackup — take a base backup of a PostgreSQL cluster
+- pgbench — run a benchmark test on PostgreSQL
+- pg_config — retrieve information about the installed version of PostgreSQL
+- pg_dump — extract a PostgreSQL database into a script file or other archive file
+- pg_dumpall — extract a PostgreSQL database cluster into a script file
+- pg_isready — check the connection status of a PostgreSQL server
+- pg_receivewal — stream write-ahead logs from a PostgreSQL server
+- pg_recvlogical — control PostgreSQL logical decoding streams
+- pg_restore — restore a PostgreSQL database from an archive file created by pg_dump
+- pg_verifybackup — verify the integrity of a base backup of a PostgreSQL cluster
+- psql — PostgreSQL interactive terminal
+- reindexdb — reindex a PostgreSQL database
+- vacuumdb — garbage-collect and analyze a PostgreSQL database
+
+psql
+
+| Command         | Description                    |
+| --------------- | ------------------------------ |
+| `help`, `\h`    | Help                           |
+| `\q`            | Quit                           |
+| `\l`            | List databases                 |
+| `\c <database>` | Connect to a database          |
+| `\d`            | List tables in database        |
+| `\d <table>`    | Show table                     |
+| `\d+ <table>`   | More detailed table definition |
+| `\dt *.*`       | List tables from all schemas   |
+| `\du`           | List users                     |
+| `\dn`           | List schemas                   |
+| `\df`           | List functions                 |
+
+Backup
+
+```bash
+$ psql -l -U postgres
+
+$ pg_dump database_name_here > database.sql
+
+$ pg_dump -Fc database_name_here > database.bak # compressed binary format
+
+$ pg_dump -Ft database_name_here > database.tar # tarball
+```
+
+Restore
+
+```bash
+$ psql -d database_name_here < database.sql
+
+$ psql -d database_name_here -f database.sql
+
+$ pg_restore database.sql
+
+$ pg_restore -Fc database.bak # restore compressed binary format
+
+$ pg_restore -Fc -C database.bak # create the database before restoring into it
+
+$ pg_restore -Ft database.tar # restore tarball
+```
+
+VSCode:
+  - [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools)
+  - [PostgreSQL](https://marketplace.visualstudio.com/items?itemName=ckolkman.vscode-postgres)
+
+### SQLite
+
+SQLite Docker:
+
+<CodePreview src="/codes/database/sqlite/Dockerfile" />
+
+```bash
+$ docker build -t sqlite:1.0 .
+
+$ docker run -it --rm -v ./data:/db sqlite:1.0 sh
+/db # sqlite3
+SQLite version 3.44.2 2023-11-24 11:41:44
+Enter ".help" for usage hints.
+Connected to a transient in-memory database.
+Use ".open FILENAME" to reopen on a persistent database.
+sqlite> .quit
+
+/db # sqlite3 database.db
+SQLite version 3.44.2 2023-11-24 11:41:44
+Enter ".help" for usage hints.
+sqlite> .quit
+
+/db # exit
+```
+
+sqlite3 ([dot-commands](https://sqlite.org/cli.html#special_commands_to_sqlite3_dot_commands_))
+
+- `.databases`: List names and files of attached databases
+- `.dump`: Dump database in SQL text format
+- `.help`: Show help
+- `.quit`: Stop interpreting input stream
+- `.schema`: Show the CREATE statements
+- `.show`:	Displays current settings for various parameters
+- `.tables`: List names of tables
+
+Data Types:
+
+- `NULL`
+- `INTEGER`: signed integer (1, 2, 3, 4, 6, 8 bytes)
+- `REAL`: floating point value (8-byte IEEE floating point number)
+- `TEXT`: text string (UTF-8, UTF-16BE or UTF-16LE)
+- `BLOB`: blob of data
+
+Referências
+
+- [How to Run and use SQLite Database with Docker Containers](https://thriveread.com/sqlite-docker-container-and-docker-compose/)
+- VSCode
+  - [SQLite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite)
+  - [SQlite Viewer](https://marketplace.visualstudio.com/items?itemName=qwtel.sqlite-viewer)
+  - [sqlitebrowser](https://hub.docker.com/r/linuxserver/sqlitebrowser)
+
+### MongoDB Server
+
+[Mongo Docker](https://hub.docker.com/_/mongo):
+
+```bash
+$ docker run --name mongo -d mongo:7.0
+
+$ docker exec -it mongo mongosh
+Current Mongosh Log ID: 65de1e4556e305af36af7b82
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.1.4
+Using MongoDB:          7.0.5
+Using Mongosh:          2.1.4
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+To help improve our products, anonymous usage data is collected and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+test>exit
+```
+
+Volume:
+
+```bash
+$ docker run -d \
+  --name mongo \
+  -e MONGO_ROOT_USERNAME=root MONGO_ROOT_PASSWORD=secret \
+  -v mongodata:/data/db \
+  mongo:7.0
+```
+
+Docker Compose ([Mongo](https://hub.docker.com/_/mongo), [Mongo Express](https://hub.docker.com/_/mongo-express)):
+
+```bash
+$ docker compose up -d
+[+] Building 0.0s (0/0)                                                                                             docker:default
+[+] Running 3/3
+ ✔ Network mongo-server_app-tier  Created                                                                                     0.1s
+ ✔ Container mongo                Started                                                                                     0.7s
+ ✔ Container mongo-express        Started                                                                                     0.1s
+
+$ docker compose exec mongo mongosh -u root -p
+Enter password: ******
+Current Mongosh Log ID: 65de236628a45b1cc031174b
+Connecting to:          mongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.1.4
+Using MongoDB:          7.0.5
+Using Mongosh:          2.1.4
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-02-27T17:59:07.794+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2024-02-27T17:59:08.592+00:00: /sys/kernel/mm/transparent_hugepage/enabled is 'always'. We suggest setting it to 'never'
+   2024-02-27T17:59:08.592+00:00: vm.max_map_count is too low
+------
+
+test>exit
+
+$docker compose down
+[+] Running 3/3
+ ✔ Container mongo-express        Removed                                                                                     0.0s
+ ✔ Container mongo                Removed                                                                                     0.5s
+ ✔ Network mongo-server_app-tier  Removed                                                                                     0.2s
+```
+
+CRUD
+
+- Create
+  - `db.<collection>.insertOne()`
+  - `db.<collection>.insertMany()`
+  - `db.<collection>.bulkWrite()`
+- Read
+  - `db.<collection>.find()`
+  - `db.<collection>.aggregate()`
+- Update
+  - `db.<collection>.updateOne()`
+  - `db.<collection>.updateMany()`
+  - `db.<collection>.findOneAndUpdate()`
+- Delete
+  - `db.<collection>.deleteOne()`
+  - `db.<collection>.deleteMany()`
+  - `db.<collection>.findOneAndDelete()`
+
+mongosh
+
+- `use`: Set current database
+- `show`
+  - `show databases`, `show dbs`: Print a list of all available databases.
+  - `show collections`, `show tables`: Print a list of all collections for current database.
+  - `show profile`: Prints system.profile information.
+  - `show users`: Print a list of all users for current database.
+  - `show roles`: Print a list of all roles for current database.
+  - `show logs`: Print all logs.
+
+```bash
+$ docker compose exec mongo mongosh -u root -p
+Enter password: ******
+Current Mongosh Log ID: 65de236628a45b1cc031174b
+Connecting to:          mongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.1.4
+Using MongoDB:          7.0.5
+Using Mongosh:          2.1.4
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-02-27T17:59:07.794+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2024-02-27T17:59:08.592+00:00: /sys/kernel/mm/transparent_hugepage/enabled is 'always'. We suggest setting it to 'never'
+   2024-02-27T17:59:08.592+00:00: vm.max_map_count is too low
+------
+
+test> show dbs
+admin   100.00 KiB
+config   60.00 KiB
+local    72.00 KiB
+
+test> use sample_mflix
+switched to db sample_mflix
+
+sample_mflix> db.movies.insertOne(
+  {
+    title: "Some Movie",
+    year: 2018,
+    type: "movie"
+  }
+)
+
+sample_mflix> show dbs
+admin         100.00 KiB
+config         60.00 KiB
+local          72.00 KiB
+sample_mflix    8.00 KiB
+
+sample_mflix> db.movies.find()
+[
+  {
+    _id: ObjectId('65de5bc4469195f3356a4be3'),
+    title: 'Some Movie',
+    year: 2018,
+    type: 'movie'
+  }
+]
+
+sample_mflix> exit
+```
+
+Referências
+
+- Mongo
+  - [Shell Quick Reference](https://docs.mongodb.com/manual/reference/mongo-shell/)
+- Cheat Sheet
+  - [bradtraversy/mongodb_cheat_sheet.md](https://gist.github.com/bradtraversy/f407d642bdc3b31681bc7e56d95485b6)
+  - [SQL to MongoDB Mapping Chart](https://gist.github.com/aponxi/4380516)
+- Docker
+  - [https://hub.docker.com/\_/mongo](https://hub.docker.com/_/mongo)
+- VSCode
+  - [MongoDB for VS Code](https://marketplace.visualstudio.com/items?itemName=mongodb.mongodb-vscode)
+
+## Tipos de Dados
+
+| Types              | MySQL                                                                                                              | Postgres                                                                                                                                                               | SQLite                       |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| Character          | `CHAR(n)`, `VARCHAR(n)`, `TINYTEXT(n)`, `TEXT(n)`, `MEDIUMTEXT(n)`, `LONGTEXT(n)`, `BINARY(n)`, `VARBINARY(n)`     | `CHARACTER (N)`, `CHAR(n)`, `CHARACTER VARYING (N)`, `VARCHAR(n)`, `TEXT`                                                                                              | `TEXT`                       |
+| Numeric            | `BIT`, `TINYINT`, `SMALLINT`, `MEDIUMINT`, `INT`, `BIGINT`, `DECIMAL`, `FLOAT`, `DOUBLE`, `BOOLEAN` (`TINYINT(1)`) | `SMALLINT`, `INTEGER`, `BIGINT`, `DECIMAL`, `NUMERIC`, `REAL`, `DOUBLE`, `SMALLSERIAL`, `SERIAL`, `BIGSERIAL`,                                                         | `NUMERIC`, `INTEGER`, `REAL` |
+| Date/Time          | `DATE`, `DATETIME`, `TIMESTAMP`, `TIME`, `YEAR`                                                                    | `DATE`, `INTERVAL `, `TIMESTAMP`, `TIME`                                                                                                                               |                              |
+| Large Object (LOB) | `TINYBLOB`, `BLOB(n)`, `MEDIUMBLOB`, `LONGTEXT`                                                                    | `BYTEA`                                                                                                                                                                | `BLOB`                       |
+| Especial           | Espacial (`POINTS`, `LINES`), `JSON`                                                                               | `MONEY`, `BOOLEAN`, `ENUM`, Espacial (`POINTS`, `LINES`), Network (`INET`, `CIDR`, `MACADDR`), `TSQUERY` , `UUID`, `XML`, `JSON`, `JSONB`, `ARRAY`, `TYPE`, `NUMRANGE` |                              |
+
+
+## Referências
+
+- SGBD
+  - [MySQL](https://www.mysql.com/)
+  - [Postgres](https://www.postgresql.org/)
+  - [MongoDB](https://www.mongodb.com/)
+  - [SQLite](https://www.sqlite.org/)
+- Tipo de dados
+  - [MySQL](https://dev.mysql.com/doc/refman/8.0/en/data-types.html)
+  - [Postgres](https://www.postgresql.org/docs/current/datatype.html)
+  - [SQLite](https://www.sqlite.org/datatype3.html)

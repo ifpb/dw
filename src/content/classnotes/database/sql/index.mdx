@@ -1,52 +1,59 @@
 ---
-title: Banco de Dados
+title: SQL
 ---
 
 import CodePreview from '../../../../components/CodePreview.astro';
-import CodeTree from '../../../../components/CodeTree.astro';
 
 # { frontmatter.title }
 
-## SGDB
+**DICAS:**
 
-## MySQL Server
+- Structured Query Language (SQL:2023 ou ISO/IEC 9075:2023)
+- Os comandos não são *case sensitive*
+- Os nomes são *case sensitive*
+- Não esqueça do `;` nos comandos
+- Em caso de erro tente interpretar a mensagem de erro
 
-```bash
-$ docker run --name mysql -e MYSQL_ROOT_PASSWORD=secret -d mysql:8.0
-```
+## Sintaxe
 
-<CodePreview src="/codes/database/mysql-server/docker-compose.yml" />
-
-[.env](.env):
-
-```text
-MYSQL_ROOT_PASSWORD=secret
-MYSQL_DATABASE=example
-MYSQL_USER=devuser
-MYSQL_PASSWORD=secret
-```
-
-Load database:
-
-```text
-$ docker compose up -d
-$ docker compose ps
- Name                Command               State                 Ports
-------------------------------------------------------------------------------------
-adminer   entrypoint.sh docker-php-e ...   Up      0.0.0.0:8080->8080/tcp
-mysql     docker-entrypoint.sh --def ...   Up      0.0.0.0:3306->3306/tcp, 33060/tcp
-```
-
-VSCode:
-  - [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools)
-  - [SQLTools MySQL/MariaDB](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools-driver-mysql)
-  - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-
-Docker:
-  - [Adminer](https://hub.docker.com/_/adminer)
-  - [MySQL](https://hub.docker.com/_/mysql)
-
-## SQLite
+- Data Definition Language (DDL): `DATABASE`, `TABLE`, `CONSTRAINTS`, `VIEW`, `INDEX`
+  - `CREATE`
+  - `DELETE` (`DROP`)
+  - `UPDATE`
+  - `RENAME`
+- Data Manipulation Language (DML)
+  - `INSERT`
+  - `UPDATE`
+  - `DELETE`
+- Data Query Language (DQL):
+  - `SELECT`
+    - FROM (JOIN, INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN, CROSS JOIN)
+    - WHERE
+    - GROUP BY
+    - HAVING
+    - ORDER BY (ASC, DESC)
+- Data Control Language (DCL):
+  - `GRANT`
+  - `REVOKE`
+- Transaction Control Language (TCL):
+  - `START` (`BEGIN`)
+  - `TRANSACTION`
+  - `COMMIT`
+  - `ROLLBACK`
+- Operators
+  - Comparison: `>`, `>=`, `<`, `<=`,`=` ,`!=` , `<>`
+  - Logical: `AND`, `OR`, `NOT`
+  - `IN`, `BETWEEN`, `LIKE`, `REGEXP`, `IS NULL`, `CASE`
+- Functions
+  - Aggregate: `MAX`, `MIN`, `AVG`, `SUM`, `COUNT`
+  - Numeric: `ROUND`, `CEILING`, `CEIL`, `FLOOR`, `ABS`, `RAND`
+  - String: `LENGTH`, `UPPER`, `LOWER`, `LTRIM`, `RTRIM`, `TRIM`, `LEFT`, `RIGHT`, `SUBSTRING`, `LOCATE`, `REPLACE`, `CONCAT`, `CONCAT`,
+  - Dates and Time: `NOW`, `CURDATE`, `CURTIME`, `YEAR`, `MONTH`, `DAY`, `HOUR`, `MINUTE`, `SECOND`, `DAYNAME`, `MONTHNAME`, `EXTRACT`, `DATE_FORMAT`, `TIME_FORMAT`, `DATE_ADD`, `DATE_ADD`, `DATE_SUB`, `DATEDIFF`, `TIME_TO_SEC`
+  - `IF`, `IFNULL`, `COALESCE`
+- Stored Procedures
+- Triggers
+- Views
+- Indice
 
 ## Dataset
 
@@ -65,25 +72,12 @@ Docker:
 3. Qual é a porcentagem de pacotes recebidos do IFPB?
 4. Qual é a porcentagem de pacotes perdidos do IFPB no dia 16/02/2018 entre 09:00 até 18:00?
 
-## SQL (MySQL)
-
-**DICAS:**
-- Os comandos não são *case sensitive*
-- Os nomes são *case sensitive*
-- Não esqueça do `;` nos comandos
-- Em caso de erro tente interpretar a mensagem de erro
-
-**TIPOS:**
-- Data Definition Language (DDL)
-- Data Manipulation Language (DML)
-
-## Data Definition Language (DDL)
-
+## DDL
 
 ### Database
 
-```sql
-> SHOW DATABASES;
+```bash
+mysql> SHOW DATABASES;
 +--------------------+
 | Database           |
 +--------------------+
@@ -94,11 +88,11 @@ Docker:
 3 rows in set (0.00 sec)
 ```
 
-```sql
-> CREATE DATABASE monitor_db;
+```bash
+mysql> CREATE DATABASE monitor_db;
 Query OK, 1 row affected (0.00 sec)
 
-> SHOW DATABASES;
+mysql> SHOW DATABASES;
 +--------------------+
 | Database           |
 +--------------------+
@@ -110,11 +104,11 @@ Query OK, 1 row affected (0.00 sec)
 4 rows in set (0.00 sec)
 ```
 
-```sql
-> DROP DATABASE monitor_db;
+```bash
+mysql> DROP DATABASE monitor_db;
 Query OK, 0 rows affected (0.00 sec)
 
-> SHOW DATABASES;
+mysql> SHOW DATABASES;
 +--------------------+
 | Database           |
 +--------------------+
@@ -127,11 +121,11 @@ Query OK, 0 rows affected (0.00 sec)
 
 ### Table
 
-```sql
-> USE monitor_db;
+```bash
+mysql> USE monitor_db;
 Database changed
 
-> SELECT DATABASE();
+mysql> SELECT DATABASE();
 +------------+
 | DATABASE() |
 +------------+
@@ -140,21 +134,20 @@ Database changed
 1 row in set (0.00 sec)
 ```
 
-```sql
-> SHOW TABLES;
+```bash
+mysql> SHOW TABLES;
 Empty set (0.00 sec)
 ```
 
-```sql
-> CREATE TABLE host (
-  id int NOT NULL AUTO_INCREMENT,
-  name varchar(100) NOT NULL,
-  address varchar(100) NOT NULL,
-  PRIMARY KEY (id)
-);
+```bash
+mysql> CREATE TABLE host (
+    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ->   name varchar(100) NOT NULL,
+    ->   address varchar(100) NOT NULL
+    -> );
 Query OK, 0 rows affected (0.00 sec)
 
-> SHOW TABLES;
+mysql> SHOW TABLES;
 +----------------------+
 | Tables_in_monitor_db |
 +----------------------+
@@ -163,8 +156,10 @@ Query OK, 0 rows affected (0.00 sec)
 1 row in set (0.00 sec)
 ```
 
-```sql
-> DESCRIBE host;
+![erd diagram](/imgs/database/monitor-db-hosts.png)
+
+```bash
+mysql> DESCRIBE host;
 +---------+--------------+------+-----+---------+----------------+
 | Field   | Type         | Null | Key | Default | Extra          |
 +---------+--------------+------+-----+---------+----------------+
@@ -175,11 +170,11 @@ Query OK, 0 rows affected (0.00 sec)
 3 rows in set (0.00 sec)
 ```
 
-```sql
-> DROP TABLE host;
+```bash
+mysql> DROP TABLE host;
 Query OK, 0 rows affected (0.00 sec)
 
-> SHOW TABLES;
+mysql> SHOW TABLES;
 +----------------------+
 | Tables_in_monitor_db |
 +----------------------+
@@ -188,11 +183,11 @@ Query OK, 0 rows affected (0.00 sec)
 1 row in set (0.01 sec)
 ```
 
-```sql
-> RENAME TABLE host TO hosts;
+```bash
+mysql> RENAME TABLE host TO hosts;
 Query OK, 0 rows affected (0.00 sec)
 
-> SHOW TABLES;
+mysql> SHOW TABLES;
 +----------------------+
 | Tables_in_monitor_db |
 +----------------------+
@@ -201,8 +196,8 @@ Query OK, 0 rows affected (0.00 sec)
 1 row in set (0.01 sec)
 ```
 
-```sql
-> DESCRIBE hosts;
+```bash
+mysql> DESCRIBE hosts;
 +---------+--------------+------+-----+---------+----------------+
 | Field   | Type         | Null | Key | Default | Extra          |
 +---------+--------------+------+-----+---------+----------------+
@@ -211,11 +206,11 @@ Query OK, 0 rows affected (0.00 sec)
 | address | varchar(100) | NO   |     | NULL    |                |
 +---------+--------------+------+-----+---------+----------------+
 
-> ALTER TABLE hosts ADD COLUMN mask varchar(100);
+mysql> ALTER TABLE hosts ADD COLUMN mask varchar(100);
 Query OK, 0 rows affected (0.01 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
-> DESCRIBE hosts;
+mysql> DESCRIBE hosts;
 +---------+--------------+------+-----+---------+----------------+
 | Field   | Type         | Null | Key | Default | Extra          |
 +---------+--------------+------+-----+---------+----------------+
@@ -227,12 +222,12 @@ Records: 0  Duplicates: 0  Warnings: 0
 4 rows in set (0.00 sec)
 ```
 
-```sql
-> ALTER TABLE hosts DROP COLUMN mask;
+```bash
+mysql> ALTER TABLE hosts DROP COLUMN mask;
 Query OK, 0 rows affected (0.01 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
-> DESCRIBE hosts;
+mysql> DESCRIBE hosts;
 +---------+--------------+------+-----+---------+----------------+
 | Field   | Type         | Null | Key | Default | Extra          |
 +---------+--------------+------+-----+---------+----------------+
@@ -243,30 +238,30 @@ Records: 0  Duplicates: 0  Warnings: 0
 3 rows in set (0.00 sec)
 ```
 
-## Data Manipulation Language (DML)
+## DML & DQL
 
 ### INSERT
 
-```sql
-> INSERT INTO hosts
-    VALUES (1, 'www.ifpb.edu.br', '200.10.10.10');
+```bash
+mysql> INSERT INTO hosts
+    -> VALUES (1, 'www.ifpb.edu.br', '200.10.10.10');
 Query OK, 1 row affected (0.01 sec)
 ```
 
-```sql
-> INSERT INTO hosts
-      (name, address)
-    VALUES
-      ('www.ifrn.edu.br', '200.10.10.11'),
-      ('www.ifpb.edu.br', '200.10.10.12');
+```bash
+mysql> INSERT INTO hosts
+    ->   (name, address)
+    -> VALUES
+    ->   ('www.ifrn.edu.br', '200.10.10.11'),
+    ->   ('www.ifpb.edu.br', '200.10.10.12');
 Query OK, 2 rows affected (0.01 sec)
 Records: 2  Duplicates: 0  Warnings: 0
 ```
 
 ### SELECT
 
-```sql
-> SELECT * FROM hosts;
+```bash
+mysql> SELECT * FROM hosts;
 +----+-----------------+--------------+
 | id | name            | address      |
 +----+-----------------+--------------+
@@ -277,8 +272,8 @@ Records: 2  Duplicates: 0  Warnings: 0
 3 rows in set (0.00 sec)
 ```
 
-```sql
-> SELECT name, address FROM hosts;
+```bash
+mysql> SELECT name, address FROM hosts;
 +-----------------+--------------+
 | name            | address      |
 +-----------------+--------------+
@@ -289,9 +284,9 @@ Records: 2  Duplicates: 0  Warnings: 0
 3 rows in set (0.00 sec)
 ```
 
-```sql
-> SELECT name, address FROM hosts
-    ORDER BY name;
+```bash
+mysql> SELECT name, address FROM hosts
+    -> ORDER BY name;
 +-----------------+--------------+
 | name            | address      |
 +-----------------+--------------+
@@ -302,9 +297,9 @@ Records: 2  Duplicates: 0  Warnings: 0
 3 rows in set (0.01 sec)
 ```
 
-```sql
-> SELECT name, address FROM hosts
-    WHERE id = 1;
+```bash
+mysql> SELECT name, address FROM hosts
+    -> WHERE id = 1;
 +-----------------+--------------+
 | name            | address      |
 +-----------------+--------------+
@@ -313,9 +308,9 @@ Records: 2  Duplicates: 0  Warnings: 0
 1 row in set (0.00 sec)
 ```
 
-```sql
-> SELECT name, address FROM hosts
-    WHERE name LIKE '%ifpb%' AND address LIKE '200.%.%.%';
+```bash
+mysql> SELECT name, address FROM hosts
+    -> WHERE name LIKE '%ifpb%' AND address LIKE '200.%.%.%';
 +-----------------+--------------+
 | name            | address      |
 +-----------------+--------------+
@@ -325,9 +320,9 @@ Records: 2  Duplicates: 0  Warnings: 0
 2 rows in set (0.00 sec)
 ```
 
-```sql
-> SELECT * FROM hosts
-    LIMIT 2;
+```bash
+mysql> SELECT * FROM hosts
+    -> LIMIT 2;
 +----+-----------------+--------------+
 | id | name            | address      |
 +----+-----------------+--------------+
@@ -337,10 +332,10 @@ Records: 2  Duplicates: 0  Warnings: 0
 2 rows in set (0.00 sec)
 ```
 
-```sql
-> SELECT * FROM hosts
-    LIMIT 2
-    OFFSET 1;
+```bash
+mysql> SELECT * FROM hosts
+    -> LIMIT 2
+    -> OFFSET 1;
 +----+-----------------+--------------+
 | id | name            | address      |
 +----+-----------------+--------------+
@@ -350,8 +345,8 @@ Records: 2  Duplicates: 0  Warnings: 0
 2 rows in set (0.00 sec)
 ```
 
-```sql
-> SELECT COUNT(*) AS total FROM hosts;
+```bash
+mysql> SELECT COUNT(*) AS total FROM hosts;
 +-------+
 | total |
 +-------+
@@ -362,14 +357,14 @@ Records: 2  Duplicates: 0  Warnings: 0
 
 ### UPDATE
 
-```sql
-> UPDATE hosts
-    SET address = '10.0.0.10'
-    WHERE id = 2;
+```bash
+mysql> UPDATE hosts
+    -> SET address = '10.0.0.10'
+    -> WHERE id = 2;
 Query OK, 1 row affected (0.01 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
-> SELECT * FROM hosts
+mysql> SELECT * FROM hosts
     WHERE id = 2;
 +----+-----------------+-----------+
 | id | name            | address   |
@@ -379,15 +374,15 @@ Rows matched: 1  Changed: 1  Warnings: 0
 1 row in set (0.00 sec)
 ```
 
-```sql
-> UPDATE hosts
-    SET name = 'portal.ifrn.edu.br', address = '10.0.0.100'
-    WHERE id = 2;
+```bash
+mysql> UPDATE hosts
+    -> SET name = 'portal.ifrn.edu.br', address = '10.0.0.100'
+    -> WHERE id = 2;
 Query OK, 1 row affected (0.01 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
-> SELECT * FROM hosts
-    WHERE id = 2;
+mysql> SELECT * FROM hosts
+    -> WHERE id = 2;
 +----+--------------------+------------+
 | id | name               | address    |
 +----+--------------------+------------+
@@ -397,74 +392,71 @@ Rows matched: 1  Changed: 1  Warnings: 0
 
 ### DELETE
 
-```sql
-> SELECT * FROM hosts;
+```bash
+mysql> SELECT * FROM hosts;
 +----+-----------------+--------------+
 | id | name            | address      |
 +----+-----------------+--------------+
 |  1 | www.ifpb.edu.br | 200.10.10.10 |
 +----+-----------------+--------------+
 
-> DELETE FROM hosts
-    WHERE id = 1;
+mysql> DELETE FROM hosts
+    -> WHERE id = 1;
 Query OK, 1 row affected (0.01 sec)
 
-> SELECT * FROM hosts
-    WHERE id = 1;
+mysql> SELECT * FROM hosts
+    -> WHERE id = 1;
 Empty set (0.00 sec)
 ```
 
-> **DICA:** Muito cuidado com o `DELETE` e `UPDATE` sem o `WHERE`!
+**DICA:** Muito cuidado com o `DELETE` e `UPDATE` sem o `WHERE`!
 
 ## Database Relationships
 
-###  1-N
+###  1:N
 
-![erd diagram](/imgs/db-simple/monitor_db.png)
+![erd diagram](/imgs/database/monitor-db-host-pings.png)
 
-```sql
-> CREATE TABLE histories (
-    id int NOT NULL AUTO_INCREMENT,
-    transmitted int NOT NULL,
-    received int NOT NULL,
-    time datetime NOT NULL,
-    host_id int NOT NULL,
-    PRIMARY KEY (id),
-    KEY host_id (host_id),
-    CONSTRAINT fk_host_id FOREIGN KEY (host_id) REFERENCES hosts (id)
-);
+```bash
+mysql> CREATE TABLE pings (
+    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ->   transmitted int NOT NULL,
+    ->   received int NOT NULL,
+    ->   createAt datetime NOT NULL,
+    ->   host_id int NOT NULL REFERENCES hosts (id)
+    -> );
 Query OK, 0 rows affected (0.02 sec)
 ```
 
-```sql
-> DESCRIBE histories;
+```bash
+mysql> DESCRIBE pings;
 +-------------+------+------+-----+---------+----------------+
 | Field       | Type | Null | Key | Default | Extra          |
 +-------------+------+------+-----+---------+----------------+
 | id          | int  | NO   | PRI | NULL    | auto_increment |
 | transmitted | int  | YES  |     | NULL    |                |
 | received    | int  | YES  |     | NULL    |                |
-| time        | time | YES  |     | NULL    |                |
+| createAt    | time | YES  |     | NULL    |                |
 | host_id     | int  | YES  | MUL | NULL    |                |
 +-------------+------+------+-----+---------+----------------+
 5 rows in set (0.00 sec)
 ```
 
-```sql
-> INSERT INTO histories
-    (transmitted, received, time, host_id)
-  VALUES
-    (4, 4, NOW(), 2),
-    (8, 4, NOW(), 2),
-    (7, 4, NOW(), 3),
-    (5, 5, NOW(), 3),
-    (4, 3, NOW(), 2);
+```bash
+mysql> INSERT INTO pings
+    ->   (transmitted, received, createAt, host_id)
+    -> VALUES
+    ->   (4, 4, NOW(), 2),
+    ->   (8, 4, NOW(), 2),
+    ->   (7, 4, NOW(), 3),
+    ->   (5, 5, NOW(), 3),
+    ->   (4, 3, NOW(), 2);
 Query OK, 5 rows affected (0.01 sec)
 Records: 5  Duplicates: 0  Warnings: 0
 
-> SELECT * FROM histories;
+mysql> SELECT * FROM pings;
 +----+-------------+----------+---------------------+---------+
-| id | transmitted | received | time                | host_id |
+| id | transmitted | received | createAt            | host_id |
 +----+-------------+----------+---------------------+---------+
 |  1 |           4 |        4 | 2018-02-16 13:41:49 |       2 |
 |  2 |           8 |        4 | 2018-02-16 13:41:49 |       2 |
@@ -475,13 +467,13 @@ Records: 5  Duplicates: 0  Warnings: 0
 5 rows in set (0.00 sec)
 ```
 
-```sql
-> SELECT
-    *
-  FROM
-    hosts INNER JOIN histories;
+```bash
+mysql> SELECT
+    ->   *
+    -> FROM
+    ->   hosts INNER JOIN pings;
 +----+--------------------+--------------+----+-------------+----------+---------------------+---------+
-| id | name               | address      | id | transmitted | received | time                | host_id |
+| id | name               | address      | id | transmitted | received | createAt            | host_id |
 +----+--------------------+--------------+----+-------------+----------+---------------------+---------+
 |  2 | portal.ifrn.edu.br | 10.0.0.100   |  1 |           4 |        4 | 2018-02-16 13:41:49 |       2 |
 |  3 | www.ifpb.edu.br    | 200.10.10.12 |  1 |           4 |        4 | 2018-02-16 13:41:49 |       2 |
@@ -497,15 +489,15 @@ Records: 5  Duplicates: 0  Warnings: 0
 10 rows in set (0.00 sec)
 ```
 
-```sql
-> SELECT
-    *
-  FROM
-    hosts INNER JOIN histories
-  WHERE
-    hosts.id = histories.host_id;
+```bash
+mysql> SELECT
+    ->   *
+    -> FROM
+    ->   hosts INNER JOIN pings
+    -> WHERE
+    ->   hosts.id = pings.host_id;
 +----+--------------------+--------------+----+-------------+----------+---------------------+---------+
-| id | name               | address      | id | transmitted | received | time                | host_id |
+| id | name               | address      | id | transmitted | received | createAt            | host_id |
 +----+--------------------+--------------+----+-------------+----------+---------------------+---------+
 |  2 | portal.ifrn.edu.br | 10.0.0.100   |  1 |           4 |        4 | 2018-02-16 13:41:49 |       2 |
 |  2 | portal.ifrn.edu.br | 10.0.0.100   |  2 |           8 |        4 | 2018-02-16 13:41:49 |       2 |
@@ -516,16 +508,16 @@ Records: 5  Duplicates: 0  Warnings: 0
 5 rows in set (0.00 sec)
 ```
 
-```sql
-> SELECT
-    sum(histories.received) AS received,
-    sum(histories.transmitted) AS transmitted,
-    round(sum(histories.received)/sum(histories.transmitted), 2) AS percent
-  FROM
-    hosts INNER JOIN histories
-  WHERE
-    hosts.id = histories.host_id AND
-    hosts.name LIKE '%ifpb%';
+```bash
+mysql> SELECT
+    ->   sum(pings.received) AS received,
+    ->   sum(pings.transmitted) AS transmitted,
+    ->   round(sum(pings.received)/sum(pings.transmitted), 2) AS percent
+    -> FROM
+    ->   hosts INNER JOIN pings
+    -> WHERE
+    ->   hosts.id = pings.host_id AND
+    ->   hosts.name LIKE '%ifpb%';
 +----------+-------------+---------+
 | received | transmitted | percent |
 +----------+-------------+---------+
@@ -534,10 +526,15 @@ Records: 5  Duplicates: 0  Warnings: 0
 1 row in set (0.00 sec)
 ```
 
-```sql
-> exit
-Bye
-```
+###  1:1
+
+![erd diagram](/imgs/database/monitor-db-ping-stats.png)
+
+###  N:M
+
+![erd diagram](/imgs/database/monitor-db-hosts-admins-physical.png)
+
+## Backup
 
 ## Referências
 
@@ -546,7 +543,10 @@ Bye
 - SQL Tutorial: [W3Schools](https://www.w3schools.com/sql/default.asp) e [TutorialsPoint](https://www.tutorialspoint.com/sql/index.htm)
 - SQL cheat sheet: [Websitesetup](https://websitesetup.org/sql-cheat-sheet/), [ZeroTurnaround](https://zeroturnaround.com/rebellabs/sql-cheat-sheet/), [cse.unl.edu](http://cse.unl.edu/~sscott/ShowFiles/SQL/CheatSheet/SQLCheatSheet.html), [hofmannsven](https://gist.github.com/hofmannsven/9164408), [sqltutorial](http://www.sqltutorial.org/sql-cheat-sheet/)
 - [SQlite Online](https://sqliteonline.com/)
+- [What is the best way to learn SQL?](https://blog.bytebytego.com/p/ep99-what-is-the-best-way-to-learn#%C2%A7what-is-the-best-way-to-learn-sql)
 - Databases
   - [SQlite](https://www.sqlite.org/index.html): [SQL](https://www.sqlite.org/lang.html), [Datatypes](https://www.sqlite.org/datatype3.html)
   - [MySQL](https://dev.mysql.com/doc/refman/5.7/en/sql-syntax.html): [Datatypes](https://www.tutorialspoint.com/mysql/mysql-data-types.htm), [Functions](https://www.w3schools.com/sql/sql_ref_mysql.asp), [Operators](https://www.w3schools.com/sql/sql_operators.asp)
   - [Oracle](https://docs.oracle.com/database/121/SQLRF/toc.htm)
+- Ferramentas
+  - DBeaver

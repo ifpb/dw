@@ -1,0 +1,42 @@
+@startuml
+hide circle
+scale 1.5
+skinparam linetype ortho
+skinparam monochrome true
+left to right direction
+
+entity "hosts" as host {
+  *id : int
+  --
+  name : varchar(100)
+  address : varchar(100)
+}
+
+entity "pings" as ping {
+  *id : int
+  --
+  createAt : datetime
+}
+
+entity "icmps" as icmp {
+  *id : int
+  --
+  bytes : int
+  ttl : int
+  time : int
+  *ping_id : int <<FK>>
+}
+
+entity "stats" as stat {
+  *id : int
+  --
+  transmitted : int
+  received : int
+  time : int
+  *ping_id : int <<FK>>
+}
+
+ping ||--|{ icmp
+ping ||--|| stat
+host ||--|{ ping
+@enduml
