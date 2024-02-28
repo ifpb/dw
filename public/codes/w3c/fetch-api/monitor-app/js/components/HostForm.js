@@ -76,7 +76,7 @@ export function create() {
             data-bs-target="#offcanvasRight"
             aria-controls="offcanvasRight"
           >
-            Cadastrar
+            Salvar
           </button>
         </div>
       </form>
