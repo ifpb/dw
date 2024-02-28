@@ -16,6 +16,8 @@ entity "pings" as ping {
   *id : int
   --
   createAt : datetime
+  *host_id : int <<FK>>
+  *stat_id : int <<FK>>
 }
 
 entity "icmps" as icmp {
@@ -23,7 +25,7 @@ entity "icmps" as icmp {
   --
   bytes : int
   ttl : int
-  time : int
+  time : float
   *ping_id : int <<FK>>
 }
 
@@ -32,8 +34,7 @@ entity "stats" as stat {
   --
   transmitted : int
   received : int
-  time : int
-  *ping_id : int <<FK>>
+  time : float
 }
 
 ping ||--|{ icmp

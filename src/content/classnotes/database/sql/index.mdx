@@ -48,7 +48,7 @@ import CodePreview from '../../../../components/CodePreview.astro';
   - Aggregate: `MAX`, `MIN`, `AVG`, `SUM`, `COUNT`
   - Numeric: `ROUND`, `CEILING`, `CEIL`, `FLOOR`, `ABS`, `RAND`
   - String: `LENGTH`, `UPPER`, `LOWER`, `LTRIM`, `RTRIM`, `TRIM`, `LEFT`, `RIGHT`, `SUBSTRING`, `LOCATE`, `REPLACE`, `CONCAT`, `CONCAT`,
-  - Dates and Time: `NOW`, `CURDATE`, `CURTIME`, `YEAR`, `MONTH`, `DAY`, `HOUR`, `MINUTE`, `SECOND`, `DAYNAME`, `MONTHNAME`, `EXTRACT`, `DATE_FORMAT`, `TIME_FORMAT`, `DATE_ADD`, `DATE_ADD`, `DATE_SUB`, `DATEDIFF`, `TIME_TO_SEC`
+  - Dates and Time: `NOW`, `CURDATE`, `CURTIME`, `YEAR`, `MONTH`, `DAY`, `HOUR`, `MINUTE`, `SECOND`, `DAYNAME`, `MONTHNAME`, `EXTRACT`, `DATE_FORMAT`, `TIME_FORMAT`, `DATE_ADD`, `DATE_SUB`, `DATEDIFF`, `TIME_TO_SEC`
   - `IF`, `IFNULL`, `COALESCE`
 - Stored Procedures
 - Triggers
@@ -59,18 +59,18 @@ import CodePreview from '../../../../components/CodePreview.astro';
 
 | name               | address      | transmitted | received | time                |
 | ------------------ | ------------ | ----------- | -------- | ------------------- |
-| portal.ifrn.edu.br | 10.0.0.100   | 4           | 4        | 2018-02-16 13:41:49 |
-| portal.ifrn.edu.br | 10.0.0.100   | 8           | 4        | 2018-02-16 13:41:49 |
-| portal.ifrn.edu.br | 10.0.0.100   | 4           | 3        | 2018-02-16 13:41:49 |
+| portal.ifrn.edu.br | 10.0.0.100   | 4           | 4        | 2023-02-16 13:41:49 |
+| portal.ifrn.edu.br | 10.0.0.100   | 8           | 4        | 2023-02-16 13:41:49 |
+| portal.ifrn.edu.br | 10.0.0.100   | 4           | 3        | 2023-02-16 13:41:49 |
 | ...                | ...          | ...         | ...      | ...                 |
-| www.ifpb.edu.br    | 200.10.10.12 | 5           | 5        | 2018-02-18 13:41:49 |
+| www.ifpb.edu.br    | 200.10.10.12 | 5           | 5        | 2023-02-18 13:41:49 |
 
 **Questões**
 
 1. Quantos pacotes foram recebidos?
 2. Qual é a média de pacotes perdidos?
 3. Qual é a porcentagem de pacotes recebidos do IFPB?
-4. Qual é a porcentagem de pacotes perdidos do IFPB no dia 16/02/2018 entre 09:00 até 18:00?
+4. Qual é a porcentagem de pacotes perdidos do IFPB no dia 16/02/2023 entre 09:00 até 18:00?
 
 ## DDL
 
@@ -430,15 +430,15 @@ Query OK, 0 rows affected (0.02 sec)
 
 ```bash
 mysql> DESCRIBE pings;
-+-------------+------+------+-----+---------+----------------+
-| Field       | Type | Null | Key | Default | Extra          |
-+-------------+------+------+-----+---------+----------------+
-| id          | int  | NO   | PRI | NULL    | auto_increment |
-| transmitted | int  | YES  |     | NULL    |                |
-| received    | int  | YES  |     | NULL    |                |
-| createAt    | time | YES  |     | NULL    |                |
-| host_id     | int  | YES  | MUL | NULL    |                |
-+-------------+------+------+-----+---------+----------------+
++-------------+----------+------+-----+---------+----------------+
+| Field       | Type     | Null | Key | Default | Extra          |
++-------------+----------+------+-----+---------+----------------+
+| id          | int      | NO   | PRI | NULL    | auto_increment |
+| transmitted | int      | NO   |     | NULL    |                |
+| received    | int      | NO   |     | NULL    |                |
+| createAt    | datetime | NO   |     | NULL    |                |
+| host_id     | int      | NO   |     | NULL    |                |
++-------------+----------+------+-----+---------+----------------+
 5 rows in set (0.00 sec)
 ```
 
@@ -458,11 +458,11 @@ mysql> SELECT * FROM pings;
 +----+-------------+----------+---------------------+---------+
 | id | transmitted | received | createAt            | host_id |
 +----+-------------+----------+---------------------+---------+
-|  1 |           4 |        4 | 2018-02-16 13:41:49 |       2 |
-|  2 |           8 |        4 | 2018-02-16 13:41:49 |       2 |
-|  3 |           7 |        4 | 2018-02-16 13:41:49 |       3 |
-|  4 |           5 |        5 | 2018-02-16 13:41:49 |       3 |
-|  5 |           4 |        3 | 2018-02-16 13:41:49 |       2 |
+|  1 |           4 |        4 | 2023-02-16 13:41:49 |       2 |
+|  2 |           8 |        4 | 2023-02-16 13:41:49 |       2 |
+|  3 |           7 |        4 | 2023-02-16 13:41:49 |       3 |
+|  4 |           5 |        5 | 2023-02-16 13:41:49 |       3 |
+|  5 |           4 |        3 | 2023-02-16 13:41:49 |       2 |
 +----+-------------+----------+---------------------+---------+
 5 rows in set (0.00 sec)
 ```
@@ -475,16 +475,16 @@ mysql> SELECT
 +----+--------------------+--------------+----+-------------+----------+---------------------+---------+
 | id | name               | address      | id | transmitted | received | createAt            | host_id |
 +----+--------------------+--------------+----+-------------+----------+---------------------+---------+
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  1 |           4 |        4 | 2018-02-16 13:41:49 |       2 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  1 |           4 |        4 | 2018-02-16 13:41:49 |       2 |
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  2 |           8 |        4 | 2018-02-16 13:41:49 |       2 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  2 |           8 |        4 | 2018-02-16 13:41:49 |       2 |
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  3 |           7 |        4 | 2018-02-16 13:41:49 |       3 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  3 |           7 |        4 | 2018-02-16 13:41:49 |       3 |
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  4 |           5 |        5 | 2018-02-16 13:41:49 |       3 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  4 |           5 |        5 | 2018-02-16 13:41:49 |       3 |
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  5 |           4 |        3 | 2018-02-16 13:41:49 |       2 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  5 |           4 |        3 | 2018-02-16 13:41:49 |       2 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  1 |           4 |        4 | 2023-02-16 13:41:49 |       2 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  1 |           4 |        4 | 2023-02-16 13:41:49 |       2 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  2 |           8 |        4 | 2023-02-16 13:41:49 |       2 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  2 |           8 |        4 | 2023-02-16 13:41:49 |       2 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  3 |           7 |        4 | 2023-02-16 13:41:49 |       3 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  3 |           7 |        4 | 2023-02-16 13:41:49 |       3 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  4 |           5 |        5 | 2023-02-16 13:41:49 |       3 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  4 |           5 |        5 | 2023-02-16 13:41:49 |       3 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  5 |           4 |        3 | 2023-02-16 13:41:49 |       2 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  5 |           4 |        3 | 2023-02-16 13:41:49 |       2 |
 +----+--------------------+--------------+----+-------------+----------+---------------------+---------+
 10 rows in set (0.00 sec)
 ```
@@ -493,51 +493,283 @@ mysql> SELECT
 mysql> SELECT
     ->   *
     -> FROM
-    ->   hosts INNER JOIN pings
-    -> WHERE
-    ->   hosts.id = pings.host_id;
+    ->   hosts h
+    -> INNER JOIN
+    ->   pings p ON h.id = p.host_id;
 +----+--------------------+--------------+----+-------------+----------+---------------------+---------+
 | id | name               | address      | id | transmitted | received | createAt            | host_id |
 +----+--------------------+--------------+----+-------------+----------+---------------------+---------+
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  1 |           4 |        4 | 2018-02-16 13:41:49 |       2 |
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  2 |           8 |        4 | 2018-02-16 13:41:49 |       2 |
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  5 |           4 |        3 | 2018-02-16 13:41:49 |       2 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  3 |           7 |        4 | 2018-02-16 13:41:49 |       3 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  4 |           5 |        5 | 2018-02-16 13:41:49 |       3 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  1 |           4 |        4 | 2023-02-16 13:41:49 |       2 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  2 |           8 |        4 | 2023-02-16 13:41:49 |       2 |
+|  2 | portal.ifrn.edu.br | 10.0.0.100   |  5 |           4 |        3 | 2023-02-16 13:41:49 |       2 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  3 |           7 |        4 | 2023-02-16 13:41:49 |       3 |
+|  3 | www.ifpb.edu.br    | 200.10.10.12 |  4 |           5 |        5 | 2023-02-16 13:41:49 |       3 |
 +----+--------------------+--------------+----+-------------+----------+---------------------+---------+
 5 rows in set (0.00 sec)
 ```
 
+Quantos pacotes foram recebidos? **20**
+
 ```bash
 mysql> SELECT
-    ->   sum(pings.received) AS received,
-    ->   sum(pings.transmitted) AS transmitted,
-    ->   round(sum(pings.received)/sum(pings.transmitted), 2) AS percent
+    ->   sum(p.transmitted) AS transmitted,
+    ->   sum(p.received) AS received,
+    ->   sum(p.transmitted - p.received) AS losted
     -> FROM
-    ->   hosts INNER JOIN pings
-    -> WHERE
-    ->   hosts.id = pings.host_id AND
-    ->   hosts.name LIKE '%ifpb%';
-+----------+-------------+---------+
-| received | transmitted | percent |
-+----------+-------------+---------+
-|        9 |          12 |    0.75 |
-+----------+-------------+---------+
+    ->   hosts h
+    -> INNER JOIN
+    ->   pings p ON h.id = p.host_id;
++-------------+----------+--------+
+| transmitted | received | losted |
++-------------+----------+--------+
+|          28 |       20 |      8 |
++-------------+----------+--------+
 1 row in set (0.00 sec)
+```
+
+Qual é a média de pacotes perdidos? **1,6**
+
+```bash
+mysql> SELECT
+    ->   avg(p.transmitted) AS transmited,
+    ->   avg(p.received) AS received,
+    ->   avg(p.transmitted - p.received) AS losted
+    -> FROM
+    ->   hosts h
+    -> INNER JOIN
+    ->   pings p ON h.id = p.host_id;
++------------+----------+--------+
+| transmited | received | losted |
++------------+----------+--------+
+|     5.6000 |   4.0000 | 1.6000 |
++------------+----------+--------+
+1 row in set (0.00 sec)
+```
+
+Qual é a porcentagem de pacotes recebidos do IFPB? **75%**
+
+```bash
+mysql> SELECT
+    ->   sum(p.transmitted) AS transmitted,
+    ->   sum(p.received) AS received,
+    ->   round(sum(p.received)/sum(p.transmitted), 3) AS losted
+    -> FROM
+    ->   hosts h
+    -> INNER JOIN
+    ->   pings p ON h.id = p.host_id
+    -> WHERE
+    ->   h.name LIKE '%ifpb%';
++-------------+----------+--------+
+| transmitted | received | losted |
++-------------+----------+--------+
+|          12 |        9 |  0.750 |
++-------------+----------+--------+
+1 row in set (0.00 sec)
+```
+
+Qual é a porcentagem de pacotes perdidos do IFPB no dia 16/02/2023 entre 09:00 até 18:00? **25%**
+
+```bash
+mysql> SELECT
+    ->   1 - round(sum(p.received)/sum(p.transmitted), 3) AS losted
+    -> FROM
+    ->   hosts h
+    -> INNER JOIN
+    ->   pings p ON h.id = p.host_id
+    -> WHERE
+    ->   h.name LIKE '%ifpb%' AND
+    ->   p.createAt BETWEEN '2023-01-01 12:00:00' AND '2023-03-31 21:00:00';
++--------+
+| losted |
++--------+
+|  0.250 |
++--------+
+1 row in set (0.00 sec)
+```
+
+```sql
+p.createAt > '2023-01-01 12:00:00' AND p.createAt < '2023-03-31 21:00:00'
 ```
 
 ###  1:1
 
 ![erd diagram](/imgs/database/monitor-db-ping-stats.png)
 
+```bash
+mysql> ALTER TABLE pings DROP COLUMN transmitted;
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE pings DROP COLUMN received;
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE pings ADD COLUMN stat_id int NOT NULL REFERENCES stats (id);
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE pings;
++----------+----------+------+-----+---------+----------------+
+| Field    | Type     | Null | Key | Default | Extra          |
++----------+----------+------+-----+---------+----------------+
+| id       | int      | NO   | PRI | NULL    | auto_increment |
+| createAt | datetime | NO   |     | NULL    |                |
+| host_id  | int      | NO   |     | NULL    |                |
++----------+----------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+```
+
+```bash
+mysql> CREATE TABLE icmps (
+    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ->   bytes int NOT NULL,
+    ->   ttl int NOT NULL,
+    ->   time float NOT NULL,
+    ->   ping_id int NOT NULL REFERENCES pings (id)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+```
+
+```bash
+mysql> INSERT INTO
+    ->   icmps
+    -> VALUES
+    ->   (1, 56, 54, 74.7, 2),
+    ->   (2, 56, 54, 74.0, 2),
+    ->   (3, 56, 54, 72.5, 2),
+    ->   (4, 56, 54, 43.5, 3),
+    ->   (5, 56, 54, 44.6, 3);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+mysql>
+```
+
+```bash
+mysql> CREATE TABLE stats (
+    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ->   transmitted int NOT NULL,
+    ->   received int NOT NULL,
+    ->   time float NOT NULL;
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+```
+
+```bash
+mysql> INSERT INTO
+    ->   stats (transmitted, received, time)
+    -> VALUES
+    ->   (4, 4, 221.2),
+    ->   (7, 4, 88.1);
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+```
+
+```bash
+mysql> INSERT INTO
+    ->   stats (transmitted, received, time)
+    -> VALUES
+    ->   (4, 4, 221.2),
+    ->   (7, 4, 88.1);
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+```
+
+```bash
+mysql> SELECT
+    ->   *
+    -> FROM
+    ->   hosts h
+    -> INNER JOIN
+    ->   pings p ON h.id = p.host_id
+    -> INNER JOIN
+    ->   stats s ON s.id = p.stat_id;
++----+-----------------+--------------+----+---------------------+---------+---------+----+-------------+----------+-------+
+| id | name            | address      | id | createAt            | host_id | stat_id | id | transmitted | received | time  |
++----+-----------------+--------------+----+---------------------+---------+---------+----+-------------+----------+-------+
+|  2 | www.ifrn.edu.br | 200.10.10.11 |  2 | 2024-02-28 02:50:55 |       2 |       1 |  1 |           4 |        4 | 221.2 |
+|  3 | www.ifpb.edu.br | 200.10.10.12 |  3 | 2024-02-28 02:50:55 |       3 |       2 |  2 |           7 |        4 |  88.1 |
++----+-----------------+--------------+----+---------------------+---------+---------+----+-------------+----------+-------+
+2 rows in set (0.00 sec)
+```
+
 ###  N:M
 
 ![erd diagram](/imgs/database/monitor-db-hosts-admins-physical.png)
 
+```bash
+mysql> CREATE TABLE admins (
+    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ->   name varchar(50) NOT NULL,
+    ->   email varchar(100) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+```
+
+```bash
+mysql> CREATE TABLE admins_hosts (
+    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ->   admin_id int NOT NULL REFERENCES admins (id),
+    ->   host_id int NOT NULL REFERENCES hosts (id)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+```
+
+```bash
+mysql> INSERT INTO
+    ->   admins (name, email)
+    -> VALUES
+    ->   ('Alice', 'alice@email.com'),
+    ->   ('Bob', 'bob@email.com'),
+    ->   ('Charlie', 'charlie@email.com');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+```
+
+```bash
+mysql> INSERT INTO
+    ->   admins_hosts (admin_id, host_id)
+    -> VALUES
+    ->   (1, 2),
+    ->   (2, 2),
+    ->   (2, 3),
+    ->   (3, 3);
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+```
+
+```bash
+mysql> SELECT
+    ->   a.name,
+    ->   h.name,
+    ->   h.address
+    -> FROM
+    ->   hosts h
+    -> INNER JOIN
+    ->   admins_hosts ah ON h.id = ah.host_id
+    -> INNER JOIN
+    ->   admins a ON a.id = ah.admin_id;
++---------+-----------------+--------------+
+| name    | name            | address      |
++---------+-----------------+--------------+
+| Alice   | www.ifrn.edu.br | 200.10.10.11 |
+| Bob     | www.ifrn.edu.br | 200.10.10.11 |
+| Bob     | www.ifpb.edu.br | 200.10.10.12 |
+| Charlie | www.ifpb.edu.br | 200.10.10.12 |
++---------+-----------------+--------------+
+4 rows in set (0.00 sec)
+```
+
 ## Backup
+
+```bash
+$ docker compose exec mysql mysqldump -u root -p monitor_db > database.sql
+```
+
+<CodePreview src = "/codes/database/mysql-server/database.sql" />
 
 ## Referências
 
+- [SQL Roadmap](https://roadmap.sh/sql)
 - [SQL Complete Guide](https://github.com/vasudeveloper001/completesql/blob/main/sql_notes.md)
 - [enochtangg/quick-SQL-cheatsheet](https://github.com/enochtangg/quick-SQL-cheatsheet)
 - SQL Tutorial: [W3Schools](https://www.w3schools.com/sql/default.asp) e [TutorialsPoint](https://www.tutorialspoint.com/sql/index.htm)

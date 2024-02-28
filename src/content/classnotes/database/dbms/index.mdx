@@ -100,6 +100,22 @@ $ docker compose down
  ✔ Network mysql-server_app-tier     Removed                     0.2s
 ```
 
+Backup
+
+```bash
+$ docker compose exec mysql mysqldump -u root -p monitor_db > database.sql
+
+$ docker compose exec mysql mysqldump -u root -p --all-databases > database.sql
+```
+
+Recovery
+
+```bash
+$ docker compose exec mysql mysql -u root -p monitor_db < database.sql
+
+$ docker compose exec mysql mysql -u root -p < database.sql
+```
+
 VSCode:
   - [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools)
   - [SQLTools MySQL/MariaDB](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools-driver-mysql)
@@ -218,7 +234,7 @@ $ pg_dump -Fc database_name_here > database.bak # compressed binary format
 $ pg_dump -Ft database_name_here > database.tar # tarball
 ```
 
-Restore
+Recovery
 
 ```bash
 $ psql -d database_name_here < database.sql
