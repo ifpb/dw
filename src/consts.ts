@@ -45,8 +45,8 @@ export const CLASSNOTE_SLUGS = [
   // test
   // docker
 
-  // 'extra/next-steps',
-  // 'extra/exercises',
+  'extra/next-steps',
+  'extra/exercises',
 ];
 
 export const MENU = [
