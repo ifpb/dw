@@ -9,49 +9,52 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 ```bash
 $ npm install prisma
+
 $ npx prisma init --datasource-provider sqlite
 ```
 
-<CodeTree src="/codes/expressjs/invest-app-prismajs-simple" />
+<CodeTree src="/codes/expressjs/monitor-app-prismajs-simple" />
 
 ## Migration
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/prisma/schema.prisma" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-simple/back/prisma/schema.prisma" />
 
-Tabela `investment`:
+Tabela `Host`:
 
-![](/dw/imgs/expressjs/prismajs-simple/database.png)
+![](/dw/imgs/expressjs/monitor-app-prismajs-simple/monitor-db-hosts.png)
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/.env.example" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-simple/back/.env.example" />
 
 ```bash
 $ npx prisma migrate dev --name init
+
 $ npx prisma studio
+
+$ npx prisma migrate reset
+
+$ npx prisma db push --force-reset
 ```
 
 ## Seed
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/prisma/seed.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-simple/back/prisma/seed.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/prisma/seeders.json" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-simple/back/prisma/seeders.json" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/package.json" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-simple/back/package.json" />
 
 ```bash
 $ npx prisma db seed
+
 $ npx prisma studio
 ```
 
 ## Model
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/src/database/database.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-simple/back/src/database/database.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/src/models/Investment.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-simple/back/src/models/Hosts.js" />
 
-## View
+## Router
 
-![](/dw/imgs/expressjs/prismajs-simple/preview.png)
-
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/public/index.html" />
-
-<CodePreview src="/codes/expressjs/invest-app-prismajs-simple/public/js/main.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-simple/back/src/routes.js" highlightLines="29"  />
