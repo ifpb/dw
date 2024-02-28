@@ -156,7 +156,7 @@ mysql> SHOW TABLES;
 1 row in set (0.00 sec)
 ```
 
-![erd diagram](/imgs/database/monitor-db-hosts.png)
+![erd diagram](/dw/imgs/database/monitor-db-hosts.png)
 
 ```bash
 mysql> DESCRIBE host;
@@ -415,7 +415,7 @@ Empty set (0.00 sec)
 
 ###  1:N
 
-![erd diagram](/imgs/database/monitor-db-host-pings.png)
+![erd diagram](/dw/imgs/database/monitor-db-host-pings.png)
 
 ```bash
 mysql> CREATE TABLE pings (
@@ -593,7 +593,7 @@ p.createAt > '2023-01-01 12:00:00' AND p.createAt < '2023-03-31 21:00:00'
 
 ###  1:1
 
-![erd diagram](/imgs/database/monitor-db-ping-stats.png)
+![erd diagram](/dw/imgs/database/monitor-db-ping-stats.png)
 
 ```bash
 mysql> ALTER TABLE pings DROP COLUMN transmitted;
@@ -694,7 +694,7 @@ mysql> SELECT
 
 ###  N:M
 
-![erd diagram](/imgs/database/monitor-db-hosts-admins-physical.png)
+![erd diagram](/dw/imgs/database/monitor-db-hosts-admins-physical.png)
 
 ```bash
 mysql> CREATE TABLE admins (
