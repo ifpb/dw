@@ -297,6 +297,34 @@ Data Types:
 - `TEXT`: text string (UTF-8, UTF-16BE or UTF-16LE)
 - `BLOB`: blob of data
 
+Backup
+
+```bash
+$ sqlite3 ./dev.db
+SQLite version 3.37.2 2022-01-06 13:25:41
+Enter ".help" for usage hints.
+sqlite> .schema
+sqlite> .schema table_name
+sqlite> .dump
+sqlite> .dump table_name
+sqlite> .output ./backup.sql
+sqlite> .exit
+
+$ sqlite3 dev.db .dump > dev.sql
+```
+
+Recovery
+
+```bash
+$ sqlite3 ./restore.db
+SQLite version 3.37.2 2022-01-06 13:25:41
+Enter ".help" for usage hints.
+sqlite> .read ./backup.sql
+sqlite> .exit
+
+$ sqlite3 restore.db < backup.sql
+```
+
 Referências
 
 - [How to Run and use SQLite Database with Docker Containers](https://thriveread.com/sqlite-docker-container-and-docker-compose/)

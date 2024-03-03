@@ -49,6 +49,10 @@ $ npx prisma db seed
 $ npx prisma studio
 ```
 
+```bash
+$ sqlite3 dev.db .dump > dev.sql
+```
+
 ## Model
 
 <CodePreview src="/codes/expressjs/monitor-app-prismajs-simple/back/src/database/database.js" />
@@ -58,3 +62,7 @@ $ npx prisma studio
 ## Router
 
 <CodePreview src="/codes/expressjs/monitor-app-prismajs-simple/back/src/routes.js" highlightLines="29"  />
+
+## View
+
+![](/dw/imgs/expressjs/prismajs-simple/monitor-app.png)
