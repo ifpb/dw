@@ -14,14 +14,14 @@ class HttpError extends Error {
 const router = express.Router();
 
 router.post('/hosts', async (req, res) => {
-  const { name, address } = req.body;
+  const { name, address, tags } = req.body;
 
   if (!name || !address) {
     throw new HttpError('Error when passing parameters');
   }
 
   try {
-    const createdHost = await Host.create({ name, address });
+    const createdHost = await Host.create({ name, address, tags });
 
     return res.status(201).json(createdHost);
   } catch (error) {
@@ -50,10 +50,6 @@ router.get('/hosts', async (req, res) => {
 router.get('/hosts/:id', async (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
-    throw new HttpError('Unable to find host');
-  }
-
   try {
     const host = await Host.readById(id);
 
@@ -72,18 +68,14 @@ router.put('/hosts/:id', async (req, res) => {
 
   const { id } = req.params;
 
-  if (!name || !address || !id) {
+  if (!name || !address) {
     throw new HttpError('Error when passing parameters');
   }
 
   try {
     const updatedHost = await Host.update({ id, name, address, tags });
 
-    if (updatedHost) {
-      return res.json(updatedHost);
-    } else {
-      throw new HttpError('Host not found');
-    }
+    return res.json(updatedHost);
   } catch (error) {
     throw new HttpError('Unable to update a host');
   }
@@ -92,38 +84,12 @@ router.put('/hosts/:id', async (req, res) => {
 router.delete('/hosts/:id', async (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
-    throw new HttpError('Unable to find host');
-  }
-
   try {
     await Host.remove(id);
 
     return res.sendStatus(204);
   } catch (error) {
     throw new HttpError('Unable to delete a host');
-  }
-});
-
-router.get('/tags', async (req, res) => {
-  try {
-    const tags = await Tag.read();
-
-    return res.json(tags);
-  } catch (error) {
-    throw new HttpError('Unable to read tags');
-  }
-});
-
-router.get('/tags/:tag/hosts', async (req, res) => {
-  const { tag } = req.params;
-
-  try {
-    const host = await Host.read({ tags: tag });
-
-    return res.json(host);
-  } catch (error) {
-    throw new HttpError('Unable to read hosts by tag');
   }
 });
 
@@ -155,6 +121,28 @@ router.get('/hosts/:hostId/pings', async (req, res) => {
   }
 });
 
+router.get('/tags', async (req, res) => {
+  try {
+    const tags = await Tag.read();
+
+    return res.json(tags);
+  } catch (error) {
+    throw new HttpError('Unable to read tags');
+  }
+});
+
+router.get('/tags/:tag/hosts', async (req, res) => {
+  const { tag } = req.params;
+
+  try {
+    const host = await Host.read({ tags: tag });
+
+    return res.json(host);
+  } catch (error) {
+    throw new HttpError('Unable to read hosts by tag');
+  }
+});
+
 router.get('/pings', async (req, res) => {
   try {
     const pings = await Ping.read();
@@ -173,14 +161,11 @@ router.use((req, res, next) => {
 // Error handler
 router.use((err, req, res, next) => {
   // console.error(err.message);
+  console.error(err.stack);
 
   if (err instanceof HttpError) {
-    console.error(err.stack);
-
     return res.status(err.code).json({ message: err.message });
   }
-
-  console.error(err.stack);
 
   // next(err);
   return res.status(500).json({ message: 'Something broke!' });

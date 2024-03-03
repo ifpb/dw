@@ -64,17 +64,17 @@ DELETE {{server}}/hosts/{{createdHostId}}
 ### Delete a host with invalid id
 DELETE {{server}}/hosts/x
 
-### Read tags
-GET {{server}}/tags
-
-### Read hosts by tag
-GET {{server}}/tags/dns/hosts
-
 ### Create a ping
 POST {{server}}/hosts/{{createdHostId}}/pings/3
 
 ### Read pings
 GET {{server}}/hosts/{{createdHostId}}/pings
+
+### Read tags
+GET {{server}}/tags
+
+### Read hosts by tag
+GET {{server}}/tags/dns/hosts
 
 ### Read pings
 GET {{server}}/pings

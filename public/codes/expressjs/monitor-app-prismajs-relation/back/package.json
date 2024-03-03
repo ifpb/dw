@@ -4,14 +4,16 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "node --watch src/index.js",
-    "test": "node --experimental-vm-modules ./node_modules/.bin/jest src",
-    "test:coverage": "node --experimental-vm-modules ./node_modules/.bin/jest src --coverage"
+    "db:reset": "prisma migrate reset --force",
+    "test": "npm run db:reset && node --experimental-vm-modules ./node_modules/.bin/jest src",
+    "test:coverage": "npm run db:reset && node --experimental-vm-modules ./node_modules/.bin/jest src --coverage"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
   },
   "jest": {
     "collectCoverage": true,
+    "testTimeout": 20000,
     "coverageReporters": [
       "json",
       "html"
