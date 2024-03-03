@@ -11,36 +11,60 @@
       "address": "8.8.8.8"
     }
   ],
-  "reachabilities": [
+  "pings": [
     {
       "id": 1,
-      "hostId": 1,
-      "value": 90
+      "createdAt": "2024-01-01T00:00:00Z",
+      "hostId": 1
     },
     {
       "id": 2,
-      "hostId": 1,
-      "value": 95
+      "createdAt": "2024-01-01T00:00:00Z",
+      "hostId": 2
+    }
+  ],
+  "icmps": [
+    {
+      "id": 1,
+      "seq": 1,
+      "ttl": 54,
+      "time": 90,
+      "pingId": 1
+    },
+    {
+      "id": 2,
+      "seq": 2,
+      "ttl": 54,
+      "time": 95,
+      "pingId": 1
     },
     {
       "id": 3,
-      "hostId": 1,
-      "value": 85
+      "seq": 3,
+      "ttl": 54,
+      "time": 85,
+      "pingId": 1
     },
     {
       "id": 4,
-      "hostId": 2,
-      "value": 95
+      "seq": 1,
+      "ttl": 54,
+      "time": 95,
+      "pingId": 2
     },
     {
       "id": 5,
-      "hostId": 2,
-      "value": 80
+      "seq": 2,
+      "ttl": 54,
+      "time": 80,
+      "pingId": 2
     },
     {
       "id": 6,
-      "hostId": 2,
-      "value": 99
+      "seq": 3,
+      "ttl": 54,
+      "time": 99,
+      "pingId": 2
     }
   ]
 }

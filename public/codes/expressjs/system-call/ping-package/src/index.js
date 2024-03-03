@@ -16,7 +16,7 @@ class HTTPError extends Error {
   }
 }
 
-app.get('/ping', async (req, res) => {
+app.post('/ping', async (req, res) => {
   const { host } = req.query;
 
   if (!host) {

@@ -54,9 +54,9 @@ export function create(host) {
   $(`#host-${host.id} .icon-stopwatch`).onclick = async () => {
     $(`#host-${host.id} .icon-loading`).classList.remove('invisible');
 
-    const latencies = await Storage.read(`hosts/${host.id}/reachabilities`);
+    const pings = await Storage.read(`hosts/${host.id}/pings?_embed=icmps`);
 
-    const times = latencies.map((latency) => latency.value);
+    const times = pings[0].icmps.map((icmp) => icmp.time);
 
     LineChart.update(times);
 

@@ -9,7 +9,7 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 ## CLI
 
-< CodePreview src = "/codes/package/json-server/db.json" />
+<CodePreview src="/codes/package/json-server/db.json" />
 
 [json-server](https://www.npmjs.com/package/json-server)
 
@@ -22,7 +22,7 @@ $ npx json-server --watch db.json
 
 ## Module
 
-< CodeTree src = "/codes/package/json-server/" />
+<CodeTree src="/codes/package/json-server/" />
 
 <CodePreview src="/codes/package/json-server/package.json" />
 
@@ -30,14 +30,14 @@ $ npx json-server --watch db.json
 
 ### Rotas
 
-| Método | Caminho       | Resposta                                       |
-| ------ | ------------- | -------------------------------------- |
-| POST   | `/hosts`      | Cria um novo host                      |
-| GET    | `/hosts`      | Retorna todos os hosts                 |
-| GET    | `/hosts?id=1` | Retorna o host com id igual a 1        |
-| GET    | `/hosts/1`    | Retorna o host com id igual a 1        |
-| PUT    | `/hosts/1`    | Atualiza o host com id igual a 1       |
-| DELETE | `/hosts/1`    | Exclui o host com id igual a 1         |
+| Método | Caminho       | Resposta                         |
+| ------ | ------------- | -------------------------------- |
+| POST   | `/hosts`      | Cria um novo host                |
+| GET    | `/hosts`      | Retorna todos os hosts           |
+| GET    | `/hosts?id=1` | Retorna o host com id igual a 1  |
+| GET    | `/hosts/1`    | Retorna o host com id igual a 1  |
+| PUT    | `/hosts/1`    | Atualiza o host com id igual a 1 |
+| DELETE | `/hosts/1`    | Exclui o host com id igual a 1   |
 
 [HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
   - Respostas de informação (100-199)
