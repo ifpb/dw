@@ -1,0 +1,68 @@
+@startuml
+hide circle
+scale 1.5
+skinparam linetype ortho
+skinparam monochrome true
+left to right direction
+
+entity "Tag" as tag {
+  *id : int
+  --
+  name : varchar(100)
+}
+
+entity "TagsOnHosts" as tp {
+  *id : int
+  --
+  *tagId : int <<FK>>
+  *hostId : int <<FK>>
+}
+
+entity "Host" as host {
+  *id : int
+  --
+  name : varchar(100)
+  address : varchar(100)
+}
+
+entity "Ping" as ping {
+  *id : int
+  *hostId : int <<FK>>
+  *statsId : int <<FK>>
+  *userId : int <<FK>>
+  --
+  createAt : datetime
+}
+
+entity "Stats" as stats {
+  *id : int
+  --
+  transmitted : int
+  received : int
+  time : float
+}
+
+entity "Icmp" as icmp {
+  *id : int
+  *ping_id : int <<FK>>
+  --
+  seq : int
+  ttl : int
+  time : float
+}
+
+entity "User" as user {
+  *id : int
+  --
+  name: varchar(100)
+  email: varchar(100)
+  password: varchar(30)
+}
+
+tag ||-upo{ tp
+tp }o--|| host
+host ||--|{ ping
+ping ||--o| stats
+ping ||-upo{ icmp
+user ||-upo{ ping
+@enduml
