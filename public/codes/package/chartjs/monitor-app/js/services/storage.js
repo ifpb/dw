@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3010';
+const API_URL = 'http://localhost:3000';
 
 async function create(resource, data) {
   resource = `${API_URL}/${resource}`;
