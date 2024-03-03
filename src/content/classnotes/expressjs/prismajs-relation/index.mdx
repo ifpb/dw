@@ -7,49 +7,149 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 # {frontmatter.title}
 
-<CodeTree src="/codes/expressjs/invest-app-prismajs-relation" />
+<CodeTree src="/codes/expressjs/monitor-app-prismajs-relation" />
+
+## Banco de Dados
+
+Modelo Lógico
+
+![](/dw/imgs/expressjs/monitor-app-prismajs-relation/monitor-db-relations-logical-model.png)
+
+Modelo Físico
+
+![](/dw/imgs/expressjs/monitor-app-prismajs-relation/monitor-db-relations-physical-model.png)
+
+[Prisma ERD Generator](https://github.com/keonik/prisma-erd-generator) ([online](https://prisma-erd.simonknott.de/))
+
+```bash
+$ npm i -D prisma-erd-generator @mermaid-js/mermaid-cli
+
+$ npx prisma generate
+```
+
+![](/dw/imgs/expressjs/monitor-app-prismajs-relation/erd.svg)
 
 ## Migration
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/prisma/schema.prisma" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-relation/back/prisma/schema.prisma" />
 
 ```bash
 $ npx prisma migrate reset
-$ npx prisma migrate dev --name create_category
+
+$ npx prisma migrate dev --name create_ping_stats_icmp_user_tags
 ```
 
-Tabelas:
+Referência
 
-![](/dw/imgs/expressjs/prismajs-relation/database.png)
+* [Prisma](https://www.prisma.io/docs)
+  * [Prisma Migrate](https://www.prisma.io/docs/concepts/components/prisma-migrate)
+  * [Referential Actions](https://www.prisma.io/docs/orm/prisma-schema/data-model/relations)
+  * [Prisma Relation](https://www.prisma.io/docs/orm/prisma-schema/data-model/relations)
 
 ## Seed
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/prisma/seed.js" />
+via prisma
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/prisma/seeders.json" />
+```js
+await prisma.host.create({
+  data: {
+    id: 'e4cfb6bb-4431-42a9-b660-d5701b2f49cd',
+    name: 'Google DNS',
+    address: '8.8.8.8',
+    tags: {
+      create: [
+        {
+          tag: {
+            connectOrCreate: {
+              where: {
+                name: 'DNS',
+              },
+              create: {
+                name: 'DNS',
+              },
+            },
+          },
+        },
+        {
+          tag: {
+            connectOrCreate: {
+              where: {
+                name: 'Google',
+              },
+              create: {
+                name: 'Google',
+              },
+            },
+          },
+        },
+      ],
+    },
+  },
+});
+```
+
+via model
+
+```js
+await Host.create({
+    id: 'e4cfb6bb-4431-42a9-b660-d5701b2f49cd',
+    name: 'Google DNS',
+    address: '8.8.8.8',
+    tags: ['DNS', 'Google'],
+  });
+```
+
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-relation/back/prisma/seed.js" />
 
 ```bash
 $ npx prisma db seed
+
 $ npx prisma studio
 ```
 
 ## Model
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/src/models/Category.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-relation/back/src/models/Hosts.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/src/models/Investment.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-relation/back/src/models/Tags.js" />
+
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-relation/back/src/models/Pings.js" />
 
 ## Router
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/src/routes.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-relation/back/src/routes.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/requests.http" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-relation/back/requests.http" />
+
+## Test
+
+[Jest](https://jestjs.io/), [Supertest](https://github.com/ladjs/supertest):
+
+```bash
+$ npm i jest supertest -D
+
+$ npm run test
+```
+
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-relation/back/src/routes.test.js" />
+
+.skip()
+
+```js
+describe.skip()
+
+it.skip()
+```
+
+Cobertura de Testes
+
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-relation/back/package.json" />
+
+```bash
+$ npm run test:coverage
+```
 
 ## View
 
-![](/dw/imgs/expressjs/prismajs-relation/preview.png)
-
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/public/index.html" />
-
-<CodePreview src="/codes/expressjs/invest-app-prismajs-relation/public/js/main.js" />
+![](/dw/imgs/expressjs/monitor-app-prismajs-relation/monitor-app.png)
 
