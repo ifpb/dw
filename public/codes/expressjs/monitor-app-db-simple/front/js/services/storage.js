@@ -39,9 +39,9 @@ async function update(resource, data) {
 
   const res = await fetch(resource, options);
 
-  const createdData = await res.json();
+  const updatedData = await res.json();
 
-  return createdData;
+  return updatedData;
 }
 
 async function remove(resource) {
