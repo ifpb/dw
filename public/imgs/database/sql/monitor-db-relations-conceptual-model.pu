@@ -1,0 +1,25 @@
+@startuml
+hide circle
+scale 1.5
+skinparam linetype ortho
+skinparam monochrome true
+left to right direction
+
+entity "tags" as tag {}
+
+entity "hosts" as host {}
+
+entity "pings" as ping {}
+
+entity "stats" as stats {}
+
+entity "icmps" as icmp {}
+
+entity "users" as user {}
+
+tag }o--o{ host : possui
+host ||--o{ ping : dispara
+ping ||--o| stats : possui
+ping ||-upo{ icmp : possui
+user ||-upo{ ping : pertence
+@enduml

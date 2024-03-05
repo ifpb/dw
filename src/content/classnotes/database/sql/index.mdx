@@ -70,7 +70,7 @@ import CodePreview from '../../../../components/CodePreview.astro';
 1. Quantos pacotes foram recebidos?
 2. Qual é a média de pacotes perdidos?
 3. Qual é a porcentagem de pacotes recebidos do IFPB?
-4. Qual é a porcentagem de pacotes perdidos do IFPB no dia 16/02/2023 entre 09:00 até 18:00?
+4. Qual é a porcentagem de pacotes perdidos do IFPB no dia 05/03/2024 entre 09:00 até 18:00?
 
 ## DDL
 
@@ -156,7 +156,7 @@ mysql> SHOW TABLES;
 1 row in set (0.00 sec)
 ```
 
-![erd diagram](/dw/imgs/database/monitor-db-hosts.png)
+![erd diagram](/dw/imgs/database/sql/monitor-db-hosts.png)
 
 ```bash
 mysql> DESCRIBE host;
@@ -284,9 +284,15 @@ mysql> SELECT name, address FROM hosts;
 3 rows in set (0.00 sec)
 ```
 
+ORDER BY
+
 ```bash
-mysql> SELECT name, address FROM hosts
-    -> ORDER BY name;
+mysql> SELECT
+    ->   name, address
+    -> FROM
+    ->   hosts
+    -> ORDER BY
+    ->   name;
 +-----------------+--------------+
 | name            | address      |
 +-----------------+--------------+
@@ -297,9 +303,15 @@ mysql> SELECT name, address FROM hosts
 3 rows in set (0.01 sec)
 ```
 
+WHERE
+
 ```bash
-mysql> SELECT name, address FROM hosts
-    -> WHERE id = 1;
+mysql> SELECT
+    ->   name, address
+    -> FROM
+    ->   hosts
+    -> WHERE
+    ->   id = 1;
 +-----------------+--------------+
 | name            | address      |
 +-----------------+--------------+
@@ -308,9 +320,16 @@ mysql> SELECT name, address FROM hosts
 1 row in set (0.00 sec)
 ```
 
+LIKE
+
 ```bash
-mysql> SELECT name, address FROM hosts
-    -> WHERE name LIKE '%ifpb%' AND address LIKE '200.%.%.%';
+mysql> SELECT
+    ->   name, address
+    -> FROM
+    ->   hosts
+    -> WHERE
+    ->   name LIKE '%ifpb%'
+    ->   AND address LIKE '200.%.%.%';
 +-----------------+--------------+
 | name            | address      |
 +-----------------+--------------+
@@ -320,9 +339,15 @@ mysql> SELECT name, address FROM hosts
 2 rows in set (0.00 sec)
 ```
 
+LIMIT
+
 ```bash
-mysql> SELECT * FROM hosts
-    -> LIMIT 2;
+mysql> SELECT
+    ->   *
+    -> FROM
+    ->   hosts
+    -> LIMIT
+    ->   2;
 +----+-----------------+--------------+
 | id | name            | address      |
 +----+-----------------+--------------+
@@ -332,10 +357,17 @@ mysql> SELECT * FROM hosts
 2 rows in set (0.00 sec)
 ```
 
+OFFSET
+
 ```bash
-mysql> SELECT * FROM hosts
-    -> LIMIT 2
-    -> OFFSET 1;
+mysql> SELECT
+    ->   *
+    -> FROM
+    ->   hosts
+    -> LIMIT
+    ->   2
+    -> OFFSET
+    ->   1;
 +----+-----------------+--------------+
 | id | name            | address      |
 +----+-----------------+--------------+
@@ -345,8 +377,13 @@ mysql> SELECT * FROM hosts
 2 rows in set (0.00 sec)
 ```
 
+COUNT()
+
 ```bash
-mysql> SELECT COUNT(*) AS total FROM hosts;
+mysql> SELECT
+    ->   COUNT(*) AS total
+    -> FROM
+    ->   hosts;
 +-------+
 | total |
 +-------+
@@ -358,9 +395,12 @@ mysql> SELECT COUNT(*) AS total FROM hosts;
 ### UPDATE
 
 ```bash
-mysql> UPDATE hosts
-    -> SET address = '10.0.0.10'
-    -> WHERE id = 2;
+mysql> UPDATE
+    ->   hosts
+    -> SET
+    ->   address = '10.0.0.10'
+    -> WHERE
+    ->   id = 2;
 Query OK, 1 row affected (0.01 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
@@ -375,14 +415,22 @@ mysql> SELECT * FROM hosts
 ```
 
 ```bash
-mysql> UPDATE hosts
-    -> SET name = 'portal.ifrn.edu.br', address = '10.0.0.100'
-    -> WHERE id = 2;
+mysql> UPDATE
+    ->   hosts
+    -> SET
+    ->   name = 'portal.ifrn.edu.br',
+    ->   address = '10.0.0.100'
+    -> WHERE
+    ->   id = 2;
 Query OK, 1 row affected (0.01 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
-mysql> SELECT * FROM hosts
-    -> WHERE id = 2;
+mysql> SELECT
+    ->   name, address
+    -> FROM
+    ->   hosts
+    -> WHERE
+    ->   id = 2;
 +----+--------------------+------------+
 | id | name               | address    |
 +----+--------------------+------------+
@@ -400,12 +448,18 @@ mysql> SELECT * FROM hosts;
 |  1 | www.ifpb.edu.br | 200.10.10.10 |
 +----+-----------------+--------------+
 
-mysql> DELETE FROM hosts
-    -> WHERE id = 1;
+mysql> DELETE FROM
+    ->   hosts
+    -> WHERE
+    ->   id = 1;
 Query OK, 1 row affected (0.01 sec)
 
-mysql> SELECT * FROM hosts
-    -> WHERE id = 1;
+mysql> SELECT
+    ->   name, address
+    -> FROM
+    ->   hosts
+    -> WHERE
+    ->   id = 1;
 Empty set (0.00 sec)
 ```
 
@@ -413,350 +467,464 @@ Empty set (0.00 sec)
 
 ## Database Relationships
 
-###  1:N
+###  1:1
 
-![erd diagram](/dw/imgs/database/monitor-db-host-pings.png)
+Modelo Lógico
+
+![erd diagram](/dw/imgs/database/sql/monitor-db-relations-1-1-logical-model.png)
+
+Modelo Físico
+
+![erd diagram](/dw/imgs/database/sql/monitor-db-relations-1-1-physical-model.png)
 
 ```bash
 mysql> CREATE TABLE pings (
     ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    ->   transmitted int NOT NULL,
-    ->   received int NOT NULL,
-    ->   createAt datetime NOT NULL,
-    ->   host_id int NOT NULL REFERENCES hosts (id)
+    ->   created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
     -> );
 Query OK, 0 rows affected (0.02 sec)
-```
 
-```bash
 mysql> DESCRIBE pings;
-+-------------+----------+------+-----+---------+----------------+
-| Field       | Type     | Null | Key | Default | Extra          |
-+-------------+----------+------+-----+---------+----------------+
-| id          | int      | NO   | PRI | NULL    | auto_increment |
-| transmitted | int      | NO   |     | NULL    |                |
-| received    | int      | NO   |     | NULL    |                |
-| createAt    | datetime | NO   |     | NULL    |                |
-| host_id     | int      | NO   |     | NULL    |                |
-+-------------+----------+------+-----+---------+----------------+
++------------+----------+------+-----+-------------------+-------------------+
+| Field      | Type     | Null | Key | Default           | Extra             |
++------------+----------+------+-----+-------------------+-------------------+
+| id         | int      | NO   | PRI | NULL              | auto_increment    |
+| created_at | datetime | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-----------+----------+------+-----+-------------------+-------------------+
+2 rows in set (0.01 sec)
+
+mysql> CREATE TABLE stats (
+    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ->   transmitted int NOT NULL,
+    ->   received int NOT NULL,
+    ->   time float NOT NULL,
+    ->   ping_id int NOT NULL REFERENCES pings (id) ON DELETE CASCADE ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESCRIBE stats;
++-------------+-------+------+-----+---------+----------------+
+| Field       | Type  | Null | Key | Default | Extra          |
++-------------+-------+------+-----+---------+----------------+
+| id          | int   | NO   | PRI | NULL    | auto_increment |
+| transmitted | int   | NO   |     | NULL    |                |
+| received    | int   | NO   |     | NULL    |                |
+| time        | float | NO   |     | NULL    |                |
+| ping_id     | int   | NO   |     | NULL    |                |
++-------------+-------+------+-----+---------+----------------+
 5 rows in set (0.00 sec)
 ```
 
+###  1:N
+
+Modelo Lógico
+
+![erd diagram](/dw/imgs/database/sql/monitor-db-relations-1-n-logical-model.png)
+
+Modelo Físico
+
+![erd diagram](/dw/imgs/database/sql/monitor-db-relations-1-n-physical-model.png)
+
 ```bash
-mysql> INSERT INTO pings
-    ->   (transmitted, received, createAt, host_id)
+mysql> CREATE TABLE icmps (
+    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ->   seq int NOT NULL,
+    ->   ttl int NOT NULL,
+    ->   time float NOT NULL,
+    ->   ping_id int NOT NULL REFERENCES pings (id) ON DELETE CASCADE ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESCRIBE icmps;
++---------+-------+------+-----+---------+----------------+
+| Field   | Type  | Null | Key | Default | Extra          |
++---------+-------+------+-----+---------+----------------+
+| id      | int   | NO   | PRI | NULL    | auto_increment |
+| seq     | int   | NO   |     | NULL    |                |
+| ttl     | int   | NO   |     | NULL    |                |
+| time    | float | NO   |     | NULL    |                |
+| ping_id | int   | NO   |     | NULL    |                |
++---------+-------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE users (
+    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ->   name varchar(100) NOT NULL,
+    ->   email varchar(100) UNIQUE,
+    ->   password varchar(30) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESCRIBE users;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int          | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(100) | NO   |     | NULL    |                |
+| password | varchar(30)  | NO   |     | NULL    |                |
+| email    | varchar(100) | YES  | UNI | NULL    |                |
++----------+--------------+------+-----+---------+----------------+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE pings ADD COLUMN host_id int NOT NULL REFERENCES hosts (id) ON DELETE CASCADE ON UPDATE CASCADE;
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE pings ADD COLUMN user_id int NOT NULL REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE;
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE pings;
++------------+----------+------+-----+-------------------+-------------------+
+| Field      | Type     | Null | Key | Default           | Extra             |
++------------+----------+------+-----+-------------------+-------------------+
+| id         | int      | NO   | PRI | NULL              | auto_increment    |
+| host_id    | int      | NO   |     | NULL              |                   |
+| user_id    | int      | NO   |     | NULL              |                   |
+| created_at | datetime | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-----------+----------+------+-----+-------------------+-------------------+
+4 rows in set (0.01 sec)
+
+mysql> INSERT INTO
+    ->   users (name, email, password)
     -> VALUES
-    ->   (4, 4, NOW(), 2),
-    ->   (8, 4, NOW(), 2),
-    ->   (7, 4, NOW(), 3),
-    ->   (5, 5, NOW(), 3),
-    ->   (4, 3, NOW(), 2);
+    ->   ('Alice', 'alice@email.com', 'secret'),
+    ->   ('Bob', 'bob@email.com', 'secret');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO
+    ->   pings (host_id, user_id)
+    -> VALUES
+    ->   (1, 1),
+    ->   (2, 1),
+    ->   (1, 1);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO
+    ->   icmps (seq, ttl, time, ping_id)
+    -> VALUES
+    ->   (1, 54, 74.7, 1),
+    ->   (2, 54, 74.0, 1),
+    ->   (3, 54, 72.5, 1),
+    ->   (1, 54, 43.5, 2),
+    ->   (2, 54, 44.6, 2),
+    ->   (1, 54, 70.0, 3),
+    ->   (2, 54, 80.0, 3),
+    ->   (3, 54, 100.0, 3);
 Query OK, 5 rows affected (0.01 sec)
 Records: 5  Duplicates: 0  Warnings: 0
 
-mysql> SELECT * FROM pings;
-+----+-------------+----------+---------------------+---------+
-| id | transmitted | received | createAt            | host_id |
-+----+-------------+----------+---------------------+---------+
-|  1 |           4 |        4 | 2023-02-16 13:41:49 |       2 |
-|  2 |           8 |        4 | 2023-02-16 13:41:49 |       2 |
-|  3 |           7 |        4 | 2023-02-16 13:41:49 |       3 |
-|  4 |           5 |        5 | 2023-02-16 13:41:49 |       3 |
-|  5 |           4 |        3 | 2023-02-16 13:41:49 |       2 |
-+----+-------------+----------+---------------------+---------+
-5 rows in set (0.00 sec)
-```
+mysql> INSERT INTO
+    ->   stats (transmitted, received, time, ping_id)
+    -> VALUES
+    ->   (4, 3, 221.2, 1),
+    ->   (2, 2, 88.1, 2)
+    ->   (3, 3, 250.0, 1);
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
 
-```bash
 mysql> SELECT
     ->   *
     -> FROM
-    ->   hosts INNER JOIN pings;
-+----+--------------------+--------------+----+-------------+----------+---------------------+---------+
-| id | name               | address      | id | transmitted | received | createAt            | host_id |
-+----+--------------------+--------------+----+-------------+----------+---------------------+---------+
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  1 |           4 |        4 | 2023-02-16 13:41:49 |       2 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  1 |           4 |        4 | 2023-02-16 13:41:49 |       2 |
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  2 |           8 |        4 | 2023-02-16 13:41:49 |       2 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  2 |           8 |        4 | 2023-02-16 13:41:49 |       2 |
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  3 |           7 |        4 | 2023-02-16 13:41:49 |       3 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  3 |           7 |        4 | 2023-02-16 13:41:49 |       3 |
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  4 |           5 |        5 | 2023-02-16 13:41:49 |       3 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  4 |           5 |        5 | 2023-02-16 13:41:49 |       3 |
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  5 |           4 |        3 | 2023-02-16 13:41:49 |       2 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  5 |           4 |        3 | 2023-02-16 13:41:49 |       2 |
-+----+--------------------+--------------+----+-------------+----------+---------------------+---------+
-10 rows in set (0.00 sec)
-```
+    ->   pings
+    -> INNER JOIN
+    ->   stats;
++----+---------+---------+---------------------+----+-------------+----------+-------+---------+
+| id | host_id | user_id | created_at          | id | transmitted | received | time  | ping_id |
++----+---------+---------+---------------------+----+-------------+----------+-------+---------+
+|  3 |       1 |       2 | 2024-03-05 01:49:36 |  1 |           4 |        3 | 221.2 |       1 |
+|  2 |       2 |       1 | 2024-03-05 00:54:50 |  1 |           4 |        3 | 221.2 |       1 |
+|  1 |       1 |       1 | 2024-03-05 00:54:50 |  1 |           4 |        3 | 221.2 |       1 |
+|  3 |       1 |       2 | 2024-03-05 01:49:36 |  2 |           2 |        2 |  88.1 |       2 |
+|  2 |       2 |       1 | 2024-03-05 00:54:50 |  2 |           2 |        2 |  88.1 |       2 |
+|  1 |       1 |       1 | 2024-03-05 00:54:50 |  2 |           2 |        2 |  88.1 |       2 |
+|  3 |       1 |       2 | 2024-03-05 01:49:36 |  3 |           3 |        3 |   250 |       1 |
+|  2 |       2 |       1 | 2024-03-05 00:54:50 |  3 |           3 |        3 |   250 |       1 |
+|  1 |       1 |       1 | 2024-03-05 00:54:50 |  3 |           3 |        3 |   250 |       1 |
++----+---------+---------+---------------------+----+-------------+----------+-------+---------+
+9 rows in set (0.00 sec)
 
-```bash
 mysql> SELECT
     ->   *
     -> FROM
-    ->   hosts h
+    ->   pings p
     -> INNER JOIN
-    ->   pings p ON h.id = p.host_id;
-+----+--------------------+--------------+----+-------------+----------+---------------------+---------+
-| id | name               | address      | id | transmitted | received | createAt            | host_id |
-+----+--------------------+--------------+----+-------------+----------+---------------------+---------+
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  1 |           4 |        4 | 2023-02-16 13:41:49 |       2 |
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  2 |           8 |        4 | 2023-02-16 13:41:49 |       2 |
-|  2 | portal.ifrn.edu.br | 10.0.0.100   |  5 |           4 |        3 | 2023-02-16 13:41:49 |       2 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  3 |           7 |        4 | 2023-02-16 13:41:49 |       3 |
-|  3 | www.ifpb.edu.br    | 200.10.10.12 |  4 |           5 |        5 | 2023-02-16 13:41:49 |       3 |
-+----+--------------------+--------------+----+-------------+----------+---------------------+---------+
-5 rows in set (0.00 sec)
-```
+    ->   stats s
+    -> ON
+    ->   s.ping_id = p.id;
++----+---------+---------+---------------------+----+-------------+----------+-------+---------+
+| id | host_id | user_id | created_at          | id | transmitted | received | time  | ping_id |
++----+---------+---------+---------------------+----+-------------+----------+-------+---------+
+|  1 |       1 |       1 | 2024-03-05 00:54:50 |  1 |           4 |        3 | 221.2 |       1 |
+|  2 |       2 |       1 | 2024-03-05 00:54:50 |  2 |           2 |        2 |  88.1 |       2 |
+|  1 |       1 |       1 | 2024-03-05 00:54:50 |  3 |           3 |        3 |   250 |       1 |
++----+---------+---------+---------------------+----+-------------+----------+-------+---------+
+3 rows in set (0.00 sec)
 
-Quantos pacotes foram recebidos? **20**
-
-```bash
 mysql> SELECT
-    ->   sum(p.transmitted) AS transmitted,
-    ->   sum(p.received) AS received,
-    ->   sum(p.transmitted - p.received) AS losted
+    ->   *
+    -> FROM
+    ->   pings p
+    -> INNER JOIN
+    ->   icmps i
+    -> ON
+    ->   i.ping_id = p.id;
++----+---------+---------+---------------------+----+-----+-----+------+---------+
+| id | host_id | user_id | created_at          | id | seq | ttl | time | ping_id |
++----+---------+---------+---------------------+----+-----+-----+------+---------+
+|  1 |       1 |       1 | 2024-03-05 00:54:50 |  1 |   1 |  54 | 74.7 |       1 |
+|  1 |       1 |       1 | 2024-03-05 00:54:50 |  2 |   2 |  54 |   74 |       1 |
+|  1 |       1 |       1 | 2024-03-05 00:54:50 |  3 |   3 |  54 | 72.5 |       1 |
+|  2 |       2 |       1 | 2024-03-05 00:54:50 |  4 |   1 |  54 | 43.5 |       2 |
+|  2 |       2 |       1 | 2024-03-05 00:54:50 |  5 |   2 |  54 | 44.6 |       2 |
+|  3 |       1 |       2 | 2024-03-05 01:49:36 |  6 |   1 |  54 |   70 |       3 |
+|  3 |       1 |       2 | 2024-03-05 01:49:36 |  7 |   2 |  54 |   80 |       3 |
+|  3 |       1 |       2 | 2024-03-05 01:49:36 |  8 |   3 |  54 |  100 |       3 |
++----+---------+---------+---------------------+----+-----+-----+------+---------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->   *
+    -> FROM
+    ->   pings p
+    -> INNER JOIN
+    ->   users u
+    -> ON
+    ->   p.user_id = u.id;
++----+---------+---------+---------------------+----+-------+----------+-----------------+
+| id | host_id | user_id | created_at          | id | name  | password | email           |
++----+---------+---------+---------------------+----+-------+----------+-----------------+
+|  1 |       1 |       1 | 2024-03-05 00:54:50 |  1 | Alice | secret   | alice@email.com |
+|  2 |       2 |       1 | 2024-03-05 00:54:50 |  1 | Alice | secret   | alice@email.com |
+|  3 |       1 |       2 | 2024-03-05 01:49:36 |  2 | Bob   | secret   | bob@email.com   |
++----+---------+---------+---------------------+----+-------+----------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->   *
+    -> FROM
+    ->   pings p
+    -> INNER JOIN
+    ->   hosts h
+    -> ON
+    ->   p.host_id = h.id;
++----+---------+---------+---------------------+----+-----------------+--------------+
+| id | host_id | user_id | created_at          | id | name            | address      |
++----+---------+---------+---------------------+----+-----------------+--------------+
+|  1 |       1 |       1 | 2024-03-05 00:54:50 |  1 | www.ifpb.edu.br | 200.10.10.10 |
+|  2 |       2 |       1 | 2024-03-05 00:54:50 |  2 | www.ifrn.edu.br | 200.10.10.11 |
+|  3 |       1 |       2 | 2024-03-05 01:49:36 |  1 | www.ifpb.edu.br | 200.10.10.10 |
++----+---------+---------+---------------------+----+-----------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->   h.name,
+    ->   p.created_at,
+    ->   s.transmitted,
+    ->   s.received
     -> FROM
     ->   hosts h
     -> INNER JOIN
-    ->   pings p ON h.id = p.host_id;
-+-------------+----------+--------+
-| transmitted | received | losted |
-+-------------+----------+--------+
-|          28 |       20 |      8 |
-+-------------+----------+--------+
-1 row in set (0.00 sec)
+    ->   pings p ON p.host_id = h.id
+    -> INNER JOIN
+    ->   stats s ON s.ping_id = p.id
+    -> ORDER BY
+    ->   h.name;
++-----------------+---------------------+-------------+----------+
+| name            | created_at          | transmitted | received |
++-----------------+---------------------+-------------+----------+
+| www.ifpb.edu.br | 2024-03-05 00:54:50 |           4 |        3 |
+| www.ifpb.edu.br | 2024-03-05 00:54:50 |           3 |        3 |
+| www.ifrn.edu.br | 2024-03-05 00:54:50 |           2 |        2 |
++-----------------+---------------------+-------------+----------+
+3 rows in set (0.00 sec)
 ```
 
-Qual é a média de pacotes perdidos? **1,6**
+###  N:M
+
+Modelo Lógico
+
+![erd diagram](/dw/imgs/database/sql/monitor-db-relations-n-m-logical-model.png)
+
+Modelo Físico
+
+![erd diagram](/dw/imgs/database/sql/monitor-db-relations-n-m-physical-model.png)
 
 ```bash
+mysql> CREATE TABLE tags (
+    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ->   name varchar(100) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESCRIBE tags;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int          | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(100) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE tag_hosts (
+    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ->   host_id int NOT NULL REFERENCES hosts (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    ->   tag_id int NOT NULL REFERENCES tags (id) ON DELETE CASCADE ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESCRIBE tag_hosts;
++---------+------+------+-----+---------+----------------+
+| Field   | Type | Null | Key | Default | Extra          |
++---------+------+------+-----+---------+----------------+
+| id      | int  | NO   | PRI | NULL    | auto_increment |
+| host_id | int  | NO   |     | NULL    |                |
+| tag_id  | int  | NO   |     | NULL    |                |
++---------+------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO
+    ->   tags (name)
+    -> VALUES
+    ->   ('Portal'),
+    ->   ('Educacional');
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO
+    ->   tag_hosts (tag_id, host_id)
+    -> VALUES
+    ->   (1, 1),
+    ->   (1, 2),
+    ->   (2, 1),
+    ->   (2, 2);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
 mysql> SELECT
-    ->   avg(p.transmitted) AS transmited,
-    ->   avg(p.received) AS received,
-    ->   avg(p.transmitted - p.received) AS losted
+    ->   h.name,
+    ->   t.name
     -> FROM
     ->   hosts h
     -> INNER JOIN
-    ->   pings p ON h.id = p.host_id;
-+------------+----------+--------+
-| transmited | received | losted |
-+------------+----------+--------+
-|     5.6000 |   4.0000 | 1.6000 |
-+------------+----------+--------+
-1 row in set (0.00 sec)
+    ->   tag_hosts th ON th.host_id = h.id
+    -> INNER JOIN
+    ->   tags t ON t.id = th.tag_id
+    -> ORDER BY
+    ->   h.name;
++-----------------+-------------+
+| name            | name        |
++-----------------+-------------+
+| www.ifpb.edu.br | Portal      |
+| www.ifpb.edu.br | Educacional |
+| www.ifrn.edu.br | Portal      |
+| www.ifrn.edu.br | Educacional |
++-----------------+-------------+
+4 rows in set (0.00 sec)
 ```
 
-Qual é a porcentagem de pacotes recebidos do IFPB? **75%**
+###  Relacionamentos
+
+Modelo Lógico
+
+![erd diagram](/dw/imgs/database/sql/monitor-db-relations-logical-model.png)
+
+Modelo Físico
+
+![erd diagram](/dw/imgs/database/sql/monitor-db-relations-physical-model.png)
+
+## Questões do Dataset
+
+Quantos pacotes foram recebidos? **8**
 
 ```bash
 mysql> SELECT
-    ->   sum(p.transmitted) AS transmitted,
-    ->   sum(p.received) AS received,
-    ->   round(sum(p.received)/sum(p.transmitted), 3) AS losted
+    ->   sum(s.transmitted) AS transmitted,
+    ->   sum(s.received) AS received,
+    ->   sum(s.transmitted - s.received) AS losted
     -> FROM
     ->   hosts h
     -> INNER JOIN
     ->   pings p ON h.id = p.host_id
+    -> INNER JOIN
+    ->   stats s ON p.id = s.ping_id;
++-------------+----------+--------+
+| transmitted | received | losted |
++-------------+----------+--------+
+|           9 |        8 |      1 |
++-------------+----------+--------+
+1 row in set (0.00 sec)
+```
+
+Qual é a média de pacotes perdidos? **0,3**
+
+```bash
+mysql> SELECT
+    ->   avg(s.transmitted) AS transmited,
+    ->   avg(s.received) AS received,
+    ->   avg(s.transmitted - s.received) AS losted
+    -> FROM
+    ->   hosts h
+    -> INNER JOIN
+    ->   pings p ON h.id = p.host_id
+    -> INNER JOIN
+    ->   stats s ON p.id = s.ping_id;
++------------+----------+--------+
+| transmited | received | losted |
++------------+----------+--------+
+|     3.0000 |   2.6667 | 0.3333 |
++------------+----------+--------+
+1 row in set (0.00 sec)
+```
+
+Qual é a porcentagem de pacotes recebidos do IFPB? **85,7%**
+
+```bash
+mysql> SELECT
+    ->   sum(s.transmitted) AS transmitted,
+    ->   sum(s.received) AS received,
+    ->   round(sum(s.received)/sum(s.transmitted), 3) AS losted
+    -> FROM
+    ->   hosts h
+    -> INNER JOIN
+    ->   pings p ON h.id = p.host_id
+    -> INNER JOIN
+    ->   stats s ON p.id = s.ping_id
     -> WHERE
     ->   h.name LIKE '%ifpb%';
 +-------------+----------+--------+
 | transmitted | received | losted |
 +-------------+----------+--------+
-|          12 |        9 |  0.750 |
+|           7 |        6 |  0.857 |
 +-------------+----------+--------+
 1 row in set (0.00 sec)
 ```
 
-Qual é a porcentagem de pacotes perdidos do IFPB no dia 16/02/2023 entre 09:00 até 18:00? **25%**
+Qual é a porcentagem de pacotes perdidos do IFPB no dia 05/03/2024 entre 00:00 até 06:00? **14,3%**
 
 ```bash
 mysql> SELECT
-    ->   1 - round(sum(p.received)/sum(p.transmitted), 3) AS losted
+    ->   1 - round(sum(s.received)/sum(s.transmitted), 3) AS losted
     -> FROM
     ->   hosts h
     -> INNER JOIN
     ->   pings p ON h.id = p.host_id
+    -> INNER JOIN
+    ->   stats s ON p.id = s.ping_id
     -> WHERE
     ->   h.name LIKE '%ifpb%' AND
-    ->   p.createAt BETWEEN '2023-01-01 12:00:00' AND '2023-03-31 21:00:00';
+    ->   p.created_at BETWEEN '2024-03-05 00:00:00' AND '2024-03-05 06:00:00';
 +--------+
 | losted |
 +--------+
-|  0.250 |
+|  0.143 |
 +--------+
 1 row in set (0.00 sec)
 ```
 
 ```sql
-p.createAt > '2023-01-01 12:00:00' AND p.createAt < '2023-03-31 21:00:00'
-```
-
-###  1:1
-
-![erd diagram](/dw/imgs/database/monitor-db-ping-stats.png)
-
-```bash
-mysql> ALTER TABLE pings DROP COLUMN transmitted;
-Query OK, 0 rows affected (0.16 sec)
-Records: 0  Duplicates: 0  Warnings: 0
-
-mysql> ALTER TABLE pings DROP COLUMN received;
-Query OK, 0 rows affected (0.16 sec)
-Records: 0  Duplicates: 0  Warnings: 0
-
-mysql> ALTER TABLE pings ADD COLUMN stat_id int NOT NULL REFERENCES stats (id);
-Query OK, 0 rows affected (0.16 sec)
-Records: 0  Duplicates: 0  Warnings: 0
-
-mysql> DESCRIBE pings;
-+----------+----------+------+-----+---------+----------------+
-| Field    | Type     | Null | Key | Default | Extra          |
-+----------+----------+------+-----+---------+----------------+
-| id       | int      | NO   | PRI | NULL    | auto_increment |
-| createAt | datetime | NO   |     | NULL    |                |
-| host_id  | int      | NO   |     | NULL    |                |
-+----------+----------+------+-----+---------+----------------+
-3 rows in set (0.00 sec)
-```
-
-```bash
-mysql> CREATE TABLE icmps (
-    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    ->   bytes int NOT NULL,
-    ->   ttl int NOT NULL,
-    ->   time float NOT NULL,
-    ->   ping_id int NOT NULL REFERENCES pings (id)
-    -> );
-Query OK, 0 rows affected (0.02 sec)
-```
-
-```bash
-mysql> INSERT INTO
-    ->   icmps
-    -> VALUES
-    ->   (1, 56, 54, 74.7, 2),
-    ->   (2, 56, 54, 74.0, 2),
-    ->   (3, 56, 54, 72.5, 2),
-    ->   (4, 56, 54, 43.5, 3),
-    ->   (5, 56, 54, 44.6, 3);
-Query OK, 5 rows affected (0.01 sec)
-Records: 5  Duplicates: 0  Warnings: 0
-mysql>
-```
-
-```bash
-mysql> CREATE TABLE stats (
-    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    ->   transmitted int NOT NULL,
-    ->   received int NOT NULL,
-    ->   time float NOT NULL;
-    -> );
-Query OK, 0 rows affected (0.02 sec)
-```
-
-```bash
-mysql> INSERT INTO
-    ->   stats (transmitted, received, time)
-    -> VALUES
-    ->   (4, 4, 221.2),
-    ->   (7, 4, 88.1);
-Query OK, 2 rows affected (0.02 sec)
-Records: 2  Duplicates: 0  Warnings: 0
-```
-
-```bash
-mysql> INSERT INTO
-    ->   stats (transmitted, received, time)
-    -> VALUES
-    ->   (4, 4, 221.2),
-    ->   (7, 4, 88.1);
-Query OK, 2 rows affected (0.02 sec)
-Records: 2  Duplicates: 0  Warnings: 0
-```
-
-```bash
-mysql> SELECT
-    ->   *
-    -> FROM
-    ->   hosts h
-    -> INNER JOIN
-    ->   pings p ON h.id = p.host_id
-    -> INNER JOIN
-    ->   stats s ON s.id = p.stat_id;
-+----+-----------------+--------------+----+---------------------+---------+---------+----+-------------+----------+-------+
-| id | name            | address      | id | createAt            | host_id | stat_id | id | transmitted | received | time  |
-+----+-----------------+--------------+----+---------------------+---------+---------+----+-------------+----------+-------+
-|  2 | www.ifrn.edu.br | 200.10.10.11 |  2 | 2024-02-28 02:50:55 |       2 |       1 |  1 |           4 |        4 | 221.2 |
-|  3 | www.ifpb.edu.br | 200.10.10.12 |  3 | 2024-02-28 02:50:55 |       3 |       2 |  2 |           7 |        4 |  88.1 |
-+----+-----------------+--------------+----+---------------------+---------+---------+----+-------------+----------+-------+
-2 rows in set (0.00 sec)
-```
-
-###  N:M
-
-![erd diagram](/dw/imgs/database/monitor-db-hosts-admins-physical.png)
-
-```bash
-mysql> CREATE TABLE admins (
-    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    ->   name varchar(50) NOT NULL,
-    ->   email varchar(100) NOT NULL
-    -> );
-Query OK, 0 rows affected (0.02 sec)
-```
-
-```bash
-mysql> CREATE TABLE admins_hosts (
-    ->   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    ->   admin_id int NOT NULL REFERENCES admins (id),
-    ->   host_id int NOT NULL REFERENCES hosts (id)
-    -> );
-Query OK, 0 rows affected (0.02 sec)
-```
-
-```bash
-mysql> INSERT INTO
-    ->   admins (name, email)
-    -> VALUES
-    ->   ('Alice', 'alice@email.com'),
-    ->   ('Bob', 'bob@email.com'),
-    ->   ('Charlie', 'charlie@email.com');
-Query OK, 3 rows affected (0.02 sec)
-Records: 3  Duplicates: 0  Warnings: 0
-```
-
-```bash
-mysql> INSERT INTO
-    ->   admins_hosts (admin_id, host_id)
-    -> VALUES
-    ->   (1, 2),
-    ->   (2, 2),
-    ->   (2, 3),
-    ->   (3, 3);
-Query OK, 4 rows affected (0.02 sec)
-Records: 4  Duplicates: 0  Warnings: 0
-```
-
-```bash
-mysql> SELECT
-    ->   a.name,
-    ->   h.name,
-    ->   h.address
-    -> FROM
-    ->   hosts h
-    -> INNER JOIN
-    ->   admins_hosts ah ON h.id = ah.host_id
-    -> INNER JOIN
-    ->   admins a ON a.id = ah.admin_id;
-+---------+-----------------+--------------+
-| name    | name            | address      |
-+---------+-----------------+--------------+
-| Alice   | www.ifrn.edu.br | 200.10.10.11 |
-| Bob     | www.ifrn.edu.br | 200.10.10.11 |
-| Bob     | www.ifpb.edu.br | 200.10.10.12 |
-| Charlie | www.ifpb.edu.br | 200.10.10.12 |
-+---------+-----------------+--------------+
-4 rows in set (0.00 sec)
+p.created_at > '2024-03-05 00:00:00' AND p.created_at < '2024-03-05 06:00:00'
 ```
 
 ## Backup

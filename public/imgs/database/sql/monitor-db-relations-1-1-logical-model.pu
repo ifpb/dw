@@ -1,0 +1,23 @@
+@startuml
+hide circle
+scale 1.5
+skinparam linetype ortho
+skinparam monochrome true
+left to right direction
+
+entity "pings" as ping {
+  id
+  --
+  create_at
+}
+
+entity "stats" as stats {
+  id
+  --
+  transmitted
+  received
+  time
+}
+
+ping ||--o| stats
+@enduml

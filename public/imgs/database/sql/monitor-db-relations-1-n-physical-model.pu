@@ -1,0 +1,53 @@
+@startuml
+hide circle
+scale 1.5
+skinparam linetype ortho
+skinparam monochrome true
+left to right direction
+
+entity "hosts" as host {
+  *id : int
+  --
+  name : varchar(100)
+  address : varchar(100)
+}
+
+entity "pings" as ping {
+  *id : int
+  *host_id : int <<FK>>
+  *user_id : int <<FK>>
+  --
+  create_at : datetime
+}
+
+entity "stats" as stats {
+  *id : int
+  *ping_id : int <<FK>>
+  --
+  transmitted : int
+  received : int
+  time : float
+}
+
+entity "icmps" as icmp {
+  *id : int
+  *ping_id : int <<FK>>
+  --
+  seq : int
+  ttl : int
+  time : float
+}
+
+entity "users" as user {
+  *id : int
+  --
+  name: varchar(100)
+  email: varchar(100)
+  password: varchar(30)
+}
+
+host ||--o{ ping
+ping ||--o| stats
+ping ||-upo{ icmp
+user ||-upo{ ping
+@enduml

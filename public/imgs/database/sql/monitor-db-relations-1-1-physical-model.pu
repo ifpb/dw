@@ -5,21 +5,20 @@ skinparam linetype ortho
 skinparam monochrome true
 left to right direction
 
-entity "hosts" as host {
-  *id : int
-  --
-  name : varchar(100)
-  address : varchar(100)
-}
-
 entity "pings" as ping {
   *id : int
   --
-  transmitted : int
-  received : int
-  createAt : datetime
-  *host_id : int <<FK>>
+  create_at : datetime
 }
 
-host ||--|{ ping
+entity "stats" as stats {
+  *id : int
+  *ping_id : int
+  --
+  transmitted : int
+  received : int
+  time : float
+}
+
+ping ||--o| stats
 @enduml

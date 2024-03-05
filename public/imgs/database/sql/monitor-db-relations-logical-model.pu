@@ -1,0 +1,56 @@
+@startuml
+hide circle
+scale 1.5
+skinparam linetype ortho
+skinparam monochrome true
+left to right direction
+
+entity "tags" as tag {
+  id
+  --
+  name
+}
+
+entity "hosts" as host {
+  id
+  --
+  name
+  address
+}
+
+entity "pings" as ping {
+  id
+  --
+  createAt
+}
+
+entity "stats" as stats {
+  id
+  --
+  transmitted
+  received
+  time
+}
+
+entity "icmps" as icmp {
+  id
+  --
+  seq
+  ttl
+  time
+}
+
+entity "users" as user {
+  id
+  --
+  name
+  email
+  password
+}
+
+tag }o--o{ host
+host ||--o{ ping
+ping ||--o| stats
+ping ||-upo{ icmp
+user ||-upo{ ping
+@enduml

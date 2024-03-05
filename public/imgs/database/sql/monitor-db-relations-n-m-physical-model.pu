@@ -1,0 +1,30 @@
+@startuml
+hide circle
+scale 1.5
+skinparam linetype ortho
+skinparam monochrome true
+left to right direction
+
+entity "tags" as tag {
+  *id : int
+  --
+  name : varchar(100)
+}
+
+entity "tag_hosts" as tp {
+  *id : int
+  *tag_id : int <<FK>>
+  *host_id : int <<FK>>
+  --
+}
+
+entity "hosts" as host {
+  *id : int
+  --
+  name : varchar(100)
+  address : varchar(100)
+}
+
+tag ||--o{ tp
+tp }o--|| host
+@enduml

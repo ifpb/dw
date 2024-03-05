@@ -5,34 +5,36 @@ skinparam linetype ortho
 skinparam monochrome true
 left to right direction
 
-entity "admins" as admin {
-  name
-  email
-}
-
 entity "hosts" as host {
+  id
+  --
   name
   address
 }
 
 entity "pings" as ping {
-  createAt
+  id
+  --
+  create_at
 }
 
 entity "icmps" as icmp {
-  bytes
+  id
+  --
+  seq
   ttl
   time
 }
 
-entity "stats" as stat {
-  transmitted
-  received
-  time
+entity "users" as user {
+  id
+  --
+  name
+  email
+  password
 }
 
-ping ||--|{ icmp
-ping ||--|| stat
-host ||--|{ ping
-host }|--|{ admin
+host ||--o{ ping
+ping ||-upo{ icmp
+user ||-upo{ ping
 @enduml

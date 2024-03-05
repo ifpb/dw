@@ -1,0 +1,22 @@
+@startuml
+hide circle
+scale 1.5
+skinparam linetype ortho
+skinparam monochrome true
+left to right direction
+
+entity "tags" as tag {
+  id
+  --
+  name
+}
+
+entity "hosts" as host {
+  id
+  --
+  name
+  address
+}
+
+tag }o--o{ host
+@enduml
