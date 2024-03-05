@@ -145,7 +145,9 @@ describe('Moniotr App', () => {
         expect(response.body.message).toBe('Unable to delete a host');
       });
     });
+  });
 
+  describe('Host Ping Endpoints', () => {
     describe('POST /hosts/:hostId/pings/:count', () => {
       it('should create a ping with valid host', async () => {
         let response = await request(app).post('/hosts').send(newHost);
