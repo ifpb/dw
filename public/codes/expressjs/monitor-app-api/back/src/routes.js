@@ -2,8 +2,8 @@ import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { hosts } from './data/hosts.js';
 
-class HTTPError extends Error {
-  constructor(message, code) {
+class HttpError extends Error {
+  constructor(message, code = 400) {
     super(message);
     this.code = code;
   }
@@ -12,26 +12,34 @@ class HTTPError extends Error {
 const router = express.Router();
 
 router.post('/hosts', (req, res) => {
-  const host = req.body;
+  const { name, address } = req.body;
+
+  if (!name || !address) {
+    throw new HttpError('Error when passing parameters');
+  }
 
   const id = uuidv4();
 
-  const newHost = { ...host, id };
-
-  if (!host.name || !host.address) {
-    throw new HTTPError('Error when passing parameters', 400);
-  }
+  const newHost = { id, name, address };
 
   hosts.push(newHost);
 
-  res.json(newHost);
+  res.status(201).json(newHost);
 });
 
 router.get('/hosts', (req, res) => {
-  const { name } = req.query;
+  const where = req.query;
 
-  if (name) {
-    const filteredHosts = hosts.filter((host) => host.name.includes(name));
+  if (where) {
+    const field = Object.keys(where)[0];
+
+    const value = where[field];
+
+    const filteredHosts = hosts.filter((host) =>
+      host[field] instanceof String
+        ? host[field].toLowerCase().includes(value.toLowerCase())
+        : host[field] === value
+    );
 
     return res.json(filteredHosts);
   }
@@ -40,32 +48,32 @@ router.get('/hosts', (req, res) => {
 });
 
 router.get('/hosts/:id', (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   const index = hosts.findIndex((host) => host.id === id);
 
   if (!hosts[index]) {
-    throw new HTTPError('Host not found', 400);
+    throw new HttpError('Unable to read a host');
   }
 
   return res.json(hosts[index]);
 });
 
 router.put('/hosts/:id', (req, res) => {
-  const host = req.body;
+  const { name, address } = req.body;
 
-  const id = req.params.id;
+  const { id } = req.params;
 
-  if (!host.name || !host.address || !id) {
-    throw new HTTPError('Error when passing parameters', 400);
+  if (!name || !address) {
+    throw new HttpError('Error when passing parameters');
   }
 
-  const newHost = { ...host, id };
+  const newHost = { id, name, address };
 
   const index = hosts.findIndex((host) => host.id === id);
 
   if (!hosts[index]) {
-    throw new HTTPError('Host not found', 400);
+    throw new HttpError('Unable to update a host');
   }
 
   hosts[index] = newHost;
@@ -74,12 +82,12 @@ router.put('/hosts/:id', (req, res) => {
 });
 
 router.delete('/hosts/:id', (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   const index = hosts.findIndex((host) => host.id === id);
 
   if (!hosts[index]) {
-    throw new HTTPError('Host not found', 400);
+    throw new HttpError('Unable to delete a host');
   }
 
   hosts.splice(index, 1);
@@ -89,17 +97,19 @@ router.delete('/hosts/:id', (req, res) => {
 
 // 404 handler
 router.use((req, res, next) => {
-  res.status(404).json({ message: 'Content not found!' });
+  return res.status(404).json({ message: 'Content not found!' });
 });
 
 // Error handler
 router.use((err, req, res, next) => {
-  if (err instanceof HTTPError) {
+  // console.error(err.message);
+  console.error(err.stack);
+
+  if (err instanceof HttpError) {
     return res.status(err.code).json({ message: err.message });
   }
 
-  // console.error(err.stack);
-  // next(err)
+  // next(err);
   return res.status(500).json({ message: 'Something broke!' });
 });
 

@@ -1,10 +1,6 @@
 import Database from '../database/database.js';
 
 async function create({ name, address }) {
-  if (!name || !address) {
-    throw new Error('Error when passing parameters');
-  }
-
   const db = await Database.connect();
 
   const sql = `
@@ -21,17 +17,21 @@ async function create({ name, address }) {
   return await readById(lastID);
 }
 
-async function read(field, value) {
+async function read(where) {
   const db = await Database.connect();
 
-  if (field && value) {
+  if (where) {
+    const field = Object.keys(where)[0];
+
+    const value = where[field];
+
     const sql = `
       SELECT
           *
         FROM
           hosts
         WHERE
-          ${field} = '?'
+          ${field} LIKE CONCAT( '%',?,'%')
       `;
 
     const hosts = await db.all(sql, [value]);
@@ -56,10 +56,6 @@ async function read(field, value) {
 }
 
 async function readById(id) {
-  if (!id) {
-    throw new Error('Unable to find host');
-  }
-
   const db = await Database.connect();
 
   const sql = `
@@ -75,18 +71,10 @@ async function readById(id) {
 
   db.close();
 
-  if (host) {
-    return host;
-  } else {
-    throw new Error('Host not found');
-  }
+  return host;
 }
 
 async function update({ id, name, address }) {
-  if (!name || !address || !id) {
-    throw new Error('Error when passing parameters');
-  }
-
   const db = await Database.connect();
 
   const sql = `
@@ -110,10 +98,6 @@ async function update({ id, name, address }) {
 }
 
 async function remove(id) {
-  if (!id) {
-    throw new Error('Unable to find host');
-  }
-
   const db = await Database.connect();
 
   const sql = `

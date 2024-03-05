@@ -15,10 +15,6 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 <CodePreview src="/codes/expressjs/monitor-app-mvc/back/src/index.js" />
 
-## Router
-
-<CodePreview src="/codes/expressjs/monitor-app-mvc/back/src/routes.js" />
-
 ## Database
 
 <CodePreview src="/codes/expressjs/monitor-app-mvc/back/src/database/data.js" />
@@ -32,3 +28,41 @@ import CodeTree from '../../../../components/CodeTree.astro';
 <CodePreview src="/codes/expressjs/monitor-app-mvc/back/src/database/seeders.js" />
 
 <CodePreview src="/codes/expressjs/monitor-app-mvc/back/src/database/seeders.json" />
+
+## Router
+
+<CodePreview src="/codes/expressjs/monitor-app-mvc/back/src/routes.js" />
+
+<CodePreview src="/codes/expressjs/monitor-app-mvc/back/requests.http" />
+
+## Teste
+
+[Jest](https://jestjs.io/), [Supertest](https://github.com/ladjs/supertest):
+
+```bash
+$ npm i jest supertest -D
+
+$ npm run test
+```
+
+<CodePreview src="/codes/expressjs/monitor-app-mvc/back/src/routes.test.js" />
+
+.skip()
+
+```js
+describe.skip()
+
+it.skip()
+```
+
+Cobertura de Testes
+
+<CodePreview src="/codes/expressjs/monitor-app-mvc/back/package.json" />
+
+```bash
+$ npm run test:coverage
+```
+
+## View
+
+![](/dw/imgs/expressjs/mvc/monitor-app.png)

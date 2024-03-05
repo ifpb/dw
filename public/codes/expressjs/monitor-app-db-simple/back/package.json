@@ -6,7 +6,17 @@
     "dev": "node --watch src/index.js",
     "db:reload": "npm run db:drop && npm run db:load",
     "db:load": "node src/database/load.js",
-    "db:drop": "rm src/database/db.sqlite"
+    "db:drop": "[ -e src/database/db.sqlite ] && rm src/database/db.sqlite",
+    "test": "npm run db:reload && node --experimental-vm-modules ./node_modules/.bin/jest src",
+    "test:coverage": "npm run db:reload && node --experimental-vm-modules ./node_modules/.bin/jest src --coverage"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "testTimeout": 20000,
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -15,5 +25,9 @@
     "morgan": "^1.10.0",
     "sqlite-async": "^1.2.0",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
   }
 }

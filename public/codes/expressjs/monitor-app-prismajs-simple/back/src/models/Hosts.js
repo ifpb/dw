@@ -1,10 +1,6 @@
 import prisma from '../database/database.js';
 
 async function create({ name, address }) {
-  if (!name || !address) {
-    throw new Error('Error when passing parameters');
-  }
-
   const createdHost = await prisma.host.create({
     data: { name, address },
   });
@@ -29,28 +25,16 @@ async function read(where) {
 }
 
 async function readById(id) {
-  if (!id) {
-    throw new Error('Unable to find host');
-  }
-
   const host = await prisma.host.findUnique({
     where: {
       id,
     },
   });
 
-  if (host) {
-    return host;
-  } else {
-    throw new Error('Host not found');
-  }
+  return host;
 }
 
 async function update({ id, name, address }) {
-  if (!name || !address || !id) {
-    throw new Error('Error when passing parameters');
-  }
-
   const updatedHost = await prisma.host.update({
     where: {
       id,
@@ -58,27 +42,15 @@ async function update({ id, name, address }) {
     data: { name, address },
   });
 
-  if (updatedHost) {
-    return updatedHost;
-  } else {
-    throw new Error('Host not found');
-  }
+  return updatedHost;
 }
 
 async function remove(id) {
-  if (!id) {
-    throw new Error('Unable to find host');
-  }
-
-  try {
-    await prisma.host.delete({
-      where: {
-        id,
-      },
-    });
-  } catch (error) {
-    throw new Error('Host not found');
-  }
+  await prisma.host.delete({
+    where: {
+      id,
+    },
+  });
 }
 
 export default { create, read, readById, update, remove };

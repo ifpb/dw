@@ -1,8 +1,8 @@
 import express from 'express';
 import Host from './models/Hosts.js';
 
-class HTTPError extends Error {
-  constructor(message, code) {
+class HttpError extends Error {
+  constructor(message, code = 400) {
     super(message);
     this.code = code;
   }
@@ -10,83 +10,101 @@ class HTTPError extends Error {
 
 const router = express.Router();
 
-router.post('/hosts', (req, res) => {
-  const host = req.body;
+router.post('/hosts', async (req, res) => {
+  const { name, address } = req.body;
+
+  if (!name || !address) {
+    throw new HttpError('Error when passing parameters');
+  }
 
   try {
-    const createdHost = Host.create(host);
+    const createdHost = await Host.create({ name, address });
 
-    res.json(createdHost);
+    return res.status(201).json(createdHost);
   } catch (error) {
-    throw new HTTPError(error.message, 400);
+    throw new HttpError('Unable to create a host');
   }
 });
 
-router.get('/hosts', (req, res) => {
+router.get('/hosts', async (req, res) => {
   const { name } = req.query;
 
-  if (name) {
-    const filteredHosts = Host.read('name', name);
-
-    return res.json(filteredHosts);
-  }
-
-  const hosts = Host.read();
-
-  return res.json(hosts);
-});
-
-router.get('/hosts/:id', (req, res) => {
-  const id = req.params.id;
-
   try {
-    const host = Host.readById(id);
+    if (name) {
+      const filteredHosts = await Host.read({ name });
 
-    return res.json(host);
+      return res.json(filteredHosts);
+    }
+
+    const hosts = await Host.read();
+
+    return res.json(hosts);
   } catch (error) {
-    throw new HTTPError(error.message, 400);
+    throw new HttpError('Unable to read hosts');
   }
 });
 
-router.put('/hosts/:id', (req, res) => {
-  const host = req.body;
+router.get('/hosts/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const host = await Host.readById(id);
+
+    if (host) {
+      return res.json(host);
+    } else {
+      throw new HttpError('Host not found');
+    }
+  } catch (error) {
+    throw new HttpError('Unable to read a host');
+  }
+});
+
+router.put('/hosts/:id', async (req, res) => {
+  const { name, address } = req.body;
 
   const id = req.params.id;
 
+  if (!name || !address) {
+    throw new HttpError('Error when passing parameters');
+  }
+
   try {
-    const updatedHost = Host.update({ ...host, id });
+    const updatedHost = await Host.update({ id, name, address });
 
     return res.json(updatedHost);
   } catch (error) {
-    throw new HTTPError(error.message, 400);
+    throw new HttpError('Unable to update a host');
   }
 });
 
-router.delete('/hosts/:id', (req, res) => {
-  const id = req.params.id;
+router.delete('/hosts/:id', async (req, res) => {
+  const { id } = req.params;
 
   try {
-    Host.remove(id);
+    await Host.remove(id);
 
     return res.send(204);
   } catch (error) {
-    throw new HTTPError(error.message, 400);
+    throw new HttpError('Unable to delete a host');
   }
 });
 
 // 404 handler
 router.use((req, res, next) => {
-  res.status(404).json({ message: 'Content not found!' });
+  return res.status(404).json({ message: 'Content not found!' });
 });
 
 // Error handler
 router.use((err, req, res, next) => {
-  if (err instanceof HTTPError) {
+  // console.error(err.message);
+  console.error(err.stack);
+
+  if (err instanceof HttpError) {
     return res.status(err.code).json({ message: err.message });
   }
 
-  // console.error(err.stack);
-  // next(err)
+  // next(err);
   return res.status(500).json({ message: 'Something broke!' });
 });
 

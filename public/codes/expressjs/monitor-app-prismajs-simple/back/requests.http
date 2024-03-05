@@ -11,8 +11,7 @@ Content-Type: application/json
   "address": "1.1.1.1"
 }
 
-### Create a host (bad params)
-# @name createHost
+### Create a host without name or address
 POST {{server}}/hosts
 Content-Type: application/json
 
@@ -29,7 +28,7 @@ GET {{server}}/hosts?name=Google%20DNS
 ### Read a host by id
 GET {{server}}/hosts/{{createdHostId}}
 
-### Read a host by id (bad params)
+### Read a host by id with invalid id
 GET {{server}}/hosts/x
 
 ### Update a host
@@ -41,7 +40,7 @@ Content-Type: application/json
   "address": "1.1.1.1"
 }
 
-### Update a host (bad params)
+### Update a host without name or address
 PUT {{server}}/hosts/{{createdHostId}}
 Content-Type: application/json
 
@@ -49,7 +48,7 @@ Content-Type: application/json
   "name": "Cloudflare DNS"
 }
 
-### Update a host (bad params)
+### Update a host with invalid id
 PUT {{server}}/hosts/x
 Content-Type: application/json
 
@@ -61,5 +60,5 @@ Content-Type: application/json
 ### Delete a host
 DELETE {{server}}/hosts/{{createdHostId}}
 
-### Delete a host (bad params)
+### Delete a host with invalid id
 DELETE {{server}}/hosts/x

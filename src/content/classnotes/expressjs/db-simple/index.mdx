@@ -49,3 +49,38 @@ Para visualizar o db.sqlite use o plugin [vscode-sqlite](https://marketplace.vis
 ## Router
 
 <CodePreview src="/codes/expressjs/monitor-app-db-simple/back/src/routes.js" />
+
+<CodePreview src="/codes/expressjs/monitor-app-db-simple/back/requests.http" />
+
+## Teste
+
+[Jest](https://jestjs.io/), [Supertest](https://github.com/ladjs/supertest):
+
+```bash
+$ npm i jest supertest -D
+
+$ npm run test
+```
+
+<CodePreview src="/codes/expressjs/monitor-app-db-simple/back/src/routes.test.js" />
+
+.skip()
+
+```js
+describe.skip()
+
+it.skip()
+```
+
+Cobertura de Testes
+
+<CodePreview src="/codes/expressjs/monitor-app-db-simple/back/package.json" />
+
+```bash
+$ npm run test:coverage
+```
+
+## View
+
+![](/dw/imgs/expressjs/db-simple/monitor-app.png)
+

@@ -24,6 +24,8 @@ GET {{server}}/hosts
 
 ### Read a host by name
 GET {{server}}/hosts?name=Google%20DNS
+# GET {{server}}/hosts?name=DNS
+# GET {{server}}/hosts?name=dns
 
 ### Read a host by id
 GET {{server}}/hosts/{{createdHostId}}

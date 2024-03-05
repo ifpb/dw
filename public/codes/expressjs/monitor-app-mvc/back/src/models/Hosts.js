@@ -15,9 +15,17 @@ function create({ name, address, id }) {
   return newHost;
 }
 
-function read(field, value) {
-  if (field && value) {
-    const filteredHosts = hosts.filter((host) => host[field].includes(value));
+function read(where) {
+  if (where) {
+    const field = Object.keys(where)[0];
+
+    const value = where[field];
+
+    const filteredHosts = hosts.filter((host) =>
+      host[field] instanceof String
+        ? host[field].toLowerCase().includes(value.toLowerCase())
+        : host[field] === value
+    );
 
     return filteredHosts;
   }

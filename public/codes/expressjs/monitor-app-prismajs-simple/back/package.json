@@ -3,10 +3,21 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "node --watch src/index.js"
+    "dev": "node --watch src/index.js",
+    "db:reset": "prisma migrate reset --force",
+    "test": "npm run db:reset && node --experimental-vm-modules ./node_modules/.bin/jest src",
+    "test:coverage": "npm run db:reset && node --experimental-vm-modules ./node_modules/.bin/jest src --coverage"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "testTimeout": 20000,
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
   },
   "dependencies": {
     "@prisma/client": "^5.10.2",
@@ -17,5 +28,9 @@
     "prisma": "^5.10.2",
     "sqlite-async": "^1.2.0",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
   }
 }
