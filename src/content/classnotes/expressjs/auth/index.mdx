@@ -7,30 +7,7 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 # {frontmatter.title}
 
-[Código Fonte](https://github.com/ifpb/lp2/tree/main/public/codes/expressjs/invest-app-auth)
-
-<CodeTree src="/codes/expressjs/invest-app-auth" githubUrl={true} />
-
-## Migration
-
-<CodePreview src="/codes/expressjs/invest-app-auth/prisma/schema.prisma" />
-
-```bash
-$ npx prisma migrate reset
-$ npx prisma migrate dev --name create_user
-```
-
-Tabelas:
-
-![](/dw/imgs/expressjs/auth/database.png)
-
-## Model
-
-<CodePreview src="/codes/expressjs/invest-app-auth/src/models/Investment.js" />
-
-<CodePreview src="/codes/expressjs/invest-app-auth/src/models/User.js" />
-
-<CodePreview src="/codes/expressjs/invest-app-auth/src/models/Category.js" />
+<CodeTree src="/codes/expressjs/monitor-app-prismajs-auth" githubUrl={true} />
 
 ## Router
 
@@ -46,32 +23,56 @@ Fluxo de Requisição:
 $ npm install jsonwebtoken
 ```
 
-<CodePreview src="/codes/expressjs/invest-app-auth/src/routes.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-auth/back/.env.example" highlightLines="13" />
 
-<CodePreview src="/codes/expressjs/invest-app-auth/requests.http" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-auth/back/src/middleware/auth.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-auth/.env.example" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-auth/back/src/routes.js" highlightLines="2,10,23,39,57,73,91,105,125,147,159,194" />
 
-## Middleware
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-auth/back/requests.http" highlightLines="4,6-58,72" />
 
-<CodePreview src="/codes/expressjs/invest-app-auth/src/middleware/auth.js" />
+## Teste
+
+[Jest](https://jestjs.io/), [Supertest](https://github.com/ladjs/supertest):
+
+```bash
+$ npm i jest supertest -D
+
+$ npm run test
+```
+
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-auth/back/src/routes.test.js" highlightLines="31-35,73" />
+
+.skip()
+
+```js
+describe.skip()
+
+it.skip()
+```
+
+Cobertura de Testes
+
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-auth/back/package.json" />
+
+```bash
+$ npm run test:coverage
+```
 
 ## View
 
 ![](/dw/imgs/expressjs/auth/signin.png)
 
-<CodePreview src="/codes/expressjs/invest-app-auth/public/signup.html" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-auth/front/signup.html" />
 
-<CodePreview src="/codes/expressjs/invest-app-auth/public/js/signup.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-auth/front/js/signup.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-auth/public/js/services/api.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-auth/front/js/services/storage.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-auth/public/js/lib/auth.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-auth/front/js/services/auth.js" />
 
-![](/dw/imgs/expressjs/auth/home-profile.png)
+![](/dw/imgs/expressjs/auth/home.png)
 
-![](/dw/imgs/expressjs/auth/home-form.png)
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-auth/front/home.html" />
 
-<CodePreview src="/codes/expressjs/invest-app-auth/public/home.html" />
-
-<CodePreview src="/codes/expressjs/invest-app-auth/public/js/home.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-auth/front/js/home.js" />

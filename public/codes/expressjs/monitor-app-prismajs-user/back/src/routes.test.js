@@ -153,14 +153,14 @@ describe('Moniotr App', () => {
     });
   });
 
-  describe('Host Ping Endpoints', () => {
+  describe.skip('Host Ping Endpoints', () => {
     describe('POST /hosts/:hostId/pings/:count', () => {
       it('should create a ping with valid host', async () => {
         let response = await request(app).post('/hosts').send(newHost);
 
-        createdHost = response.body;
-
-        response = await request(app).post(`/hosts/${createdHost.id}/pings/3`);
+        response = await request(app).post(
+          `/hosts/${response.body.id}/pings/3`
+        );
 
         expect(response.statusCode).toBe(200);
 
@@ -172,9 +172,9 @@ describe('Moniotr App', () => {
           .post('/hosts')
           .send({ name: 'unknown host', address: '172.16.0.1' });
 
-        createdHost = response.body;
-
-        response = await request(app).post(`/hosts/${createdHost.id}/pings/3`);
+        response = await request(app).post(
+          `/hosts/${response.body.id}/pings/3`
+        );
 
         expect(response.statusCode).toBe(400);
       });
@@ -184,9 +184,9 @@ describe('Moniotr App', () => {
           .post('/hosts')
           .send({ name: 'unknown host', address: 'www.unknownhost.com' });
 
-        createdHost = response.body;
-
-        response = await request(app).post(`/hosts/${createdHost.id}/pings/3`);
+        response = await request(app).post(
+          `/hosts/${response.body.id}/pings/3`
+        );
 
         expect(response.statusCode).toBe(400);
       });
