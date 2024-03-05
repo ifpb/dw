@@ -7,20 +7,26 @@ import CodeTree from '../../../../components/CodeTree.astro';
 
 # {frontmatter.title}
 
-<CodeTree src="/codes/expressjs/invest-app-prismajs-user" githubUrl={true} />
+<CodeTree src="/codes/expressjs/monitor-app-prismajs-user" githubUrl={true} />
+
+## Banco de Dados
+
+Modelo Lógico
+
+![](/dw/imgs/expressjs/prismajs-user/monitor-db-relations-logical-model.png)
+
+Modelo Físico
+
+![](/dw/imgs/expressjs/prismajs-user/monitor-db-relations-physical-model.png)
 
 ## Migration
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-user/prisma/schema.prisma" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-user/back/prisma/schema.prisma" />
 
 ```bash
 $ npx prisma migrate reset
 $ npx prisma migrate dev --name create_user
 ```
-
-Tabelas:
-
-![](/dw/imgs/expressjs/prismajs-user/database.png)
 
 ## Model
 
@@ -28,7 +34,7 @@ Tabelas:
 $ npm install bcrypt
 ```
 
-Encrypt:
+[Encrypt](https://bcrypt-generator.com/):
 
 ```text
 12345678 + 10
@@ -40,7 +46,7 @@ Encrypt:
 => $2a$10$CZHQV57ViPynbUbeffLU7.cTV8Rr9PjlJXkoe/Xu1FIUXA/I0we5C
 ```
 
-Decrypt:
+[Decrypt](https://bcrypt-generator.com/):
 
 ```text
 12345678 + $2a$10$13Aak6RFaLSM2BWra67RA.KElfrt41YQsTjy9nul0bxBhXI2vjiPe
@@ -48,9 +54,9 @@ Decrypt:
 ```
 
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/models/User.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-user/back/src/models/Users.js" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/models/Investment.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-user/back/src/models/Pings.js" highlightLines="26-32,46-52" />
 
 ## Router
 
@@ -58,16 +64,44 @@ Decrypt:
 $ npm install dotenv
 ```
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/index.js" highlightLines="2" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-user/back/src/index.js" highlightLines="2" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-user/src/routes.js"  highlightLines="108-122" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-user/back/src/routes.js"  highlightLines="157-173" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-user/requests.http" highlightLines="5-15" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-user/back/requests.http" highlightLines="85-114" />
+
+## Teste
+
+[Jest](https://jestjs.io/), [Supertest](https://github.com/ladjs/supertest):
+
+```bash
+$ npm i jest supertest -D
+
+$ npm run test
+```
+
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-user/back/src/routes.test.js" highlightLines="17-21,236-260" />
+
+.skip()
+
+```js
+describe.skip()
+
+it.skip()
+```
+
+Cobertura de Testes
+
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-user/back/package.json" />
+
+```bash
+$ npm run test:coverage
+```
 
 ## View
 
 ![](/dw/imgs/expressjs/prismajs-user/signup.png)
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-user/public/signup.html" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-user/front/signup.html" />
 
-<CodePreview src="/codes/expressjs/invest-app-prismajs-user/public/js/signup.js" />
+<CodePreview src="/codes/expressjs/monitor-app-prismajs-user/front/js/signup.js" />

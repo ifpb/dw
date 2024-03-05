@@ -40,7 +40,7 @@ export const CLASSNOTE_SLUGS = [
   'expressjs/db-simple',
   'expressjs/prismajs-simple',
   'expressjs/prismajs-relation',
-  // 'expressjs/prismajs-user',
+  'expressjs/prismajs-user',
   // 'expressjs/auth',
   // docker
   // test
