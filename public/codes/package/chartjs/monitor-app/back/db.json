@@ -1,0 +1,70 @@
+{
+  "hosts": [
+    {
+      "id": 1,
+      "name": "Google Search",
+      "address": "www.google.com"
+    },
+    {
+      "id": 2,
+      "name": "Google DNS",
+      "address": "8.8.8.8"
+    }
+  ],
+  "pings": [
+    {
+      "id": 1,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "hostId": 1
+    },
+    {
+      "id": 2,
+      "createdAt": "2024-01-01T00:00:00Z",
+      "hostId": 2
+    }
+  ],
+  "icmps": [
+    {
+      "id": 1,
+      "seq": 1,
+      "ttl": 54,
+      "time": 90,
+      "pingId": 1
+    },
+    {
+      "id": 2,
+      "seq": 2,
+      "ttl": 54,
+      "time": 95,
+      "pingId": 1
+    },
+    {
+      "id": 3,
+      "seq": 3,
+      "ttl": 54,
+      "time": 85,
+      "pingId": 1
+    },
+    {
+      "id": 4,
+      "seq": 1,
+      "ttl": 54,
+      "time": 95,
+      "pingId": 2
+    },
+    {
+      "id": 5,
+      "seq": 2,
+      "ttl": 54,
+      "time": 80,
+      "pingId": 2
+    },
+    {
+      "id": 6,
+      "seq": 3,
+      "ttl": 54,
+      "time": 99,
+      "pingId": 2
+    }
+  ]
+}

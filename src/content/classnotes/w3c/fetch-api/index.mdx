@@ -91,12 +91,10 @@ makeRequest('GET', resource)
 
 ![](/dw/imgs/w3c/fetch-api/monitor-app-crud.png)
 
-[Código Fonte](https://github.com/ifpb/dw/tree/main/public/codes/w3c/fetch-api/monitor-app/)
+<CodeTree src="/codes/w3c/fetch-api/monitor-app" githubUrl={true} />
 
-<CodeTree src="/codes/w3c/fetch-api/monitor-app/" />
-
-```js title="/codes/w3c/fetch-api/monitor-app/js/service/storage.js"
-const API_URL = 'http://localhost:3000';
+```js title="/codes/w3c/fetch-api/monitor-app/front/js/service/storage.js"
+const API_URL = '/api';
 
 async function create(resource, data) {}
 async function read(resource) {}
@@ -106,11 +104,13 @@ async function remove(resource) {}
 export default { create, read, update, remove };
 ```
 
+<CodePreview src="/codes/w3c/fetch-api/monitor-app/front/vite.config.js" highlightLines="8-9" />
+
 #### Create a host
 
 ![](/dw/imgs/api/rest/host-api-post.png)
 
-```js title="/codes/w3c/fetch-api/monitor-app/js/service/storage.js"
+```js title="/codes/w3c/fetch-api/monitor-app/front/js/service/storage.js"
 async function create(resource, data) {
   resource = `${API_URL}/${resource}`;
 
@@ -145,7 +145,7 @@ Storage.create('hosts', host);
 
 ![](/dw/imgs/api/rest/host-api-get.png)
 
-```js title="/codes/w3c/fetch-api/monitor-app/js/service/storage.js"
+```js title="/codes/w3c/fetch-api/monitor-app/front/js/service/storage.js"
 async function read(resource) {
   resource = `${API_URL}/${resource}`;
 
@@ -166,7 +166,7 @@ Storage.read('hosts/3');
 
 ![](/dw/imgs/api/rest/host-api-put.png)
 
-```js title="/codes/w3c/fetch-api/monitor-app/js/service/storage.js"
+```js title="/codes/w3c/fetch-api/monitor-app/front/js/service/storage.js"
 async function update(resource, data) {
   resource = `${API_URL}/${resource}`;
 
@@ -196,7 +196,7 @@ Storage.update('hosts/3', { name: 'Cloudflare DNS', addres: '1.1.1.1' });
 
 ![](/dw/imgs/api/rest/host-api-delete.png)
 
-```js title="/codes/w3c/fetch-api/monitor-app/js/service/storage.js"
+```js title="/codes/w3c/fetch-api/monitor-app/front/js/service/storage.js"
 async function remove(resource) {
   resource = `${API_URL}/${resource}`;
 
