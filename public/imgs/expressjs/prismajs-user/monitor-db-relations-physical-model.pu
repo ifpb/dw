@@ -44,7 +44,7 @@ entity "Stats" as stats {
 
 entity "Icmp" as icmp {
   *id : int
-  *ping_id : int <<FK>>
+  *pingId : int <<FK>>
   --
   seq : int
   ttl : int
