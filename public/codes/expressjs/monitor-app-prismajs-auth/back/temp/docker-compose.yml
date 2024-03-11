@@ -1,0 +1,13 @@
+version: "3.1"
+
+services:
+  node-web:
+    build: .
+    image: node-web
+    container_name: node-web
+    environment:
+      DATABASE_URL: file:./dev.db
+      BCRYPT_SALT: 10
+      JWT_SECRET: abc
+    ports:
+      - 3000:3000

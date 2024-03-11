@@ -17,7 +17,7 @@ form.onsubmit = async (event) => {
     const user = Object.fromEntries(new FormData(form));
 
     try {
-      const { email, message } = await API.create('/users', user, false);
+      const { email, message } = await API.create('users', user, false);
 
       if (email) {
         location.href = '/signin.html';

@@ -3,7 +3,6 @@ layout: ../layouts/MarkDownLayout.astro
 title: Desenvolvimento Web
 ---
 
-import { join } from 'path'
 import { SUBJECT } from '../consts.js'
 
 # {frontmatter.title}
@@ -38,8 +37,6 @@ A disciplina apresenta o seguinte conteúdo, que será dividido conforme este [r
 
 Sobre o código fonte gerados durante as aulas, ele estará disponível no repositório da disciplina ({Object.keys(SUBJECT.GITHUB_URLS).map((github) => (<a href={SUBJECT.GITHUB_URLS[github]} target="_blank">Turma {github}</a>)).reduce((prev, curr) => [prev, ', ', curr])}).
 
-
-
 ## Horário e ambiente
 
 As aulas da disciplina serão alocados nesse horário e ambiente:
@@ -71,7 +68,7 @@ A nota final será computada através da média ponderada das três maiores aval
 - Avaliação II: [Projeto - Etapa I](/dw/project) (<a href={SUBJECT.PROJECTS_URL} target="_blank">padlet</a>);
 - Avaliação III: [Projeto - Etapa II](/dw/project)
 
-Esta sala do Google Classroom ({Object.keys(SUBJECT.CLASSROOM_URLS).map((github) => (<a href={SUBJECT.GITHUB_URLS[github]} target="_blank">Turma {github}</a>)).reduce((prev, curr) => [prev, ', ', curr])}) será utilizado para enviar todas as avaliações.
+Esta sala do Google Classroom ({Object.keys(SUBJECT.CLASSROOM_URLS).map((github) => (<a href={SUBJECT.GITHUB_URLS[github]} target="_blank">Turma {github}</a>)).reduce((prev, curr) => [prev, ', ', curr])}) será utilizada para enviar todas as avaliações.
 
 ## Comunicação
 
