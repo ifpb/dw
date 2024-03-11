@@ -3,6 +3,9 @@ layout: ../layouts/MarkDownLayout.astro
 title: Desenvolvimento Web
 ---
 
+import { join } from 'path'
+import { SUBJECT } from '../consts.js'
+
 # {frontmatter.title}
 
 A disciplina de [Desenvolvimento para Web](/dw/docs/plano-de-ensino.pdf) (DW) do Curso Superior de Tecnologia em Redes de Computadores do IFPB tem como objetivo apresentar ao aluno conceitos sobre desenvolvimento de sistemas Web utilizando banco de dados. Sua carga horária apresenta um total de 100 horas aula e será ministrada pelo professor Luiz Carlos Chaves. Para as aulas serão utilizadas exposições e atividades práticas, além de avaliações individuais e em grupo.
@@ -33,28 +36,46 @@ A disciplina apresenta o seguinte conteúdo, que será dividido conforme este [r
   - Fundamentos de BDR
   - SQL (criação e manipulação)
 
-Sobre o código fonte gerados durante as aulas, eles estarão disponíveis no [repositório da disciplina](https://github.com/lucachaves/dw-2024-1).
+Sobre o código fonte gerados durante as aulas, ele estará disponível no repositório da disciplina ({Object.keys(SUBJECT.GITHUB_URLS).map((github) => (<a href={SUBJECT.GITHUB_URLS[github]} target="_blank">Turma {github}</a>)).reduce((prev, curr) => [prev, ', ', curr])}).
+
+
 
 ## Horário e ambiente
 
 As aulas da disciplina serão alocados nesse horário e ambiente:
 
-| Dia     | Horário     | Ambiente |
-| ------- | ----------- | -------- |
-| Segunda | 07:00-08:40 | Lab 58   |
-| Quarta  | 07:00-10:40 | Lab 58   |
+<table>
+  <thead>
+    <tr>
+      <th>Dia</th>
+      <th>Horário</th>
+      <th>Ambiente</th>
+    </tr>
+  </thead>
+  <tbody>
+    {SUBJECT.SCHEDULES.map(({ day, start, end, room }) => (
+      <tr>
+        <td>{day}</td>
+        <td>{start}-{end}</td>
+        <td>{room}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
 
 ## Avaliações
 
 A nota final será computada através da média ponderada das três maiores avaliações:
 
-- Avaliação I: [Exercícios](https://ifpb.github.io/exercises/);
-- Avaliação II: [Projeto I](/dw/project);
-- Avaliação III: [Projeto II](/dw/project);
+- Avaliação I: [Exercícios](/dw/extra/exercises/);
+- Avaliação II: [Projeto - Etapa I](/dw/project) (<a href={SUBJECT.PROJECTS_URL} target="_blank">padlet</a>);
+- Avaliação III: [Projeto - Etapa II](/dw/project)
+
+Esta sala do Google Classroom ({Object.keys(SUBJECT.CLASSROOM_URLS).map((github) => (<a href={SUBJECT.GITHUB_URLS[github]} target="_blank">Turma {github}</a>)).reduce((prev, curr) => [prev, ', ', curr])}) será utilizado para enviar todas as avaliações.
 
 ## Comunicação
 
-Toda a comunicação será realizada usando o Google Chat.
+Toda a comunicação será realizada usando este <a href={SUBJECT.CHAT_URL} target="_blank">chat</a> do Google Chat.
 
 ## Bibliografia
 
@@ -81,3 +102,4 @@ E para completar ainda mais a listagem existe estes [exemplares](https://github.
   - [Chrome](https://www.google.com/chrome/browser/index.html) ([Chrome status](https://www.chromestatus.com/features), [Web Developer](https://chrome.google.com/webstore/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm))
 - Versionamento de código
   - [Git](https://git-scm.com/)
+
