@@ -6,7 +6,7 @@ export const SUBJECT = {
   CHAT_URL: 'https://mail.google.com/mail/u/0/#chat/space/AAAAAji4jww',
   PROJECTS_URL: 'https://padlet.com/lucachaves/projetodw20241',
   GITHUB_URLS: {
-    A: 'https://github.com/lucachaves/dw-2024-1',
+    A: 'https://github.com/luizchaves/dw-2024-1',
   },
   SCHEDULES: [
     {
