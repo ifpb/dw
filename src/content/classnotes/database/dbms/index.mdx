@@ -100,6 +100,79 @@ $ docker compose down
  ✔ Network mysql-server_app-tier     Removed                     0.2s
 ```
 
+Create Database
+
+```bash
+$ docker compose exec mysql mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.31 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE monitor_db;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> CREATE DATABASE monitor_db;
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| example            |
+| information_schema |
+| monitor_db         |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.01 sec)
+
+mysql> USE monitor_db;
+Database changed
+
+mysql> CREATE TABLE hosts (
+    ->   id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   name VARCHAR(255) NOT NULL,
+    ->   email VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> SHOW TABLES;
++----------------------+
+| Tables_in_monitor_db |
++----------------------+
+| hosts                |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> DESCRIBE hosts;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int          | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(255) | NO   |     | NULL    |                |
+| address | varchar(255) | NO   |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> quit
+Bye
+
+$ docker compose down
+[+] Running 3/3
+ ✔ Container mysql-server-adminer-1  Removed                     0.3s
+ ✔ Container mysql-server-mysql-1    Removed                     1.4s
+ ✔ Network mysql-server_app-tier     Removed                     0.2s
+```
+
 Backup
 
 ```bash
@@ -222,6 +295,63 @@ psql
 | `\dn`           | List schemas                   |
 | `\df`           | List functions                 |
 
+Create Database
+
+```bash
+$ ls -a
+.  ..  .env  docker-compose.yml
+
+$ docker compose up -d
+[+] Building 0.0s (0/0)                                                                                             docker:default
+[+] Running 3/3
+ ✔ Network postgres-server_app-tier     Created                                                                               0.0s
+ ✔ Container postgres                   Started                                                                               0.1s
+ ✔ Container postgres-server-adminer-1  Started                                                                               0.1s
+
+$ docker compose ps
+NAME                        IMAGE           COMMAND                  SERVICE    CREATED          STATUS          PORTS
+postgres                    postgres:16.2   "docker-entrypoint.s…"   postgres   37 seconds ago   Up 36 seconds   0.0.0.0:5432->5432/tcp
+postgres-server-adminer-1   adminer:4.8.1   "entrypoint.sh php -…"   adminer    37 seconds ago   Up 36 seconds   0.0.0.0:8080->8080/tcp
+
+$ docker compose exec postgres psql -U postgres
+psql (16.2 (Debian 16.2-1.pgdg120+2))
+Type "help" for help.
+
+postgres=# CREATE DATABASE monitor_db;
+
+monitor_db=# \l
+ monitor_db | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ postgres   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ template0  | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+            |          |          |                 |            |            |            |           | postgres=CTc/postgres
+ template1  | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+            |          |          |                 |            |            |            |           | postgres=CTc/postgres
+
+postgres=# \c monitor_db
+
+monitor_db=# CREATE TABLE hosts (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL
+);
+
+monitor_db=# \dt public.*
+ public | hosts | table | postgres
+
+monitor_db=# \d hosts
+ id     | integer                |           | not null | nextval('hosts_id_seq'::regclass)
+ name   | character varying(255) |           | not null |
+ email  | character varying(255) |           | not null |
+
+postgres=# \q
+
+$ docker compose down
+[+] Running 3/3
+ ✔ Container postgres-server-adminer-1  Removed                                                                               0.4s
+ ✔ Container postgres                   Removed                                                                               0.4s
+ ✔ Network postgres-server_app-tier     Removed                                                                               0.2s
+```
+
 Backup
 
 ```bash
@@ -296,6 +426,37 @@ Data Types:
 - `REAL`: floating point value (8-byte IEEE floating point number)
 - `TEXT`: text string (UTF-8, UTF-16BE or UTF-16LE)
 - `BLOB`: blob of data
+
+Create Database
+
+```bash
+$ docker run -it --rm -v ./data:/db sqlite:1.0 sh
+/db # sqlite3 database.db
+SQLite version 3.44.2 2023-11-24 11:41:44
+Enter ".help" for usage hints.
+sqlite> .databases
+main: /db/database.db r/w
+
+sqlite> CREATE TABLE hosts (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL
+);
+
+sqlite> .tables
+hosts
+
+sqlite> .schema hosts
+CREATE TABLE hosts (
+  id INTEGER PRIMARY KEY,
+   name TEXT NOT NULL,
+   email TEXT NOT NULL
+ );
+
+sqlite> .quit
+
+/db # exit
+```
 
 Backup
 
@@ -399,7 +560,18 @@ $docker compose down
  ✔ Network mongo-server_app-tier  Removed                                                                                     0.2s
 ```
 
-CRUD
+mongosh
+
+- `use`: Set current database
+- `show`
+  - `show databases`, `show dbs`: Print a list of all available databases.
+  - `show collections`, `show tables`: Print a list of all collections for current database.
+  - `show profile`: Prints system.profile information.
+  - `show users`: Print a list of all users for current database.
+  - `show roles`: Print a list of all roles for current database.
+  - `show logs`: Print all logs.
+
+Create Database (CRUD)
 
 - Create
   - `db.<collection>.insertOne()`
@@ -416,17 +588,6 @@ CRUD
   - `db.<collection>.deleteOne()`
   - `db.<collection>.deleteMany()`
   - `db.<collection>.findOneAndDelete()`
-
-mongosh
-
-- `use`: Set current database
-- `show`
-  - `show databases`, `show dbs`: Print a list of all available databases.
-  - `show collections`, `show tables`: Print a list of all collections for current database.
-  - `show profile`: Prints system.profile information.
-  - `show users`: Print a list of all users for current database.
-  - `show roles`: Print a list of all roles for current database.
-  - `show logs`: Print all logs.
 
 ```bash
 $ docker compose exec mongo mongosh -u root -p
@@ -447,37 +608,51 @@ For mongosh info see: https://docs.mongodb.com/mongodb-shell/
 
 test> show dbs
 admin   100.00 KiB
-config   60.00 KiB
+config   12.00 KiB
 local    72.00 KiB
 
-test> use sample_mflix
-switched to db sample_mflix
+test> use monitor_db
+switched to db monitor_db
 
-sample_mflix> db.movies.insertOne(
-  {
-    title: "Some Movie",
-    year: 2018,
-    type: "movie"
-  }
-)
+monitor_db> show dbs
+admin       100.00 KiB
+config       12.00 KiB
+local        72.00 KiB
 
-sample_mflix> show dbs
-admin         100.00 KiB
-config         60.00 KiB
-local          72.00 KiB
-sample_mflix    8.00 KiB
+monitor_db> db.getCollectionNames()
+[]
 
-sample_mflix> db.movies.find()
+monitor_db> db.hosts.insertOne(
+...   {
+...     address: "Google DNS",
+...     value: '8.8.8.8'
+...   }
+... )
+{
+  acknowledged: true,
+  insertedId: ObjectId('66de735b5e9174c5eec76a8c')
+}
+
+monitor_db> show dbs
+admin       100.00 KiB
+config       12.00 KiB
+local        72.00 KiB
+monitor_db   40.00 KiB
+
+
+monitor_db> db.getCollectionNames()
+[ 'hosts' ]
+
+monitor_db> db.hosts.find()
 [
   {
-    _id: ObjectId('65de5bc4469195f3356a4be3'),
-    title: 'Some Movie',
-    year: 2018,
-    type: 'movie'
+    _id: ObjectId('66de735b5e9174c5eec76a8c'),
+    address: 'Google DNS',
+    value: '8.8.8.8'
   }
 ]
 
-sample_mflix> exit
+monitor_db> exit
 ```
 
 Referências
@@ -491,6 +666,45 @@ Referências
   - [https://hub.docker.com/\_/mongo](https://hub.docker.com/_/mongo)
 - VSCode
   - [MongoDB for VS Code](https://marketplace.visualstudio.com/items?itemName=mongodb.mongodb-vscode)
+
+## Databases
+
+| Database | Create Database                  | Use Database            | Create Table                     | Insert table                       |
+| -------- | -------------------------------- | ----------------------- | -------------------------------- | ---------------------------------- |
+| MySQL    | `CREATE DATABASE database_name;` | `USE database_name;`    | `CREATE TABLE table_name (...);` | `INSERT INTO table_name ...;`      |
+| Postgres | `CREATE DATABASE database_name;` | `\c database_name`      | `CREATE TABLE table_name (...);` | `INSERT INTO table_name ...;`      |
+| SQLite   |                                  | `sqlite3 database_name` | `CREATE TABLE table_name (...);` | `INSERT INTO table_name ...;`      |
+| MongoDB  | `use database_name;`             | `use database_name;`    |                                  | `db.collection_name.insertOne();`  |
+
+Create table MySQL
+
+```sql
+CREATE TABLE hosts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL
+);
+```
+
+Create table MySQL
+
+```sql
+CREATE TABLE hosts (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL
+);
+```
+
+Create table SQLite
+
+```sql
+CREATE TABLE hosts (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL
+);
+```
 
 ## Tipos de Dados
 

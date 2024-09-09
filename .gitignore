@@ -22,3 +22,5 @@ pnpm-debug.log*
 
 # jest coverage
 coverage/
+
+public/codes/database/*/data

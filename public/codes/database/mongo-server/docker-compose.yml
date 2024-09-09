@@ -13,6 +13,8 @@ services:
       - app-tier
     ports:
       - 27017:27017
+    volumes:
+      - ./data:/data/db
 
   mongo-express:
     container_name: mongo-express
