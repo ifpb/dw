@@ -6,13 +6,26 @@ import CodePreview from '../../../../components/CodePreview.astro';
 
 # { frontmatter.title }
 
-## SGDB
+## SGBD
 
 - [Understanding Database Types | ByteByteGo](https://blog.bytebytego.com/p/understanding-database-types)
 - [DB-Engines Ranking](https://db-engines.com/en/ranking)
 
 
 ### MySQL Server
+
+- Servidor (3306)
+  - [MySQL Server](https://www.mysql.com/) ([install mysql](https://dev.mysql.com/doc/refman/8.0/en/installing.html))
+  - [Docker MySQL](https://hub.docker.com/_/mysql)
+- Cliente
+  - [MySQL Workbench](https://www.mysql.com/products/workbench/)
+  - [DBeaver](https://dbeaver.io/)
+  - [Adminer](https://www.adminer.org/) ([docker adminer](https://hub.docker.com/_/adminer))
+  - [mysql (CLI)](https://dev.mysql.com/doc/refman/8.0/en/mysql.html)
+  - VSCode:
+    - [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools)
+    - [SQLTools MySQL/MariaDB](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools-driver-mysql)
+    - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
 
 [MySQL Docker](https://hub.docker.com/_/mysql):
 
@@ -189,12 +202,19 @@ $ docker compose exec mysql mysql -u root -p monitor_db < database.sql
 $ docker compose exec mysql mysql -u root -p < database.sql
 ```
 
-VSCode:
-  - [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools)
-  - [SQLTools MySQL/MariaDB](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools-driver-mysql)
-  - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-
 ### Postgres Server
+
+- Server
+  - [Postgres](https://www.postgresql.org/) ([install](https://www.postgresql.org/download/))
+  - [Docker Postgres](https://hub.docker.com/_/postgres)
+- Client
+  - [pgAdmin](https://www.pgadmin.org/) ([dpage/pgadmin4](https://hub.docker.com/r/dpage/pgadmin4/))
+  - [DBeaver](https://dbeaver.io/)
+  - [Adminer](https://www.adminer.org/) ([docker adminer](https://hub.docker.com/_/adminer))
+  - [psql (CLI)](https://www.postgresql.org/docs/current/app-psql.html)
+  - VSCode
+    - [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools)
+    - [PostgreSQL](https://marketplace.visualstudio.com/items?itemName=ckolkman.vscode-postgres)
 
 [Postgres Docker](https://hub.docker.com/_/postgres):
 
@@ -380,11 +400,19 @@ $ pg_restore -Fc -C database.bak # create the database before restoring into it
 $ pg_restore -Ft database.tar # restore tarball
 ```
 
-VSCode:
-  - [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.sqltools)
-  - [PostgreSQL](https://marketplace.visualstudio.com/items?itemName=ckolkman.vscode-postgres)
-
 ### SQLite
+
+- [SQLite](https://www.sqlite.org/index.html)
+- [Docker SQLite](https://hub.docker.com/r/linuxserver/sqlitebrowser)
+- client
+  - [DB Browser for SQLite](https://sqlitebrowser.org/)
+  - [DBeaver](https://dbeaver.io/)
+  - [Adminer](https://www.adminer.org/) ([docker adminer](https://hub.docker.com/_/adminer))
+  - [sqlitebrowser](https://hub.docker.com/r/linuxserver/sqlitebrowser)
+  - [sqlite3 (CLI)](https://www.sqlite.org/cli.html)
+  - VSCode
+    - [SQLite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite)
+    - [SQlite Viewer](https://marketplace.visualstudio.com/items?itemName=qwtel.sqlite-viewer)
 
 SQLite Docker:
 
@@ -486,15 +514,27 @@ sqlite> .exit
 $ sqlite3 restore.db < backup.sql
 ```
 
-Referências
+{/* Referências
 
-- [How to Run and use SQLite Database with Docker Containers](https://thriveread.com/sqlite-docker-container-and-docker-compose/)
-- VSCode
-  - [SQLite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite)
-  - [SQlite Viewer](https://marketplace.visualstudio.com/items?itemName=qwtel.sqlite-viewer)
-  - [sqlitebrowser](https://hub.docker.com/r/linuxserver/sqlitebrowser)
+- [How to Run and use SQLite Database with Docker Containers](https://thriveread.com/sqlite-docker-container-and-docker-compose/) */}
 
 ### MongoDB Server
+
+- Server
+  - [MongoDB](https://www.mongodb.com/) ([install](https://docs.mongodb.com/manual/installation/))
+  - [Docker Mongo](https://hub.docker.com/_/mongo)
+  - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- Client
+  - [MongoDB Compass](https://www.mongodb.com/products/compass)
+  - [DBeaver](https://dbeaver.io/)
+  - [Adminer](https://www.adminer.org/) ([docker adminer](https://hub.docker.com/_/adminer))
+  - [mongo-express](https://hub.docker.com/_/mongo-express)
+  - [MongoDB Shell - mongosh (CLI)](https://docs.mongodb.com/mongodb-shell/)
+  - VSCode
+    - [MongoDB for VS Code](https://marketplace.visualstudio.com/items?itemName=mongodb.mongodb-vscode)
+- Guias
+  - [bradtraversy/mongodb_cheat_sheet.md](https://gist.github.com/bradtraversy/f407d642bdc3b31681bc7e56d95485b6)
+  - [SQL to MongoDB Mapping Chart](https://gist.github.com/aponxi/4380516)
 
 [Mongo Docker](https://hub.docker.com/_/mongo):
 
@@ -655,26 +695,14 @@ monitor_db> db.hosts.find()
 monitor_db> exit
 ```
 
-Referências
-
-- Mongo
-  - [Shell Quick Reference](https://docs.mongodb.com/manual/reference/mongo-shell/)
-- Cheat Sheet
-  - [bradtraversy/mongodb_cheat_sheet.md](https://gist.github.com/bradtraversy/f407d642bdc3b31681bc7e56d95485b6)
-  - [SQL to MongoDB Mapping Chart](https://gist.github.com/aponxi/4380516)
-- Docker
-  - [https://hub.docker.com/\_/mongo](https://hub.docker.com/_/mongo)
-- VSCode
-  - [MongoDB for VS Code](https://marketplace.visualstudio.com/items?itemName=mongodb.mongodb-vscode)
-
 ## Databases
 
-| Database | Create Database                  | Use Database            | Create Table                     | Insert table                       |
-| -------- | -------------------------------- | ----------------------- | -------------------------------- | ---------------------------------- |
-| MySQL    | `CREATE DATABASE database_name;` | `USE database_name;`    | `CREATE TABLE table_name (...);` | `INSERT INTO table_name ...;`      |
-| Postgres | `CREATE DATABASE database_name;` | `\c database_name`      | `CREATE TABLE table_name (...);` | `INSERT INTO table_name ...;`      |
-| SQLite   |                                  | `sqlite3 database_name` | `CREATE TABLE table_name (...);` | `INSERT INTO table_name ...;`      |
-| MongoDB  | `use database_name;`             | `use database_name;`    |                                  | `db.collection_name.insertOne();`  |
+| Database | Create Database                  | Use Database               | Create Table                     | Insert table                       |
+| -------- | -------------------------------- | -------------------------- | -------------------------------- | ---------------------------------- |
+| MySQL    | `CREATE DATABASE database_name;` | `USE database_name;`       | `CREATE TABLE table_name (...);` | `INSERT INTO table_name ...;`      |
+| Postgres | `CREATE DATABASE database_name;` | `\c database_name`         | `CREATE TABLE table_name (...);` | `INSERT INTO table_name ...;`      |
+| SQLite   |                                  | `sqlite3 database_name.db` | `CREATE TABLE table_name (...);` | `INSERT INTO table_name ...;`      |
+| MongoDB  | `use database_name;`             | `use database_name;`       |                                  | `db.collection_name.insertOne();`  |
 
 Create table MySQL
 
@@ -686,7 +714,7 @@ CREATE TABLE hosts (
 );
 ```
 
-Create table MySQL
+Create table Postgres
 
 ```sql
 CREATE TABLE hosts (
