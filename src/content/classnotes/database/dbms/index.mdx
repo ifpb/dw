@@ -704,7 +704,19 @@ monitor_db> exit
 | SQLite   |                                  | `sqlite3 database_name.db` | `CREATE TABLE table_name (...);` | `INSERT INTO table_name ...;`      |
 | MongoDB  | `use database_name;`             | `use database_name;`       |                                  | `db.collection_name.insertOne();`  |
 
-Create table MySQL
+SQL (CREATE TABLE)
+
+<table>
+  <thead>
+    <tr>
+      <th>Banco de Dados</th>
+      <th>Comando SQL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MySQL</td>
+      <td>
 
 ```sql
 CREATE TABLE hosts (
@@ -714,7 +726,11 @@ CREATE TABLE hosts (
 );
 ```
 
-Create table Postgres
+      </td>
+    </tr>
+    <tr>
+      <td>PostgreSQL</td>
+      <td>
 
 ```sql
 CREATE TABLE hosts (
@@ -724,7 +740,11 @@ CREATE TABLE hosts (
 );
 ```
 
-Create table SQLite
+      </td>
+    </tr>
+    <tr>
+      <td>SQLite</td>
+      <td>
 
 ```sql
 CREATE TABLE hosts (
@@ -733,6 +753,14 @@ CREATE TABLE hosts (
   email TEXT NOT NULL
 );
 ```
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
 
 ## Tipos de Dados
 
