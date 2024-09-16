@@ -13,7 +13,7 @@ entity "pings" as ping {
 
 entity "stats" as stats {
   *id : int
-  *ping_id : int
+  *ping_id : int  <<FK>>
   --
   transmitted : int
   received : int

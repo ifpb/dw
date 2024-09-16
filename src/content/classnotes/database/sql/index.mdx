@@ -42,8 +42,10 @@ import CodePreview from '../../../../components/CodePreview.astro';
   - `ROLLBACK`
 - Operators
   - Comparison: `>`, `>=`, `<`, `<=`,`=` ,`!=` , `<>`
-  - Logical: `AND`, `OR`, `NOT`
-  - `IN`, `BETWEEN`, `LIKE`, `REGEXP`, `IS NULL`, `CASE`
+  - Logical: `AND`, `OR`, `NOT`, `ALL`, `ANY`, `SOME`, `BETWEEN`, `IN`, `LIKE`, `EXISTS`, `REGEXP`, `IS NULL`, `CASE`
+  - Arithmetic: `+`, `-`, `*`, `/`, `%`
+  - Bitwise: `&`, `|`, `^`
+  - Compound: `+=`, `-=`, `*=`, `/=`, `%=`
 - Functions
   - Aggregate: `MAX`, `MIN`, `AVG`, `SUM`, `COUNT`
   - Numeric: `ROUND`, `CEILING`, `CEIL`, `FLOOR`, `ABS`, `RAND`
@@ -54,6 +56,7 @@ import CodePreview from '../../../../components/CodePreview.astro';
 - Triggers
 - Views
 - Indice
+- Constraint: `NOT NULL`, `UNIQUE`, `PRIMARY KEY`, `FOREIGN KEY`, `CHECK`, `DEFAULT`, `CREATE INDEX`
 
 ## Dataset
 
@@ -71,6 +74,8 @@ import CodePreview from '../../../../components/CodePreview.astro';
 2. Qual é a média de pacotes perdidos?
 3. Qual é a porcentagem de pacotes recebidos do IFPB?
 4. Qual é a porcentagem de pacotes perdidos do IFPB no dia 05/03/2024 entre 09:00 até 18:00?
+
+Veja [Normalização de Dados](https://en.wikipedia.org/wiki/Database_normalization)
 
 ## DDL
 
@@ -935,6 +940,22 @@ $ docker compose exec mysql mysqldump -u root -p monitor_db > database.sql
 
 <CodePreview src = "/codes/database/mysql-server/database.sql" />
 
+
+```bash
+mysql> select table_name as "Table Name", table_rows  AS "Row Count" FROM information_schema.tables WHERE table_schema = 'monitor_db';
++------------+-----------+
+| Table Name | Row Count |
++------------+-----------+
+| hosts      |         3 |
+| icmps      |         8 |
+| pings      |         3 |
+| stats      |         3 |
+| tag_hosts  |         4 |
+| tags       |         2 |
+| users      |         2 |
++------------+-----------+
+```
+
 ## Referências
 
 - [SQL Roadmap](https://roadmap.sh/sql)
@@ -948,5 +969,41 @@ $ docker compose exec mysql mysqldump -u root -p monitor_db > database.sql
   - [SQlite](https://www.sqlite.org/index.html): [SQL](https://www.sqlite.org/lang.html), [Datatypes](https://www.sqlite.org/datatype3.html)
   - [MySQL](https://dev.mysql.com/doc/refman/5.7/en/sql-syntax.html): [Datatypes](https://www.tutorialspoint.com/mysql/mysql-data-types.htm), [Functions](https://www.w3schools.com/sql/sql_ref_mysql.asp), [Operators](https://www.w3schools.com/sql/sql_operators.asp)
   - [Oracle](https://docs.oracle.com/database/121/SQLRF/toc.htm)
+- Normalização
+  - [Description of the database normalization basics](https://learn.microsoft.com/en-us/office/troubleshoot/access/database-normalization-description)
+  - [Database normalization](https://en.wikipedia.org/wiki/Database_normalization)
+- Dataset
+  - Portal
+    - [Kaggle - SQLite](https://www.kaggle.com/datasets?fileType=sqlite)
+      - [IMDb Project (SQL)](https://www.kaggle.com/datasets/luizpaulodeoliveira/imdb-project-sql/data)
+      - [E-commerce dataset by Olist (SQLite)](https://www.kaggle.com/datasets/terencicp/e-commerce-dataset-by-olist-as-an-sqlite-database)
+    - [Maven Analytics](https://mavenanalytics.io/data-playground)
+    - [Tableau - Free Public Data Sets For Analysis](https://www.tableau.com/learn/articles/free-public-data-sets)
+    - [Data.World](https://data.world/datasets/sample)
+    - [Fun Sample DataSets](https://domo-support.domo.com/s/article/360043931814?language=en_US)
+    - [Awesome Public Datasets](https://github.com/awesomedata/awesome-public-datasets)
+    - https://github.com/oracle-samples/db-sample-schemas
+    - [Six sample databases for SQL Server and how to find them](https://www.techtarget.com/searchdatamanagement/tip/Six-sample-databases-for-SQL-Server-and-how-to-find-them)
+    - [10 Database Examples in Real Life](https://www.liquidweb.com/blog/ten-ways-databases-run-your-life/)
+    - [12 Database Examples in Real Life](https://olibr.com/blog/12-database-examples-in-real-life/)
+  - Samples
+    - Microsoft
+      - [Northwind](https://github.com/harryho/db-samples)
+      - [Wide World Importers](https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-what-is?view=sql-server-ver16)
+      - [AdventureWorks](https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver16&tabs=ssms)
+      - [SQL Server Samples](https://github.com/microsoft/sql-server-samples)
+      - [SQL samples](https://learn.microsoft.com/en-us/sql/samples/sql-samples-where-are?view=sql-server-ver16)
+    - [MySQL](https://dataedo.com/kb/databases/mysql/sample-databases)
+      - [Employees Sample Database](https://dev.mysql.com/doc/employee/en/)
+      - [Sakila Sample Database](https://dev.mysql.com/doc/sakila/en/)
+    - [Sample Databases](https://wiki.postgresql.org/wiki/Sample_Databases)
+    - [Worldcup DB](https://github.com/frostybee/worldcup-db)
+    - [E-commerce dataset by Olist (SQLite)](https://www.kaggle.com/datasets/terencicp/e-commerce-dataset-by-olist-as-an-sqlite-database)
+    - [IMDb Project (SQL)](https://www.kaggle.com/datasets/luizpaulodeoliveira/imdb-project-sql/data)
+    - [IMDb Non-Commercial Datasets](https://developer.imdb.com/non-commercial-datasets/)
+    - [Chinook Database](https://github.com/lerocha/chinook-database)
+    - [Polls database Schema](https://github.com/Azure-Samples/mysql-database-samples/blob/main/polls-database/readme.md)
+    - [Sample Databases](https://github.com/dbgate/sample-databases)
+    - [Github Topics | Sample Database](https://github.com/topics/sample-database)
 - Ferramentas
   - DBeaver
