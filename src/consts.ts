@@ -4,9 +4,9 @@ export const SUBJECT = {
     A: 'https://classroom.google.com/c/NjYzNjMwNzIzNzg1',
   },
   CHAT_URL: 'https://mail.google.com/mail/u/0/#chat/space/AAAAAji4jww',
-  PROJECTS_URL: 'https://padlet.com/lucachaves/projetodw20241',
+  PROJECTS_URL: 'https://padlet.com/lucachaves/projetodw20242',
   GITHUB_URLS: {
-    A: 'https://github.com/luizchaves/dw-2024-1',
+    A: 'https://github.com/luizchaves/dw-2024-2',
   },
   SCHEDULES: [
     {
