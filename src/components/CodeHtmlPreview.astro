@@ -1,0 +1,47 @@
+---
+import CodePreview from './CodePreview.astro';
+import HtmlPreview from './HtmlPreview.astro';
+
+export interface Props {
+  src: string;
+  onlyBody?: boolean;
+  codeTree?: boolean;
+  isShowHtml?: boolean;
+  isShowCss?: boolean;
+  isShowIframe?: boolean;
+  height?: number;
+  htmlFile: string;
+  cssHighlightLines: string;
+  htmlHighlightLines: string;
+  linkName?: string;
+}
+
+const {
+  src,
+  height,
+  onlyBody = true,
+  isShowIframe = true,
+  htmlFile,
+  htmlHighlightLines,
+  linkName,
+} = Astro.props;
+
+const htmlPath = `${src}/${htmlFile ?? 'index.html'}`;
+---
+
+<div class="flex flex-col space-y-0.5">
+  <HtmlPreview
+    src={htmlPath}
+    height={height}
+    isShowIframe={isShowIframe}
+    linkName={linkName}
+    class="font-bold"
+  />
+
+  <CodePreview
+    src={htmlPath}
+    onlyBody={onlyBody}
+    highlightLines={htmlHighlightLines}
+    hideTitle={true}
+  />
+</div>

@@ -35,6 +35,7 @@ export const CONTENT_SLUGS = [
   'css/introduction',
   'package/bootstrap',
   'css/form',
+  'app/invest-app-bootstrap',
 
   'ecma/introduction',
   'ecma/variable',

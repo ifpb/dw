@@ -1,7 +1,8 @@
 ---
-title: Componentes Web
+title: Bootstrap
 ---
 
+import CodeHtmlPreview from '../../../../components/CodeHtmlPreview.astro';
 import CodeHtmlCssPreview from '../../../../components/CodeHtmlCssPreview.astro';
 import CodePreview from '../../../../components/CodePreview.astro';
 
@@ -9,17 +10,113 @@ import CodePreview from '../../../../components/CodePreview.astro';
 
 ## CDN
 
-<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/cdn" onlyBody={false} />
+[Quick Start](https://getbootstrap.com/docs/5.3/getting-started/introduction/#quick-start)
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/cdn" onlyBody={false} />
 
 ## Content
 
-[Reboot](https://getbootstrap.com/docs/5.3/content/reboot/)
+[Reboot](https://getbootstrap.com/docs/5.3/content/reboot/) > Paragraphs
 
-<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/content-reboot" />
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/content-reboot-paragraphs" />
 
-[Tables](https://getbootstrap.com/docs/5.3/content/tables/)
+[Reboot](https://getbootstrap.com/docs/5.3/content/reboot/) > Headings
 
-<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/content-tables" />
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/content-reboot-headings" />
+
+[Reboot](https://getbootstrap.com/docs/5.3/content/reboot/) > Links
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/content-reboot-links" />
+
+[Tables](https://getbootstrap.com/docs/5.3/content/tables/) > default table
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/content-tables-default" />
+
+[Tables](https://getbootstrap.com/docs/5.3/content/tables/) > .table
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/content-tables-table" />
+
+[Tables](https://getbootstrap.com/docs/5.3/content/tables/) > .table-striped
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/content-tables-striped" class="border-8 border-sky-500" />
+
+## Helpers
+
+[Color & background](https://getbootstrap.com/docs/5.3/helpers/color-background/) > .text-\{color\}
+
+color: primary, secondary, success, danger, warning, info, light, dark
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/helpers-color-text" />
+
+[Color & background](https://getbootstrap.com/docs/5.3/helpers/color-background/) > .bg-\{color\}
+
+color: primary, secondary, success, danger, warning, info, light, dark
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/helpers-color-bg" />
+
+[Color & background](https://getbootstrap.com/docs/5.3/helpers/color-background/) > .text-bg-\{color\}
+
+color: primary, secondary, success, danger, warning, info, light, dark
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/helpers-color-text-bg" />
+
+## Utilities
+
+[Text](https://getbootstrap.com/docs/5.3/utilities/text/) > Text alignment: .text-start, .text-center, .text-end
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/utilities-text-alignment" />
+
+[Text](https://getbootstrap.com/docs/5.3/utilities/text/) > Text transform: .text-lowercase, .text-uppercase, .text-capitalize
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/utilities-text-transform" />
+
+[Text](https://getbootstrap.com/docs/5.3/utilities/text/) > Font weight and italics: .fw-bold, .fst-italic
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/utilities-font-weight-italic" />
+
+[Text](https://getbootstrap.com/docs/5.3/utilities/text/) > Font size: .fs-1, ..., .fs-6
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/utilities-font-size" />
+
+[Spacing](https://getbootstrap.com/docs/5.3/utilities/spacing/) > \{property\}\{sides\}-\{size\} & \{property\}\{sides\}-\{breakpoint\}-\{size\}
+
+property: m, p
+
+sides: t, b, s, e, x, y
+
+size: 0, 1, 2, 3, 4, 5, auto
+
+breakpoint: sm, md, lg, xl, xxl
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/utilities-spacing" />
+
+[Display](https://getbootstrap.com/docs/5.3/utilities/display/) > .d-\{value\}, .d-\{breakpoint\}-\{value\}
+
+value: none, inline, inline-block, block, grid, inline-grid, table, table-cell, table-row, flex, inline-flex
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/utilities-display" />
+
+[Visibility](https://getbootstrap.com/docs/5.3/utilities/visibility/) > .visible, .invisible
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/utilities-visibility" />
+
+## Components
+
+[Navbar](https://getbootstrap.com/docs/5.3/components-navbar)
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/components-navbar/" />
+
+[Card](https://getbootstrap.com/docs/5.3/components/card/) > Basic card
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/components-card-simple" />
+
+[Card](https://getbootstrap.com/docs/5.3/components/card/) > Header and Footer
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/components-card-header-footer" />
+
+[Card](https://getbootstrap.com/docs/5.3/components/card/) > Grid
+
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/components-card-grid" />
 
 ## Layout
 
@@ -48,41 +145,21 @@ import CodePreview from '../../../../components/CodePreview.astro';
 
 
 
-[Grid system](https://getbootstrap.com/docs/5.3/layout/grid/)
+[Grid system](https://getbootstrap.com/docs/5.3/layout/grid/) > Equal width
 
-<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/layout-grid" />
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/layout-grid-equal-width" />
 
-## Helpers
+[Grid system](https://getbootstrap.com/docs/5.3/layout/grid/) > Column width - .col-\{width\}
 
-[Color & background](https://getbootstrap.com/docs/5.3/helpers/color-background/)
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/layout-grid-column-width" />
 
-<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/helpers-color" />
+[Grid system](https://getbootstrap.com/docs/5.3/layout/grid/) > Responsive - .col-\{breakpoint\}-\{width\}, breakpoing: sm, md, lg, xl, xxl
 
-## Utilities
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/layout-grid-responsive" />
 
-[Display](https://getbootstrap.com/docs/5.3/utilities/display/), [Spacing](https://getbootstrap.com/docs/5.3/utilities/spacing/), [Text](https://getbootstrap.com/docs/5.3/utilities/text/), [Visibility](https://getbootstrap.com/docs/5.3/utilities/visibility/)
+[Grid system](https://getbootstrap.com/docs/5.3/layout/grid/) > Row columns
 
-<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/utilities" />
-
-## Components
-
-[Navbar](https://getbootstrap.com/docs/5.3/components-navbar)
-
-<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/components-navbar/" />
-
-[Card](https://getbootstrap.com/docs/5.3/components/card/)
-
-<CodeHtmlCssPreview src="/codes/package/bootstrap/docs/components-card" />
-
-## Monitor-app
-
-[Projeto Figma](https://figma.com/file/3rWtag6oLh0amk2wS0XQH1/monitor-app) ([layout.fig](/codes/package/bootstrap/monitor-app-cdn/layout.fig)):
-
-![](/dw/imgs/package/bootstrap/monitor-app-cdn.png)
-
-[monitor-app](/dw/codes/package/bootstrap/monitor-app-cdn/src/index.html):
-
-<CodePreview src="/codes/package/bootstrap/monitor-app-cdn/src/index.html" />
+<CodeHtmlPreview src="/codes/package/bootstrap/docs/layout-grid-row-columns" />
 
 ## Referências
 
@@ -90,3 +167,10 @@ import CodePreview from '../../../../components/CodePreview.astro';
 - Templates
   - https://bootstrapmade.com/
   - https://startbootstrap.com/themes
+- VSCode
+  - [Bootstrap 5 Quick Snippets](https://marketplace.visualstudio.com/items?itemName=AnbuselvanRocky.bootstrap5-vscode)
+- Inspirações de Componentes
+  - [Figma Design templates](https://www.figma.com/community/design-templates)
+  - [Dribbble](https://dribbble.com/)
+  - [UI Design Patterns](https://pageflows.com/)
+  - [One Page Love](https://onepagelove.com/inspiration)

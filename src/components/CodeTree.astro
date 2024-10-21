@@ -15,7 +15,7 @@ export interface Props {
 const { src, content, githubUrl } = Astro.props;
 
 const githubLink = githubUrl
-  ? `[Código Fonte](${GITHUB_EDIT_URL + '/public' + src})`
+  ? `<a href="${GITHUB_EDIT_URL + '/public' + src}" target="blank"><img class="inline m-0" src="https://img.shields.io/badge/Open%20In%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Open in GitHub"></a>`
   : '';
 
 const codeTree = existsSync(resolve('./public' + src))
