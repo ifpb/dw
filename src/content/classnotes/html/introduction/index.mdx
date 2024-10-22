@@ -2,9 +2,10 @@
 title: Introdução ao HTML
 ---
 
+import CodeTree from '../../../../components/CodeTree.astro';
 import CodePreview from '../../../../components/CodePreview.astro';
 import HtmlPreview from '../../../../components/HtmlPreview.astro';
-import CodeHtmlCssPreview from '../../../../components/CodeHtmlCssPreview.astro';
+import CodeHtmlPreview from '../../../../components/CodeHtmlPreview.astro';
 
 export const imageCodeTree = ``;
 
@@ -247,7 +248,7 @@ Referências:
 
 ### Estrutura básica
 
-<CodeHtmlCssPreview
+<CodeHtmlPreview
   src="/codes/html/introduction/basic-structure"
   onlyBody={false}
 />
@@ -256,31 +257,27 @@ Referências:
 
 ### Hyperlink
 
-```plaintext title="Sintaxe"
-hyperlink = content + url
-
-content = text, image...
-```
+hyperlink = url + content (text, image...):
 
 ```html title="Sintaxe Básica"
 <a href="url">content</a>
 ```
 
-Exemplo Básico:
+Link externo:
 
-<CodeHtmlCssPreview
-  src="/codes/html/introduction/hyperlink"
+<CodeHtmlPreview
+  src="/codes/html/introduction/hyperlink-external"
   isShowIframe={false}
 />
 
 Atributo `target`:
 
-<CodeHtmlCssPreview
+<CodeHtmlPreview
   src="/codes/html/introduction/hyperlink-target"
   isShowIframe={false}
 />
 
-Link interno (#):
+Link interno:
 
 ```plaintext title="Estrutura da URL"
                                                  query
@@ -289,26 +286,15 @@ Link interno (#):
 https://ifpb.github.io:80/dw/html/introduction/?name=ifpb#hyperlink
 ```
 
-<HtmlPreview title ="hyperlink-internal">
-  <nav>
-    <a href="#tags">Tags</a><br />
-    <a href="#atributo-de-tag">Atributo de tag</a><br />
-    <a href="#entidade-do-html">Entidade do HTML</a>
-  </nav>
-</HtmlPreview>
-
-<CodePreview
-  src="/codes/html/introduction/hyperlink-internal/index.html"
-  onlyBody={true}
-/>
+<CodeHtmlPreview src="/codes/html/introduction/hyperlink-fragment" />
 
 Link entre páginas:
 
-<CodeHtmlCssPreview
-  src="/codes/html/introduction/hyperlink-pages"
-  codeTree={true}
-  isShowIframe={false}
-/>
+<CodeTree src="/codes/html/introduction/hyperlink-pages" />
+
+<CodeHtmlPreview src="/codes/html/introduction/hyperlink-pages" />
+
+<CodeHtmlPreview src="/codes/html/introduction/hyperlink-pages/pages" htmlFile="page.html" />
 
 ### Imagem
 
@@ -316,24 +302,15 @@ Link entre páginas:
 <img src="url" alt="text alternative" />
 ```
 
-Exemplo (Abrir no Liver Server e localmente):
+<CodeTree src="/codes/html/introduction/image" />
 
-```plaintext showLineNumbers title="Arquivos"
-/
-└── var
-    └── www
-        └── site
-            └── pages
-                ├── index.html
-                └── img
-                    └── image.png
-```
+<CodeHtmlPreview src="/codes/html/introduction/image" />
 
-<CodeHtmlCssPreview src="/codes/html/introduction/image" />
+Parent directory:
 
-Diretório (..):
+<CodeTree src="/codes/html/introduction/image-parent" />
 
-<CodeHtmlCssPreview
+<CodeHtmlPreview
   src="/codes/html/introduction/image-parent"
   codeTree={true}
   htmlFile="pages/index.html"
@@ -350,7 +327,7 @@ Diretório (..):
 
 Exemplo:
 
-<CodeHtmlCssPreview src="/codes/html/introduction/list" />
+<CodeHtmlPreview src="/codes/html/introduction/list" />
 
 ### Tabela
 
@@ -363,4 +340,4 @@ C++       12.96%
 C#        8.21
 ```
 
-<CodeHtmlCssPreview src="/codes/css/table/table-html" />
+<CodeHtmlPreview src="/codes/css/table/table-html" />
