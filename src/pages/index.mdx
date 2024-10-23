@@ -7,13 +7,13 @@ import { SUBJECT } from '../consts.js'
 
 # {frontmatter.title}
 
-A disciplina de [Desenvolvimento para Web](/dw/docs/plano-de-ensino.pdf) (DW) do Curso Superior de Tecnologia em Redes de Computadores do IFPB tem como objetivo apresentar ao aluno conceitos sobre desenvolvimento de sistemas Web utilizando banco de dados. Sua carga horária apresenta um total de 100 horas aula e será ministrada pelo professor Luiz Carlos Chaves. Para as aulas serão utilizadas exposições e atividades práticas, além de avaliações individuais e em grupo.
+A disciplina de [Desenvolvimento para Web](docs/plano-de-ensino.pdf) (DW) do Curso Superior de Tecnologia em Redes de Computadores do IFPB tem como objetivo apresentar ao aluno conceitos sobre desenvolvimento de sistemas Web utilizando banco de dados. Sua carga horária apresenta um total de 100 horas aula e será ministrada pelo professor Luiz Carlos Chaves. Para as aulas serão utilizadas exposições e atividades práticas, além de avaliações individuais e em grupo.
 
 Esta disciplina possui como pré-requisito necessário o conhecimento prévio de Algoritmos e Programação de Script.
 
 ## Conteúdo
 
-A disciplina apresenta o seguinte conteúdo, que será dividido conforme este [roteiro de aula](/dw/classnotes):
+A disciplina apresenta o seguinte conteúdo, que será dividido conforme este [roteiro de aula](classnotes):
 
 - Estrutura da Web
   - Função do cliente e servidor HTTP
@@ -64,9 +64,11 @@ As aulas da disciplina serão alocados nesse horário e ambiente:
 
 A nota final será computada através da média ponderada das três maiores avaliações:
 
-- Avaliação I: [Exercícios](/dw/extra/exercises/);
-- Avaliação II: [Projeto - Etapa I](/dw/project) (<a href={SUBJECT.PROJECTS_URL} target="_blank">padlet</a>);
-- Avaliação III: [Projeto - Etapa II](/dw/project)
+- [Exercícios](https://ifpb.github.io/exercises/):
+  - Avaliação I
+- [Projeto](project) (<a href={SUBJECT.PROJECTS_URL.padlet} target="_blank">padlet</a>, <a href={SUBJECT.PROJECTS_URL.github} target="_blank">ifpb/projects</a>):
+  - Avaliação II: Projeto - Etapa I;
+  - Avaliação III: Projeto - Etapa II.
 
 Esta sala do Google Classroom ({Object.keys(SUBJECT.CLASSROOM_URLS).map((github) => (<a href={SUBJECT.GITHUB_URLS[github]} target="_blank">Turma {github}</a>)).reduce((prev, curr) => [prev, ', ', curr])}) será utilizada para enviar todas as avaliações.
 
@@ -76,16 +78,27 @@ Toda a comunicação será realizada usando este <a href={SUBJECT.CHAT_URL} targ
 
 ## Bibliografia
 
-<div class="flex gap-2 flex-col md:flex-row flex-wrap items-center">[![Use a cabeça JS](imgs/books/use-a-cabeca-js.jpg)](http://www.altabooks.com.br/use-a-cabeca-javascript.html)
-[![Javascript: Guia do Programador](imgs/books/javascript-guia-programador.jpg)](https://novatec.com.br/livros/javascript-guia-programador/)
-[![Só Javascript](imgs/books/so-javascript.jpg)](https://books.google.com.br/books/about/SO_JAVASCRIPT_TUDO_O_QUE_VOCE_PRECISA_SA.html)</div>
-<div class="flex gap-2 flex-col md:flex-row flex-wrap items-center">[![Desenvolvimento de Software II](imgs/books/desenvolvimento-software.jpg)](https://loja.grupoa.com.br/livros/informacao-e-comunicacao/desenvolvimento-de-software-ii/9788582601952)
-[![Javascript guia definitivo](imgs/books/js-guia-definitivo.jpg)](http://shop.oreilly.com/product/9780596805531.do)
-[![Eloquent JavaScript](imgs/books/eloquent-js.jpg)](http://eloquentjavascript.net/)
-[![You dont know js](imgs/books/you-dont-know-js.jpg)](https://github.com/getify/You-Dont-Know-JS)
-[![Exploring JS](imgs/books/exploring-js.jpg)](http://exploringjs.com/impatient-js/index.html)</div>
+<div class="flex gap-2 flex-col md:flex-row flex-wrap items-center">
+[![Use a cabeça JS](imgs/books/use-a-cabeca-js.jpg)](http://www.altabooks.com.br/use-a-cabeca-javascript.html)
 
-E para completar ainda mais a listagem existe estes [exemplares](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md) como outros indicações.
+[![Javascript: Guia do Programador](imgs/books/javascript-guia-programador.jpg)](https://novatec.com.br/livros/javascript-guia-programador/)
+
+[![Só Javascript](imgs/books/so-javascript.jpg)](https://books.google.com.br/books/about/SO_JAVASCRIPT_TUDO_O_QUE_VOCE_PRECISA_SA.html)
+</div>
+
+<div class="flex gap-2 flex-col md:flex-row flex-wrap items-center">
+[![Desenvolvimento de Software II](imgs/books/desenvolvimento-software.jpg)](https://loja.grupoa.com.br/livros/informacao-e-comunicacao/desenvolvimento-de-software-ii/9788582601952)
+
+[![Javascript guia definitivo](imgs/books/js-guia-definitivo.jpg)](http://shop.oreilly.com/product/9780596805531.do)
+
+[![Eloquent JavaScript](imgs/books/eloquent-js.jpg)](http://eloquentjavascript.net/)
+
+[![You dont know js](imgs/books/you-dont-know-js.jpg)](https://github.com/getify/You-Dont-Know-JS)
+
+[![Exploring JS](imgs/books/exploring-js.jpg)](http://exploringjs.com/impatient-js/index.html)
+</div>
+
+E para completar ainda mais a listagem existe estes [exemplares](https://github.com/EbookFoundation/free-programming-books/blob/main/books/free-programming-books-subjects.md) como outros indicações.
 
 ## Ferramentas
 
@@ -96,7 +109,7 @@ E para completar ainda mais a listagem existe estes [exemplares](https://github.
 - Design
   - [Figma](https://www.figma.com/)
 - Navegador
-  - [Chrome](https://www.google.com/chrome/browser/index.html) ([Chrome status](https://www.chromestatus.com/features), [Web Developer](https://chrome.google.com/webstore/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm))
+  - [Chrome](https://www.google.com/chrome/browser/index.html) ([Web Developer](https://chrome.google.com/webstore/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm))
 - Versionamento de código
   - [Git](https://git-scm.com/)
 
