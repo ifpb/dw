@@ -41,7 +41,7 @@ const codeName = src?.split('/')?.at(-2);
     }
   </div>
 
-  <div class={`code-preview overflow-hidden !m-0 ${showDarkMode ? 'bg-[#0d1117]' : '!bg-white'}`}>
+  <div class={`code-preview overflow-hidden !m-0 ${showDarkMode === true && 'bg-[#0d1117]'} ${showDarkMode === false && '!bg-white'}`}>
     {
       src && isShowIframe ? (
         <Iframe
@@ -62,6 +62,6 @@ const codeName = src?.split('/')?.at(-2);
 
 <style>
   .code-preview {
-    @apply bg-white dark:bg-[#0d1117] rounded p-4;
+    @apply dark:bg-[#0d1117] rounded p-4;
   }
 </style>
