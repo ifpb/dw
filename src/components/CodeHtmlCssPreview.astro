@@ -37,6 +37,8 @@ const htmlPath = `${src}/${htmlFile ?? 'index.html'}`;
 const cssPath = `${src}/css/style.css`;
 ---
 
+<div class="space-y-8">
+
 <HtmlPreview
   src={htmlPath}
   height={height}
@@ -61,3 +63,4 @@ const cssPath = `${src}/css/style.css`;
     <CodePreview src={cssPath} highlightLines={cssHighlightLines} />
   )
 }
+</div>
