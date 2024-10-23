@@ -2,6 +2,14 @@ p {
   color: green;
 }
 
-.color-red {
+.text-red {
   color: red;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.text-bold {
+  font-weight: bold;
 }
