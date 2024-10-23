@@ -16,6 +16,7 @@ export interface Props {
   cssHighlightLines: string;
   htmlHighlightLines: string;
   linkName?: string;
+  showDarkMode?: boolean;
 }
 
 const {
@@ -30,6 +31,7 @@ const {
   cssHighlightLines,
   htmlHighlightLines,
   linkName,
+  showDarkMode,
 } = Astro.props;
 
 const htmlPath = `${src}/${htmlFile ?? 'index.html'}`;
@@ -37,13 +39,14 @@ const htmlPath = `${src}/${htmlFile ?? 'index.html'}`;
 const cssPath = `${src}/css/style.css`;
 ---
 
-<div class="space-y-8">
+<div class="space-y-8 mb-8">
 
 <HtmlPreview
   src={htmlPath}
   height={height}
   isShowIframe={isShowIframe}
   linkName={linkName}
+  showDarkMode={showDarkMode}
 />
 
 {codeTree && <CodeTree src={src} />}

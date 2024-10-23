@@ -1,17 +1,17 @@
 /* light mode */
 :root {
+  --color-primary: #000;
   --background-color: #fff;
-  --text-color: #000;
 }
 
 /* dark mode */
-html.dark {
+:root.dark {
+  --color-primary: #fff;
   --background-color: #0d1117;
-  --text-color: #F7F8F8;
 }
 
 body {
   background: var(--background-color);
-  color: var(--text-color);
+  color: var(--color-primary) !important;
 }
 

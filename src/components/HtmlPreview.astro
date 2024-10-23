@@ -8,6 +8,7 @@ export interface Pros {
   isShowIframe?: boolean;
   title?: string;
   linkName?: string;
+  showDarkMode?: boolean;
 }
 
 const {
@@ -16,6 +17,7 @@ const {
   isShowIframe = true,
   title = 'html',
   linkName,
+  showDarkMode,
 } = Astro.props;
 
 const codeName = src?.split('/')?.at(-2);
@@ -46,6 +48,7 @@ const codeName = src?.split('/')?.at(-2);
           src={`/dw${src}`}
           srcDoc={readFile(src)}
           height={height}
+          showDarkMode={showDarkMode}
           client:load
         />
       ) : src ? (

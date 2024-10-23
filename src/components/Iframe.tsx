@@ -6,14 +6,15 @@ export interface Props extends React.HTMLAttributes<HTMLIFrameElement> {
   src: string;
   srcDoc?: string;
   height?: number;
+  showDarkMode?: boolean;
 }
 
-export default function Iframe({ src, srcDoc, height }: Props) {
+export default function Iframe({ src, srcDoc, height, showDarkMode }: Props) {
   const [iFrameHeight, setIFrameHeight] = useState(0);
 
   const iFrameRef = useRef<HTMLIFrameElement>(null);
 
-  const $isDark = useStore(isDark);
+  const $isDark = showDarkMode || useStore(isDark);
 
   iFrameRef?.current?.contentWindow?.document.head.insertAdjacentHTML(
     'beforeend',
