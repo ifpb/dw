@@ -14,6 +14,7 @@ export interface Props {
   cssHighlightLines: string;
   htmlHighlightLines: string;
   linkName?: string;
+  showDarkMode?: boolean;
 }
 
 const {
@@ -24,6 +25,7 @@ const {
   htmlFile,
   htmlHighlightLines,
   linkName,
+  showDarkMode,
 } = Astro.props;
 
 const htmlPath = `${src}/${htmlFile ?? 'index.html'}`;
@@ -35,6 +37,7 @@ const htmlPath = `${src}/${htmlFile ?? 'index.html'}`;
     height={height}
     isShowIframe={isShowIframe}
     linkName={linkName}
+    showDarkMode={showDarkMode}
     class="font-bold"
   />
 
