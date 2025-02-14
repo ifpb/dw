@@ -161,7 +161,7 @@ Database changed
 mysql> CREATE TABLE hosts (
     ->   id INT AUTO_INCREMENT PRIMARY KEY,
     ->   name VARCHAR(255) NOT NULL,
-    ->   email VARCHAR(255) NOT NULL
+    ->   address VARCHAR(255) NOT NULL
     -> );
 Query OK, 0 rows affected (0.04 sec)
 
@@ -359,16 +359,16 @@ postgres=# \c monitor_db
 monitor_db=# CREATE TABLE hosts (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL
+  address VARCHAR(255) NOT NULL
 );
 
 monitor_db=# \dt public.*
  public | hosts | table | postgres
 
 monitor_db=# \d hosts
- id     | integer                |           | not null | nextval('hosts_id_seq'::regclass)
- name   | character varying(255) |           | not null |
- email  | character varying(255) |           | not null |
+ id       | integer                |           | not null | nextval('hosts_id_seq'::regclass)
+ name     | character varying(255) |           | not null |
+ address  | character varying(255) |           | not null |
 
 postgres=# \q
 
@@ -475,7 +475,7 @@ main: /db/database.db r/w
 sqlite> CREATE TABLE hosts (
   id INTEGER PRIMARY KEY,
   name TEXT NOT NULL,
-  email TEXT NOT NULL
+  address TEXT NOT NULL
 );
 
 sqlite> .tables
@@ -485,7 +485,7 @@ sqlite> .schema hosts
 CREATE TABLE hosts (
   id INTEGER PRIMARY KEY,
    name TEXT NOT NULL,
-   email TEXT NOT NULL
+   address TEXT NOT NULL
  );
 
 sqlite> .quit
@@ -671,8 +671,8 @@ monitor_db> db.getCollectionNames()
 
 monitor_db> db.hosts.insertOne(
 ...   {
-...     address: "Google DNS",
-...     value: '8.8.8.8'
+...     name: 'Google DNS',
+...     address: '8.8.8.8'
 ...   }
 ... )
 {
@@ -694,8 +694,8 @@ monitor_db> db.hosts.find()
 [
   {
     _id: ObjectId('66de735b5e9174c5eec76a8c'),
-    address: 'Google DNS',
-    value: '8.8.8.8'
+    name: 'Google DNS',
+    address: '8.8.8.8'
   }
 ]
 
@@ -729,7 +729,7 @@ SQL (CREATE TABLE)
 CREATE TABLE hosts (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL
+  address VARCHAR(255) NOT NULL
 );
 ```
 
@@ -743,7 +743,7 @@ CREATE TABLE hosts (
 CREATE TABLE hosts (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL
+  address VARCHAR(255) NOT NULL
 );
 ```
 
@@ -757,7 +757,7 @@ CREATE TABLE hosts (
 CREATE TABLE hosts (
   id INTEGER PRIMARY KEY,
   name TEXT NOT NULL,
-  email TEXT NOT NULL
+  address TEXT NOT NULL
 );
 ```
 
