@@ -207,6 +207,84 @@ $ docker compose exec mysql mysql -u root -p monitor_db < database.sql
 $ docker compose exec mysql mysql -u root -p < database.sql
 ```
 
+Criar usuário:
+
+```sql
+-- Criar usuário local
+CREATE USER 'nome_usuario'@'localhost' IDENTIFIED BY 'senha';
+
+-- Criar usuário para qualquer host
+CREATE USER 'nome_usuario'@'*' IDENTIFIED BY 'senha';
+
+-- Exemplo
+CREATE USER 'developer'@'localhost' IDENTIFIED BY 'dev123';
+```
+
+Deletar usuário:
+
+```sql
+DROP USER 'nome_usuario'@'localhost';
+
+-- Exemplo
+DROP USER 'developer'@'localhost';
+```
+
+Grant (Conceder Permissões):
+
+```sql
+-- Conceder todas as permissões em um banco
+GRANT ALL PRIVILEGES ON nome_banco.* TO 'nome_usuario'@'localhost';
+
+-- Conceder permissões específicas
+GRANT SELECT, INSERT, UPDATE, DELETE ON nome_banco.* TO 'nome_usuario'@'localhost';
+
+-- Conceder permissões em tabela específica
+GRANT SELECT ON nome_banco.tabela TO 'nome_usuario'@'localhost';
+
+-- Conceder todas as permissões em todos os bancos
+GRANT ALL PRIVILEGES ON *.* TO 'nome_usuario'@'localhost';
+
+-- Exemplos
+GRANT ALL PRIVILEGES ON monitor_db.* TO 'developer'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON monitor_db.usuarios TO 'developer'@'localhost';
+```
+
+Revoke (Revogar Permissões):
+
+```sql
+-- Revogar todas as permissões em um banco
+REVOKE ALL PRIVILEGES ON nome_banco.* FROM 'nome_usuario'@'localhost';
+
+-- Revogar permissões específicas
+REVOKE SELECT, INSERT, UPDATE, DELETE ON nome_banco.* FROM 'nome_usuario'@'localhost';
+
+-- Revogar permissões em tabela específica
+REVOKE DELETE ON nome_banco.tabela FROM 'nome_usuario'@'localhost';
+
+-- Exemplos
+REVOKE DELETE ON monitor_db.* FROM 'developer'@'localhost';
+REVOKE UPDATE ON monitor_db.usuarios FROM 'developer'@'localhost';
+```
+
+Aplicar alterações:
+
+```sql
+-- Recarregar as permissões
+FLUSH PRIVILEGES;
+
+-- Verificar permissões de um usuário
+SHOW GRANTS FOR 'nome_usuario'@'localhost';
+
+-- Exemplo
+SHOW GRANTS FOR 'developer'@'localhost';
+```
+
+Listar usuários:
+
+```sql
+SELECT user, host FROM mysql.user;
+```
+
 ### Postgres Server
 
 - Server
@@ -403,6 +481,91 @@ $ pg_restore -Fc database.bak # restore compressed binary format
 $ pg_restore -Fc -C database.bak # create the database before restoring into it
 
 $ pg_restore -Ft database.tar # restore tarball
+```
+
+Criar usuário:
+
+```sql
+-- Criar usuário
+CREATE USER nome_usuario WITH PASSWORD 'senha';
+
+-- Criar usuário com opções
+CREATE USER nome_usuario WITH PASSWORD 'senha' CREATEDB CREATEROLE;
+
+-- Exemplo
+CREATE USER developer WITH PASSWORD 'dev123';
+```
+
+Deletar usuário:
+
+```sql
+DROP USER nome_usuario;
+
+-- Ou reassumir propriedade antes de deletar
+DROP USER IF EXISTS nome_usuario;
+
+-- Exemplo
+DROP USER developer;
+```
+
+Grant (Conceder Permissões):
+
+```sql
+-- Conceder todas as permissões em um banco
+GRANT ALL PRIVILEGES ON DATABASE nome_banco TO nome_usuario;
+
+-- Conceder permissões específicas em um banco
+GRANT CONNECT, CREATE ON DATABASE nome_banco TO nome_usuario;
+
+-- Conceder permissões em esquema
+GRANT ALL PRIVILEGES ON SCHEMA public TO nome_usuario;
+
+-- Conceder permissões em tabela específica
+GRANT SELECT, INSERT, UPDATE, DELETE ON nome_banco.tabela TO nome_usuario;
+
+-- Conceder todas as permissões em tabelas
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO nome_usuario;
+
+-- Exemplos
+GRANT ALL PRIVILEGES ON DATABASE monitor_db TO developer;
+GRANT SELECT, INSERT, UPDATE ON public.hosts TO developer;
+```
+
+Revoke (Revogar Permissões):
+
+```sql
+-- Revogar todas as permissões em um banco
+REVOKE ALL PRIVILEGES ON DATABASE nome_banco FROM nome_usuario;
+
+-- Revogar permissões específicas em um banco
+REVOKE CONNECT, CREATE ON DATABASE nome_banco FROM nome_usuario;
+
+-- Revogar permissões em esquema
+REVOKE ALL PRIVILEGES ON SCHEMA public FROM nome_usuario;
+
+-- Revogar permissões em tabela específica
+REVOKE DELETE ON nome_banco.tabela FROM nome_usuario;
+
+-- Exemplos
+REVOKE DELETE ON public.hosts FROM developer;
+REVOKE ALL PRIVILEGES ON DATABASE monitor_db FROM developer;
+```
+
+Verificar permissões:
+
+```sql
+-- Listar usuários
+\du
+
+-- Verificar permissões de um usuário
+SELECT grantee, privilege_type
+FROM information_schema.role_table_grants
+WHERE table_name = 'hosts';
+
+-- Listar permissões em banco de dados
+SELECT datname, datacl
+FROM pg_database
+WHERE datname = 'monitor_db';
 ```
 
 ### SQLite
@@ -700,6 +863,107 @@ monitor_db> db.hosts.find()
 monitor_db> exit
 ```
 
+Criar usuário:
+
+```javascript
+// Criar usuário com senha
+db.createUser({
+  user: "nome_usuario",
+  pwd: "senha",
+  roles: [
+    { role: "readWrite", db: "monitor_db" }
+  ]
+});
+
+// Criar usuário administrador
+db.createUser({
+  user: "admin_user",
+  pwd: passwordPrompt(),
+  roles: [
+    { role: "root", db: "admin" }
+  ]
+});
+
+// Exemplo
+db.createUser({
+  user: "developer",
+  pwd: passwordPrompt(),
+  roles: [
+    { role: "readWrite", db: "monitor_db" },
+    { role: "read", db: "admin" }
+  ]
+});
+```
+
+Deletar usuário:
+
+```javascript
+// Deletar usuário do banco atual
+db.dropUser("nome_usuario");
+
+// Exemplo
+db.dropUser("developer");
+```
+
+Grant (Conceder Permissões):
+
+```javascript
+// Conceder permissões a usuário existente
+db.grantRolesToUser("nome_usuario", [
+  { role: "readWrite", db: "monitor_db" },
+  { role: "dbAdmin", db: "monitor_db" }
+]);
+
+// Exemplo
+db.grantRolesToUser("developer", [
+  { role: "readWrite", db: "monitor_db" }
+]);
+```
+
+Revoke (Revogar Permissões):
+
+```javascript
+// Revogar permissões de um usuário
+db.revokeRolesFromUser("nome_usuario", [
+  { role: "readWrite", db: "monitor_db" }
+]);
+
+// Exemplo
+db.revokeRolesFromUser("developer", [
+  { role: "dbAdmin", db: "monitor_db" }
+]);
+```
+
+Verificar permissões:
+
+```javascript
+// Listar usuários do banco atual
+show users
+
+// ou
+
+db.getUsers()
+
+// Verificar permissões de um usuário específico
+db.getUser("nome_usuario")
+
+// Exemplo
+db.getUser("developer")
+```
+
+Roles comuns no MongoDB:
+
+| Role        | Descrição                                                      |
+| ----------- | -------------------------------------------------------------- |
+| `read`      | Permissão apenas leitura em um banco de dados                  |
+| `readWrite` | Permissão de leitura e escrita em um banco de dados            |
+| `dbAdmin`   | Permissões administrativas do banco (criar índices, etc)       |
+| `userAdmin` | Permissão para gerenciar usuários do banco                     |
+| `dbOwner`   | Combinação de `readWrite`, `dbAdmin` e `userAdmin`             |
+| `root`      | Acesso total a todos os bancos (super usuário)                 |
+
+
+
 ## Databases
 
 | Database | Create Database                  | Use Database               | Create Table                     | Insert table                       |
@@ -764,8 +1028,246 @@ CREATE TABLE hosts (
   </tbody>
 </table>
 
+Usuários (CREATE USER, GRANT e REVOKE)
 
+<table>
+  <thead>
+    <tr>
+      <th>Operação</th>
+      <th>MySQL</th>
+      <th>PostgreSQL</th>
+      <th>MongoDB</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Criar Usuário</strong></td>
+      <td>
 
+```sql
+CREATE USER 'user'@'localhost'
+IDENTIFIED BY 'senha';
+```
+
+      </td>
+      <td>
+
+```sql
+CREATE USER user WITH
+PASSWORD 'senha';
+```
+
+      </td>
+      <td>
+
+```javascript
+db.createUser({
+  user: "user",
+  pwd: passwordPrompt(),
+  roles: [...]
+});
+```
+
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Deletar Usuário</strong></td>
+      <td>
+
+```sql
+DROP USER 'user'@'localhost';
+```
+
+      </td>
+      <td>
+
+```sql
+DROP USER user;
+```
+
+      </td>
+      <td>
+
+```javascript
+db.dropUser("user");
+```
+
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Grant (Banco)</strong></td>
+      <td>
+
+```sql
+GRANT ALL PRIVILEGES
+ON database.*
+TO 'user'@'localhost';
+```
+
+      </td>
+      <td>
+
+```sql
+GRANT ALL PRIVILEGES
+ON DATABASE database
+TO user;
+```
+
+      </td>
+      <td>
+
+```javascript
+db.grantRolesToUser("user", [
+  { role: "readWrite",
+    db: "database" }
+]);
+```
+
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Grant (Tabela)</strong></td>
+      <td>
+
+```sql
+GRANT SELECT, INSERT
+ON database.table
+TO 'user'@'localhost';
+```
+
+      </td>
+      <td>
+
+```sql
+GRANT SELECT, INSERT
+ON database.table
+TO user;
+```
+
+      </td>
+      <td>
+
+```javascript
+// Não há grant por tabela
+// Use read/readWrite no db
+```
+
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Revoke (Banco)</strong></td>
+      <td>
+
+```sql
+REVOKE ALL PRIVILEGES
+ON database.*
+FROM 'user'@'localhost';
+```
+
+      </td>
+      <td>
+
+```sql
+REVOKE ALL PRIVILEGES
+ON DATABASE database
+FROM user;
+```
+
+      </td>
+      <td>
+
+```javascript
+db.revokeRolesFromUser("user", [
+  { role: "readWrite",
+    db: "database" }
+]);
+```
+
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Revoke (Tabela)</strong></td>
+      <td>
+
+```sql
+REVOKE SELECT, INSERT
+ON database.table
+FROM 'user'@'localhost';
+```
+
+      </td>
+      <td>
+
+```sql
+REVOKE SELECT, INSERT
+ON database.table
+FROM user;
+```
+
+      </td>
+      <td>
+
+```javascript
+// Não há revoke por tabela
+```
+
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Aplicar Permissões</strong></td>
+      <td>
+
+```sql
+FLUSH PRIVILEGES;
+```
+
+      </td>
+      <td>
+
+```sql
+-- Automático
+-- (sem comando necessário)
+```
+
+      </td>
+      <td>
+
+```javascript
+// Automático
+// (sem comando necessário)
+```
+
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Listar Usuários</strong></td>
+      <td>
+
+```sql
+SELECT user, host
+FROM mysql.user;
+```
+
+      </td>
+      <td>
+
+```sql
+\du
+```
+
+      </td>
+      <td>
+
+```javascript
+show users
+// ou
+db.getUsers()
+```
+
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ## Tipos de Dados
 
