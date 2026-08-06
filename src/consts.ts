@@ -3,13 +3,13 @@ export const SUBJECT = {
   CLASSROOM_URLS: {
     A: 'https://classroom.google.com/c/ODQ3MDU2MjU2NzA2',
   },
-  CHAT_URL: 'https://mail.google.com/mail/u/0/#chat/space/AAQAUGqGVVQ',
+  CHAT_URL: 'https://mail.google.com/mail/u/0/#chat/space/AAQAPOKnT8E',
   PROJECTS_URL: {
     padlet: 'https://padlet.com/lucachaves/projetodw20261',
     github: 'https://ifpb.github.io/projects/codes/dw-cstrc-jp/1/',
   },
   GITHUB_URLS: {
-    A: 'https://github.com/luizchaves/dw-2026-1',
+    A: 'https://github.com/luizchaves/dw-2026-2',
   },
   SCHEDULES: [
     {
